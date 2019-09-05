@@ -43,18 +43,19 @@ omega_p = 2*np.pi/res_p[0]
 res_s = analyse.lineare_regression(n,period_s,eperiod_s)
 omega_s = 2*np.pi/res_s[0]
 
+"""
 f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex='col', sharey='row', gridspec_kw={'height_ratios': [5, 2]})
 ax1.plot(nreg,res_p[0]*nreg+res_p[2], linestyle="--", color = 'black')
 ax1.errorbar(n,period_p, yerr = 0.02, color='red', fmt='.', marker ='o')
 ax1.set_ylabel('$t$ / $s$')
 ax1.grid()
 ax1.set_ylim(-10,350)
-ax1.set_title('Messung mit Pendelkoerper')
+ax1.set_title('Messung mit Pendelkörper')
 
 ax2.plot(nreg,res_s[0]*nreg+res_s[2], linestyle="--", color = 'black')
 ax2.errorbar(n,period_s, yerr = 0.02, color='red', fmt='.', marker = 'o')
 ax2.grid()
-ax2.set_title('Messung ohne Pendelkoerper')
+ax2.set_title('Messung ohne Pendelkörper')
 
 ax3.axhline(y=0., color='black', linestyle='--')
 ax3.errorbar(n, period_p-(res_p[0]*n+res_p[2]), yerr=eperiod_p, color='red', fmt='.', marker='o', markeredgecolor='red')
@@ -73,12 +74,53 @@ plt.rcParams['axes.labelsize'] = 'large'
 plt.tight_layout()
 f.subplots_adjust(hspace=0.0)
 plt.savefig('plots/regression.pdf', format='pdf', dpi=1200)
-plt.show()
 plt.close(f)
+"""
+
+"""
+#Fouriertransoformationen
+f, (ax1,ax2) = plt.subplots(2,1, sharex='all')
+fourier = analyse.fourier_fft(timeVal,voltage_p)
+frequency = fourier[0]
+amplitude = fourier[1]
+ax1.scatter(frequency, amplitude,color='red')
+ax1.grid()
+ax1.set_ylabel('Amplitude')
+
+maximumIndex = amplitude.argmax();
+ax1.set_xlim(frequency[max(0, maximumIndex-10)], frequency[min(maximumIndex+10, len(frequency))])
+peak_p = analyse.peakfinder_schwerpunkt(frequency, amplitude)
+ax1.axvline(peak_p, linestyle="--",color='black')
+
+fourier2 = analyse.fourier_fft(timeVal, voltage_s)
+frequency2 = fourier2[0]
+amplitude2 = fourier2[1]
+ax2.scatter(frequency2, amplitude2, color='red')
+ax2.grid()
+ax2.set_xlabel('Frequenz / Hz')
+ax2.set_ylabel('Amplitude')
+
+maximumIndex = amplitude2.argmax();
+ax2.set_xlim(frequency2[max(0, maximumIndex-10)], frequency2[min(maximumIndex+10, len(frequency2))])
+peak_s = analyse.peakfinder_schwerpunkt(frequency2, amplitude2)
+ax2.axvline(peak_s, linestyle= "--",color='black')
+
+plt.rcParams["figure.figsize"] = (12,6)
+plt.rcParams['axes.titlesize'] = 'large'
+plt.rcParams['axes.labelsize'] = 'large'
+plt.tight_layout()
+f.subplots_adjust(hspace=0.0)
+plt.savefig('plots/fft.pdf', format='pdf', dpi=1200)
+plt.close(f)
+"""
 
 #Gebe das chi^2 an
-print('chi^2/ndf:')
+print('chi_p^2/ndf:')
 print(res_p[4]/18)
+print('chi_s^2/ndf:')
+print(res_s[4]/18)
+
+releomega = 0.2*np.abs(omega_p**2-omega_s**2)/omega_p**2
 
 stor1 = np.power(omega_p,2)
 stor2 = 1+0.5*np.power(rp,2)/np.power(lp,2)
