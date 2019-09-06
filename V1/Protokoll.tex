@@ -11,6 +11,10 @@
 
 \usepackage{graphicx}
 
+\usepackage{float}
+\usepackage{adjustbox}
+\usepackage{hyperref}
+
 %\usepackage{enumerate}
 \usepackage[shortlabels]{enumitem}
 
@@ -117,44 +121,6 @@ Für die Höhenmessung wird die Unsicherheit auf $\sigma_s = 1 \, \mathrm{mm}$ g
 \end{figure}
 
 
-
-
-\section{Erdbeschleunigung mit dem Pendel}
-
-
-\subsection{Versuchsbeschreibung}
-
-In diesem Experiment wird nun die Schwingung eines physikalischen Pendels untersucht, um die Erdbeschleunigung $g$ zu bestimmen. Die Schwingungsgleichung für das physikalische Pendel lautet
-$$J \ddot \varphi = - mgl_s \sin(\varphi).$$
-Dabei ist $J$ das Gesamtträgheitsmoment des Pendels und $l_s$ der Abstand vom Aufhängepunkt zum Schwerpunkt des Pendels, sowie $\varphi$ der Auslenkwinkel aus der Ruhelage. Auf der rechten Seite der Gleichung steht das rücktreibende Drehmoment, welches durch die Gravitationskraft hervorgerufen wird. Für kleine Winkel, bei denen $\sin(\varphi) \approx \varphi$, ergibt sich eine lineare, homogene Differentialgleichung zweiter Ordnung
-$$\ddot \varphi = -\frac{mgl_s}J \varphi.$$
-Diese Gleichung hat die allgemeine Lösung
-$$\varphi(t) = A\cdot \cos(\omega t)+ B\cdot \sin(\omega t).$$
-Die Kreisfrequenz $\omega$ dieser Schwingung ist gegeben durch
-$$\omega^2 = \frac{mgl_s}J.$$
-Da das Trägheitsmoment $J$ des Pendels schwierig zu bestimmen ist, umgehen wir dieses Problem. Das betrachtete Pendel besteht aus einem Winkelaufnehmer-Profil, der Pendelstange und einem zylindrischen Pendelkörper.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.15]{Pendel_Zeichnung_be.jpg}
-	\caption{Schematische Zeichung des Pendels}
-\end{figure}
-
-Wir bestimmen zunächst die Schwingungsfrequenz $\omega_{st}$ der Stange allein. Anschließend wird der Pendelkörper an der Stelle an der Stange angebracht, an dem das Pendel mit Pendelkörper und Stange diegleiche Schwingungsfrequent hat, wie die Stange allein. Sind $D_{st}$ und $D_p$ die maximalen Rückstellmomente von Stange und Pendelkörper und $J_{st}$ und $J_p$ die entsprechenden Trägheitsmomente, so gilt für die Schwingungfrequenz der Stange allein
-$$\omega_{st}^2 = \frac{D_{st}}{J_{st}}.$$
-Für den Pendelkörper allein gilt analog
-$$\omega_p^2 = \frac{D_p}{J_p}.$$
-Da die Rückstellmomente und die Trägheitsmomente additiv sind, ergibt sich die Frequenz des physikalischen Pendels mit Stange und Pendelkörper zu
-$$\omega^2 = \frac{D_{st} + D_p}{J_{st} + J_p} = \omega_{st}^2 \frac{1+\frac{D_p}{D_{st}}}{1+\frac{J_p}{J_st}}.$$
-Ist der Pendelkörper nun so eingestellt, dass $\omega = \omega_{st}$, so muss $\frac{D_p}{D_{st}} = \frac{J_p}{J_st}$. Daraus erhält man schließlich
-$$\omega_p = \omega_{st} = \omega.$$
-Das Pendel lässt sich so betrachten als bestünde es nur aus dem Pendelkörper. Mit dem Trägheitsmoment des geometrisch einfachen Pendelkörpers und dem Satz von Steiner ergibt sich
-$$J_p = \frac 12 m_p r_p^2 + m_pl_p^2.$$
-Damit lässt sich nun die Kreisfrequenz des Pendels ausdrücken
-$$\omega^2 = \omega_p^2 = \frac{D_p}{J_p} = \frac{m_pgl_p}{\frac 12 m_pr_p^2+m_pl_p^2}.$$
-Durch Umformen folgt schließlich die Formel für die Erdbeschleunigung
-$$g = \omega^2l_p \left( 1 + \frac 12 \frac{r_p^2}{l_p^2} \right)$$
-Durch Messung des Radius $r_p$ und der Länge $l_p$, sowie der Periodendauer $T = \frac{2\pi}{\omega}$, lässt sich somit die Erdbeschleunigung bestimmen.
-
+\input{pendel.tex}
 
 \end{document}

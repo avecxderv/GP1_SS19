@@ -40,8 +40,10 @@ nreg = np.arange(0,200,1)
 #Lineare Regression der Daten zur Bestimmung der Frequenz
 res_p = analyse.lineare_regression(n,period_p,eperiod_p)
 omega_p = 2*np.pi/res_p[0]
+eomega_p = 2*np.pi/(res_p[0]**2)*res_p[1]
 res_s = analyse.lineare_regression(n,period_s,eperiod_s)
 omega_s = 2*np.pi/res_s[0]
+eomega_s = 2*np.pi/(res_s[0]**2)*res_s[1]
 
 """
 f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex='col', sharey='row', gridspec_kw={'height_ratios': [5, 2]})
@@ -77,7 +79,6 @@ plt.savefig('plots/regression.pdf', format='pdf', dpi=1200)
 plt.close(f)
 """
 
-"""
 #Fouriertransoformationen
 f, (ax1,ax2) = plt.subplots(2,1, sharex='all')
 fourier = analyse.fourier_fft(timeVal,voltage_p)
@@ -110,9 +111,7 @@ plt.rcParams['axes.titlesize'] = 'large'
 plt.rcParams['axes.labelsize'] = 'large'
 plt.tight_layout()
 f.subplots_adjust(hspace=0.0)
-plt.savefig('plots/fft.pdf', format='pdf', dpi=1200)
 plt.close(f)
-"""
 
 #Gebe das chi^2 an
 print('chi_p^2/ndf:')
@@ -125,5 +124,5 @@ releomega = 0.2*np.abs(omega_p**2-omega_s**2)/omega_p**2
 stor1 = np.power(omega_p,2)
 stor2 = 1+0.5*np.power(rp,2)/np.power(lp,2)
 g = stor1*lp*stor2
-eg = np.sqrt(np.power(2*np.pi/(res_p[0]**2)*res_p[1],2)*4*stor1*np.power(lp,2)*np.power(stor2,2)+
-             np.power(0.001,2)*stor1*np.power(1-0.5*np.power(rp,2)/np.power(lp,2),2))
+eg = np.sqrt(eomega_p**2*4*stor1*np.power(lp,2)*np.power(stor2,2) +
+     np.power(0.0007,2)*stor1**2*np.power(1-0.5*np.power(rp,2)/np.power(lp,2),2))
