@@ -79,6 +79,7 @@ plt.savefig('plots/regression.pdf', format='pdf', dpi=1200)
 plt.close(f)
 """
 
+"""
 #Fouriertransoformationen
 f, (ax1,ax2) = plt.subplots(2,1, sharex='all')
 fourier = analyse.fourier_fft(timeVal,voltage_p)
@@ -112,6 +113,23 @@ plt.rcParams['axes.labelsize'] = 'large'
 plt.tight_layout()
 f.subplots_adjust(hspace=0.0)
 plt.close(f)
+"""
+
+#Rohdaten visualisieren
+plt.plot(timeVal[0:2000],voltage_p[0:2000], label='Mit Pendelkörper')
+plt.plot(timeVal[0:2000],voltage_s[0:2000], label='Ohne Pendelkörper')
+plt.grid()
+plt.ylabel("Auslenkung")
+plt.xlabel("$t$ / $s$")
+plt.xlim(0,40)
+plt.legend()
+plt.rcParams["figure.figsize"] = (12,6)
+plt.rcParams['axes.titlesize'] = 'large'
+plt.rcParams['axes.labelsize'] = 'large'
+plt.savefig('plots/rohdaten.pdf')
+plt.show()
+plt.close()
+
 
 #Gebe das chi^2 an
 print('chi_p^2/ndf:')
