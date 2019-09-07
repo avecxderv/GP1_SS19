@@ -32,7 +32,7 @@
 	\vspace{2cm}
 	{\scshape\LARGE Mechanik \par}
 	\vspace{1cm}
-	{\Large Pendel- und Fallexperiment zu Bestimmung der Erdbeschleunigung\par}
+	{\Large Pendel- und Fallexperiment zur Bestimmung der Erdbeschleunigung\par}
 	\vfill
 	{\large\itshape Simon Schwarz und Marius Ising\par}
 
@@ -58,15 +58,16 @@ Dabei ist $v_0$ die Anfangsgeschwindigkeit und $s_0$ der anfängliche Weg zum Ze
 
 \begin{figure}[h]
 	\centering
-		\includegraphics{Aufbau_ff.jpg}
+	\includegraphics{bilder/Aufbau_fF_be.jpg}
 	\caption{Versuchsaufbau}
 \end{figure}
-Der Versuchsaufbau dient der Messung der Fallzeit einer Stahlkugel für einstellbare Höhen von 10 bis 90 mm. In eine Grundplatte mit integrierter Auffangplatte wird eine Stativstange mit Skala montiert. Zudem wird eine höhenverstellbare Startkonsole mit Auslösevorrichtung für die Metallkugel an die Stange angebracht. Verlässt die Metallkugel die Haltezunge mit Mikromagnet, so wird ein elektrisches Startsignal ausgelöst. Beim Aufprall auf der Platte entsteht ein Stopp-Signal und die Zeitmessung wird beendet. Die Zeitmessung erfolgt dabei wahlweise mit einem Digital-Zähler oder dem Oszilloskop. Der Zähler und das Oszilloskop werden dabei gleichzeitig angeschlossen.
+Der Versuchsaufbau dient der Messung der Fallzeit einer Stahlkugel für einstellbare Höhen von 10 bis 90 mm. In eine Grundplatte mit integrierter Auffangplatte wird eine Stativstange mit Skala montiert. Zudem wird eine höhenverstellbare Startkonsole mit Auslösevorrichtung für die Metallkugel an die Stange angebracht. Verlässt die Metallkugel die Haltezunge mit Mikromagnet, so wird ein elektrisches Startsignal ausgelöst. Beim Aufprall auf der Platte entsteht ein Stopp-Signal und die Zeitmessung wird beendet. Die Zeitmessung erfolgt dabei wahlweise mit einem Digital-Zähler oder dem Oszilloskop. Der Zähler und das Oszilloskop werden dabei gleichzeitig angeschlossen (siehe Abb. \ref{AnschlussOsDz}).
 
 \begin{figure}[h]
 	\centering
-	\includegraphics{Aufbau_Detail_ff.jpg}
+	\includegraphics{bilder/Aufbau_Detail_ff.jpg}
 	\caption{Anschluss von Digital-Zähler und Oszilloskop}
+	\label{AnschlussOsDz}
 \end{figure}
 
 
@@ -78,7 +79,10 @@ Die Fallzeiten werden für verschiedene Höhen von 10 bis 90 cm in Schritten von
 
 \subsection{Versuchsauswertung}
 
-Mit dem Digitalzähler ergaben sich folgende Messungen
+\subsubsection{Messung mit dem Digitalzähler}
+
+Für die Höhenmessung ist entscheidend mit welcher Genauigkeit man den Skalenstrich trifft. Dabei wird die Unsicherheit auf $\sigma_s = 1 \, \mathrm{mm}$ geschätzt. Mit dem Digitalzähler ergaben sich die Messsungen aus Tabelle \ref{tableDz}.
+
 \begin{table}[h]
 \begin{center}
 \begin{tabular}{c|r|r|r|r|r|r|r|r|r}
@@ -95,33 +99,120 @@ $t$ / ms & 140 & 200 & 245 & 284 & 318 & 348 & 376 & 403 & 427 \\
 	 & 141 & 200 & 245 & 284 & 318 & 348 & 376 & 403 & 427 \\
 	 & 141 & 200 & 246 & 284 & 318 & 348 & 376 & 402 & 427 \\
 \hline
-$\bar t$ / ms & 140.7 & 200 & 245.6 & 284 & 318 & 348 & 376.3 & 402.5 & 427
+$\bar t$ / ms & 140.7 & 200.0 & 245.6 & 284.0 & 318.0 & 348.0 & 376.3 & 402.5 & 427.0
 \end{tabular}
 \caption{Messreihe mit dem Digitalzähler}
+\label{tableDz}
 \end{center}
 \end{table}
 
-\begin{table}[h]
+Aufgrund der geringen statistischen Effekte in der Messreihe werden statistische Unsicherheiten vernachlässigt und die Unsicherheit aufgrund der zeitlichen Auflösung des Zählers unter Annahme einer Gleichverteilung zu $\sigma_t = 1/\sqrt{12} \, \mathrm{ms} \approx 0.29 \, \mathrm{ms}$ bestimmt. Wir führen nun mit den berechneten Mittelwerten eine Regression durch. Da in unserem Experiment die Anfangsgeschwindigkeit $v_0$ der Kugel vernachlässigbar sein sollte, haben wir einen linearen Zusammenhang zwischen $s$ und $t^2$. Es gilt
+$$s(t) = s_0 + mt^2.$$
+Deswegen führen wir eine lineare Regression von $s$ über $t^2$ durch. Dazu berechnen wir zunächst die Werte für $t^2$ und bestimmen den Fehler dieser gemäß
+$$\sigma_{t^2} = 2|t|\sigma_t.$$
+Die Ergebnisse der Regression sind in Tabelle \ref{tableReg1} aufgelistet.
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{c|c|c}
+$m$ & $s_0$ & $\chi^2/n_{df}$ \\
+\hline
+$(4.9221 \pm 0.0084) \, \mathrm m / \mathrm s^2$ & $(0.0028 \pm 0.0009) \, \mathrm m$ & $0.14$
+\end{tabular}
+\caption{Ausgabe der Regression}
+\label{tableReg1}
+\end{center}
+\end{table}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{plots/regression_fF1.pdf}
+	\caption{Residuenplot für den Digitalzähler}
+	\label{ResDz}
+\end{figure}
+
+Der sehr schlechte Wert für $\chi^2/n_{df}$ spiegelt sich auch im Residuengraph wieder (Abb. \ref{ResDz}), wo alle Fehlerbalken deutlich die Nulllinie treffen. Zusammen führt dies zu dem Schluss, dass die Fehlerabschätzungen für $s$ und $t$ zu grob sind. Da wir jedoch keine bessseren Abschätzungen machen können, führen wir noch eine alternative Auswertung der Daten durch. Dazu berechnen wir für je zwei benachbarte Datenpunkte in unserem $s-t^2$-Diagramm die Steigung, wobei der erste Wert nicht verwendet wird. Für die Steigung gilt
+$$m = \frac{s_{i+1}-s_i}{t_{i+1}^2-t_{i}^2}.$$
+Dies liefert uns vier Schätzungen für die Steigung. Die Fehler werden mit einer Gaußschen Fehlerfortplanzung bestimmt. Diese liefert uns
+$$\frac{\sigma_m^2}{m^2} = \frac{2}{(s_{i+1}-s_i)^2}\cdot\sigma_s^2 + \frac{4(t_{i+1}^2 + t_i^2)}{(t_{i+1}^2-t_i^2)^2}\cdot\sigma_t^2.$$
+Anschließend werden die vier Steigungswerte mit ihren Unsicherheiten gewichtet gemittelt und innerer und äußerer Fehler des Mittelwertes bestimmt. Die Ergebnisse dieser Kalkulation sind in Tabelle \ref{tableAltAus} zu sehen. 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{c|c}
+$m_1$ & $(4.921 \pm 0.083) \, \mathrm m / \mathrm s^2$ \\ 
+$m_2$ & $(4.886 \pm 0.091) \, \mathrm m / \mathrm s^2$ \\
+$m_3$ & $(4.879 \pm 0.099) \, \mathrm m / \mathrm s^2$ \\
+$m_4$ & $(4.921 \pm 0.109) \, \mathrm m / \mathrm s^2$ \\
+\hline
+$\bar m$ & $4.902 \, \mathrm m / \mathrm s^2$ \\
+$\sigma^{in}_{\bar m}$ & $0.047 \, \mathrm m / \mathrm s^2$ \\
+$\sigma^{au}_{\bar m}$ & $0.011 \, \mathrm m / \mathrm s^2$
+\end{tabular}
+\caption{Alternative Auswertung der Daten}
+\label{tableAltAus}
+\end{center}
+\end{table}
+Aus dem Wert der Steigung ergibt sich dann die Schätzung für die Erdbeschleunigung
+$$g = (9.80 \pm 0.09) \, \mathrm m / \mathrm s^2 .$$
+
+\subsubsection{Messung mit dem Oszilloskop}
+
+Die Messungen mit dem Oszilloskop sind in Tabelle \ref{tableOs} aufgeführt. 
+\begin{table}[h!]
 \begin{center}
 \begin{tabular}{c|r|r|r|r|r|r|r|r|r}
 $s$ / cm & 10 & 20 & 30 & 40 & 50 & 60 & 70 & 80 & 90 \\
 \hline
-$t$ / ms & 140.8 & 200 & 245.2 & 283.8 & 318.2 & 348.4 & 376.6 & 402.7 & 427.2 \\
+$t$ / ms & 140.8 & 200.0 & 245.2 & 283.8 & 318.2 & 348.4 & 376.6 & 402.7 & 427.2 \\
 \end{tabular}
 \caption{Messreihe mit dem Oszilloskop}
+\label{tableOs}
 \end{center}
 \end{table}
 
-Für die Höhenmessung wird die Unsicherheit auf $\sigma_s = 1 \, \mathrm{mm}$ geschätzt. Aufgrund der geringen statistischen Effekte in der Messreihe der Zeitmessungen mit dem Digitalzähler werden statistische Unsicherheiten vernachlässigt und die Unsicherheit aufgrund der zeitlichen Auflösung des Zählers unter Annahme einer Gleichverteilung zu $\sigma_t = 1/\sqrt{12} \, \mathrm{ms} \approx 0.29 \, \mathrm{ms}$ bestimmt.
+Die Genauigkeit der Zeitmessung mit dem Oszilloskop wird auf $\sigma_t = 0.1 \, \mathrm{ms}$ geschätzt. Wir führen wieder ein lineare Regression von $s$ über $t^2$ durch. Die Ergebnisse befinden sich in Tabelle \ref{tableReg2}.
 
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{c|c|c}
+$m$ & $s_0$ & $\chi^2/n_{df}$ \\
+\hline
+$(4.9123 \pm 0.0066) \, \mathrm m / \mathrm s^2$ & $(0.0035 \pm 0.0007) \, \mathrm m$ & $0.5$
+\end{tabular}
+\caption{Ausgabe der Regression}
+\label{tableReg2}
+\end{center}
+\end{table}
 
-\begin{figure}[h]
+Der Wert für $\chi^2/n_{df}$ deutet wieder auf eine zu grobe Fehlerabschätzung hin. Dies zeigt sich auch wieder im Residuenplot (Abb. \ref{ResOz}), wo fast alle Fehlerbalken die Nulllinie treffen.
+\begin{figure}[h!]
 	\centering
-	\includegraphics[scale=0.3]{Auswertung.png}
-	\caption{Residuenplots}
+	\includegraphics[width=\textwidth]{plots/regression_fF2.pdf}
+	\caption{Residuenplot für das Oszilloskop}
+	\label{ResOz}
 \end{figure}
+Trotzdessen verwenden wir die Ergebnisse dieser Regression, da die Anpassung deutlich besser ist, als im Falle des Digitalzählers. Aus der Steigung ermitteln wir folgende Schätzung für die Erdbeschleunigung
+$$g = (9.824 \pm 0.013) \, \mathrm m / \mathrm s^2 .$$
+
+
+\subsection{Fazit}
+
+Wir haben nun zwei Schätzungen für die Erdbeschleunigung $g$ ermittelt. Wie im Fazit des zweiten Versuchs erläutert, verwenden wir als Literaturwert für die Erbeschleunigung in Aachen $g_L = 9.811 \, \mathrm m / \mathrm s^2$. 
+Zur Bewertung der beiden Ergebnisse berechnen wir
+\begin{align*}
+\frac{|g_L-g_{Dz}|}{\sigma_{g_{Dz}}} &= 0.12 \\
+\frac{|g_L-g_{Os}|}{\sigma_{g_{Os}}} &= 1
+\end{align*}
+In beiden Fällen liegen wir somit im $1\sigma$-Intervall. Zur Überprüfung der Übereinstimmung der beiden Werte untereinander berechnen wir noch
+$$\frac{|g_{Os}-g_{Dz}|}{\sqrt{\sigma_{g_{Dz}}^2 + \sigma_{g_{Os}}^2}} \approx 0.03 \ll 1.$$
+Die beiden Werten stimmen also im Rahmen der Unsicherheiten sehr gut überein. 
+
+
+\newpage
 
 
 \input{pendel.tex}
+
 
 \end{document}
