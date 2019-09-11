@@ -68,7 +68,7 @@ ergibt. Dabei ist $f_0$ die Grundfrequenz der longitudinalen Schallwelle, die ne
 
 Folgende Geräte werden für den Versuch benötigt: Zwei Tischklemmen, eine Kreuzmuffe, eine Metallstange $\sim 20$ cm, ein Metallstift, ein Metallstift, ein Sensor-Cassy mit Laptop, ein Mikrofon, ein Gummihammer, eine Waage, ein Bandmaß, eine Mikrometerschraube und vier Metallstangen $\sim 130$cm (Kupfer, Stahl, Aluminium und Messing).
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{bilder/aufbau_festkoerper.jpg}
 	\caption{Versuchsaufbau}
@@ -76,9 +76,9 @@ Folgende Geräte werden für den Versuch benötigt: Zwei Tischklemmen, eine Kreu
 
 Eine große, zu untersuchende Metallstange wird mit Hilfe einer Tischklemme, der kleinen Metallstange und der Kreuzmuffe horizontal am Tisch befestigt. Dabei muss die Stange mittig an zwei Punkten eingespannt werden, damit die Schwingung nicht beinträchtigt wird. Dies ist in Abbildung \ref{pic:aufhaengung} dargestellt. In kleinem Abstand zu einem Ende der großen Metallstange wird das Mikrofon platziert, das den Schalldruck und somit die Schallwellen misst. Das Mikrofon ist am Sensor-Cassy angeschlossen. Am anderen Ende kann die Stange durch einen Schlag mit dem Gummihammer in Schwingung versetzt werden.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
-	\includegraphics{bilder/aufhaengung_beschriftet.png}
+	\includegraphics[width=\linewidth]{bilder/aufhaengung_beschriftet.png}
 	\caption{Aufhängung der Metallstange an zwei Punkten mit der Kreuzmuffe und einem Metallstift}
 	\label{pic:aufhaengung}
 \end{figure}
@@ -117,7 +117,6 @@ $6$ & Messing & $130.00 \pm 0.07$ & $1237.20 \pm 0.03$ & $11.978 \pm 0.005$ \\
 $9$ & Aluminium & $129.90 \pm 0.07$ & $407.30 \pm 0.03$ & $11.944 \pm 0.031$ \\
 $11$ & Stahl & $130.10 \pm 0.07$ & $1157.60 \pm 0.03$ & $11.989 \pm 0.045$
 \end{tabular}
-\caption{Ergebnisse der Längen- und Massenmessungen}
 \end{table}
 Als Fehler in $\overline{D}$ wurde die Wurzel der empirischen Varianz und nicht die Standardabweichung des arithmetischen Mittels genommen, weil diese den Unebenheiten des Stabes nicht gerecht wird. In Abbildung \ref{pic:rohdaten} ist eine Messung des für den Kupferstab abgebildet.
 
@@ -166,25 +165,31 @@ Zusammen mit den ermittelten Werten von $M$, $L$ und $\overline{D}$ lässt sich 
 \begin{tabular}{cc|c|c|c}
 Stabnummer & Material & $\rho$ [g/$\text{cm}^3$] & $v_l$ [m/s] & $E$ [N/$\text{m}^2$] \\
 \hline
-$5$ & Kupfer & $8.828\pm 0.118$ & $3789.988\pm 0.582$ & $(1.288\pm 0.017)\cdot 10^{11}$ \\
-$6$ & Messing & $8.446\pm 0.006$ & $3505.117\pm 0.582$ & $(1.038\pm 0.001) \cdot 10^{11}$\\
-$9$ & Aluminium & $2.798\pm 0.015$ & $5108.536\pm 0.582$ & $(0.730\pm 0.004)\cdot 10^{11}$\\
-$11$ & Stahl & $7.882\pm 0.059$ & $4902.048\pm 0.582$ & $(1.894\pm 0.015)\cdot 10^{11}$
+$5$ & Kupfer & $8.828\pm 0.118$ & $3789.99\pm 2.10$ & $(1.288\pm 0.017)\cdot 10^{11}$ \\
+$6$ & Messing & $8.446\pm 0.007$ & $3505.12\pm 1.95$ & $(1.038\pm 0.001) \cdot 10^{11}$\\
+$9$ & Aluminium & $2.798\pm 0.015$ & $5108.54\pm 2.78$ & $(0.730\pm 0.004)\cdot 10^{11}$\\
+$11$ & Stahl & $7.882\pm 0.059$ & $4902.05\pm 2.66$ & $(1.894\pm 0.015)\cdot 10^{11}$
 \end{tabular}
 \end{table}
 
 \subsection{Fazit}
 
-Wir haben nun zwei Schätzungen für die Erdbeschleunigung $g$ ermittelt. Wie im Fazit des zweiten Versuchs erläutert, verwenden wir als Literaturwert für die Erbeschleunigung in Aachen $g_L = 9.811 \, \mathrm m / \mathrm s^2$. 
-Zur Bewertung der beiden Ergebnisse berechnen wir
-\begin{align*}
-\frac{|g_L-g_{Dz}|}{\sigma_{g_{Dz}}} &= 0.12 \\
-\frac{|g_L-g_{Os}|}{\sigma_{g_{Os}}} &= 1
-\end{align*}
-In beiden Fällen liegen wir somit im $1\sigma$-Intervall. Zur Überprüfung der Übereinstimmung der beiden Werte untereinander berechnen wir noch
-$$\frac{|g_{Os}-g_{Dz}|}{\sqrt{\sigma_{g_{Dz}}^2 + \sigma_{g_{Os}}^2}} \approx 0.03 \ll 1.$$
-Die beiden Werten stimmen also im Rahmen der Unsicherheiten sehr gut überein. 
+Im Internet findet man zu den verschiedenen Materialien sehr verschiedene Literaturwerte. So sind  Stahl (als Eisen-Kohlenstoff-Legierung) und Messing (als Kupferlegierung) keine eindeutig bestimmten Werkstoffe.
+Eine Auswahl:
 
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c|c}
+Material & $\rho$ [g/$\text{cm}^3$] & $v_l$ [m/s] & $E$ [N/$\text{m}^2$] \\
+\hline
+Kupfer & $8.93$ & $3800$ & $1.37\cdot 10^{11}$ \\
+Messing & $8.60$ & $3500$ & $(1.02-1.25) \cdot 10^{11}$\\
+Aluminium & $2.70$ & $5110$ & $0.722 \cdot 10^{11}$\\
+Stahl & $7.9$ & $5100$ & $1.8\cdot 10^{11}$
+\end{tabular}
+\end{table}
+
+Die Literaturwerte von $v_l$ stammen von einer Internetseite des Cassy Herstellers LD Didactic.\footnote{\url{https://www.ld-didactic.de/software/524221de/Content/ExperimentExamples/Physics/Mechanics/VelocitySoundSolids.htm}}. $\rho_{Cu}$, $\rho_{Al}$, $E_{Cu}$ und $E_{Al}$ stammen aus dem Experimentalphysik-Lehrbuch \textit{Gerthsen Physik}.\footnote{Dieter Meschede: \textit{Gerthsen Physik}, 25. Auflage, Springer Verlag Berlin Heidelberg, 2015}
 
 \newpage
 
