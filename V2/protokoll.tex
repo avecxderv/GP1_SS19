@@ -139,10 +139,7 @@ Die Bestimmung von $f_0$ erfolgt mit Hilfe der Frequenzspektren, die durch eine 
 	\label{pic:spektrum1}
 \end{figure}
 
-Um $f_0$ möglichst exakt aus diesem Spektrum ablesen zu können, wird die Peakfinder-Methode aus dem Praktikumspaket verwendet. Für das Spektrum in Abbildung \ref{pic:spektrum1} ist dies in Abbildung \ref{pic:spektrum2} visualisiert. Im Anhang \ref{anhang:plot} finden sich für alle Messungen entsprechende Plots. Als Fehler, der durch das Ablesen, durch die FFT und durch Messunsicherheiten verursacht wird, wird $\sigma_{f} = 0.5\,$Hz verwendet. Als Fehler der Mittelwerte wird der innere Fehler 
-$$\sigma_{f_0} = \frac{\sigma_{f}}{\sqrt{5}} = 0.224\,\text{Hz}$$
-gewählt, da dieser größer ist als der äußere.
-
+Um $f_0$ möglichst exakt aus diesem Spektrum ablesen zu können, wird die Peakfinder-Methode aus dem Praktikumspaket verwendet. Für das Spektrum in Abbildung \ref{pic:spektrum1} ist dies in Abbildung \ref{pic:spektrum2} visualisiert. Im Anhang \ref{anhang:plot} finden sich für alle Messungen entsprechende Plots. Als Fehler, der durch das Ablesen, durch die FFT und durch Messunsicherheiten verursacht wird, wird $\sigma_{f} = 0.5\,$Hz verwendet. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{plots/spektrum2.pdf}
@@ -150,12 +147,14 @@ gewählt, da dieser größer ist als der äußere.
 	\label{pic:spektrum2}
 \end{figure}
 
-Daraus ergeben sich die folgenden Grundfrequenzen:
+Die angegebenen Werte für $f_0$ sind die Mittelwerte aus allen 5 Messungen. Da die Standardabweichungen der Messungen übereinstimmen, entspricht das arithmetische Mittel dem gewichteten Mittel. Als Fehler der Mittelwerte wird der innere Fehler 
+$$\sigma_{f_0} = \frac{\sigma_{f}}{\sqrt{5}} = 0.224\,\text{Hz}$$
+gewählt, da dieser größer ist als der äußere. Es ergeben sich die Grundfrequenzen:
 
 \begin{table}[H]
 \centering
 \begin{tabular}{cc|c}
-Stabnummer & Material & $\overline{f}_0$ [Hz]\\
+Stabnummer & Material & ${f}_0$ [Hz]\\
 \hline
 $5$ & Kupfer & $1458.810\pm 0.224$ \\
 $6$ & Messing & $1348.122\pm 0.224$\\
