@@ -139,7 +139,9 @@ Die Bestimmung von $f_0$ erfolgt mit Hilfe der Frequenzspektren, die durch eine 
 	\label{pic:spektrum1}
 \end{figure}
 
-Um $f_0$ möglichst exakt aus diesem Spektrum ablesen zu können, wird die Peakfinder-Methode aus dem Praktikumspaket verwendet. Für das Spektrum in Abbildung \ref{pic:spektrum1} ist dies in Abbildung \ref{pic:spektrum2} visualisiert. Im Anhang \ref{anhang:plot} finden sich für alle Messungen entsprechende Plots. Als Fehler, der durch das Ablesen, durch die FFT und durch Messunsicherheiten verursacht wird, wird $\sigma_{f} = 0.5\,$Hz verwendet.
+Um $f_0$ möglichst exakt aus diesem Spektrum ablesen zu können, wird die Peakfinder-Methode aus dem Praktikumspaket verwendet. Für das Spektrum in Abbildung \ref{pic:spektrum1} ist dies in Abbildung \ref{pic:spektrum2} visualisiert. Im Anhang \ref{anhang:plot} finden sich für alle Messungen entsprechende Plots. Als Fehler, der durch das Ablesen, durch die FFT und durch Messunsicherheiten verursacht wird, wird $\sigma_{f} = 0.5\,$Hz verwendet. Als Fehler der Mittelwerte wird der innere Fehler 
+$$\sigma_{f_0} = \frac{\sigma_{f}}{\sqrt{5}} = 0.224\,\text{Hz}$$
+gewählt, da dieser größer ist als der äußere.
 
 \begin{figure}[H]
 	\centering
@@ -174,6 +176,7 @@ $9$ & Aluminium & $2.798\pm 0.015$ & $5108.54\pm 2.78$ & $(0.730\pm 0.004)\cdot 
 $11$ & Stahl & $7.882\pm 0.059$ & $4902.05\pm 2.66$ & $(1.894\pm 0.015)\cdot 10^{11}$
 \end{tabular}
 \end{table}
+Die Fehler wurden hierbei mittels Gaußscher Fehlerfortpflanzung berechnet.
 
 \subsection{Fazit}
 
