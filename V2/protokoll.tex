@@ -79,7 +79,7 @@ Folgende Geräte werden für den Versuch benötigt: Zwei Tischklemmen, eine Kreu
 
 Eine große, zu untersuchende Metallstange wird mit Hilfe einer Tischklemme, der kleinen Metallstange und der Kreuzmuffe horizontal am Tisch befestigt. Dabei muss die Stange mittig an zwei Punkten eingespannt werden, damit die Schwingung nicht beinträchtigt wird. Dies ist in Abbildung \ref{pic:aufhaengung} dargestellt. In kleinem Abstand zu einem Ende der großen Metallstange wird das Mikrofon platziert, das den Schalldruck und somit die Schallwellen misst. Das Mikrofon ist am Sensor-Cassy angeschlossen. Am anderen Ende kann die Stange durch einen Schlag mit dem Gummihammer in Schwingung versetzt werden.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{bilder/aufhaengung_beschriftet.png}
 	\caption{Aufhängung der Metallstange an zwei Punkten mit der Kreuzmuffe und einem Metallstift}
@@ -186,19 +186,19 @@ Eine Auswahl:
 Material & $\rho$ [g/$\text{cm}^3$] & $v_l$ [m/s] & $E$ [N/$\text{m}^2$] \\
 \hline
 Kupfer & $8.93$ & $3800$ & $1.37\cdot 10^{11}$ \\
-Messing & $8.60$ & $3500$ & $(1.02-1.25) \cdot 10^{11}$\\
+Messing & $8.60$ & $3500$ & $1.03 \cdot 10^{11}$\\
 Aluminium & $2.70$ & $5110$ & $0.722 \cdot 10^{11}$\\
-Stahl & $7.9$ & $5100$ & $1.8\cdot 10^{11}$
+Stahl & $7.8 - 8$ & $5100$  & $2-2.2 \cdot 10^{11}$
 \end{tabular}
 \end{table}
 
-Die Literaturwerte von $v_l$ stammen von einer Internetseite des Cassy Herstellers LD Didactic.\footnote{\url{https://www.ld-didactic.de/software/524221de/Content/ExperimentExamples/Physics/Mechanics/VelocitySoundSolids.htm}}. $\rho_{Cu}$, $\rho_{Al}$, $E_{Cu}$ und $E_{Al}$ stammen aus dem Experimentalphysik-Lehrbuch \textit{Gerthsen Physik}.\footnote{Dieter Meschede: \textit{Gerthsen Physik}, 25. Auflage, Springer Verlag Berlin Heidelberg, 2015}
+Die Literaturwerte von $v_l$ stammen von einer Internetseite des Cassy Herstellers LD Didactic.\footnote{\url{https://www.ld-didactic.de/software/524221de/Content/ExperimentExamples/Physics/Mechanics/VelocitySoundSolids.htm}} $\rho_{Cu}$, $\rho_{Al}$, $E_{Cu}$ und $E_{Al}$ stammen aus dem Experimentalphysik-Lehrbuch \textit{Gerthsen Physik}.\footnote{Dieter Meschede: \textit{Gerthsen Physik}, 25. Auflage, Springer Verlag Berlin Heidelberg, 2015} Die Werte von Messing und Stahl sind dem Buch \textit{Physik - Formeln und Gesetze} von Horst Kuchling entnommen.\footnote{Horst Kuchling: \textit{Physik- Formeln und Gesetze}, 17. Auflage, VEB Fachbuchverlag Leipzig, 1982}
+Da wir die genaue Materialzusammensetzung der im Versuch verwendeten Stäbe nicht kennen, ist es nur möglich die Größenordnungen zu vergleichen. Diese stimmen für Kupfer, Messing und Aluminium überein. Dafür weichen die Werte von Stab 11 (Stahl) teils deutlich von den Literaturwerten ab. Das liegt an den verschiedenen Stahlsorten, die für die Messungen verwendet wurden, und an Fehlerquellen wie Beschädigungen, Verunreinigungen und Oxidation am Stab.
 
 \newpage
-
-
+\input{gitarre.tex}
+\nopagebreak
 \appendix
-\newpage
 \section{Ergebnisse der Peakfinder-Methode}\label{anhang:plot}
 \begin{figure}[H]
 	\centering
@@ -219,7 +219,5 @@ Die Literaturwerte von $v_l$ stammen von einer Internetseite des Cassy Herstelle
 	\centering
 	\includegraphics[width=\linewidth]{plots/anhang4.pdf}
 \end{figure}
-
-\input{gitarre.tex}
 
 \end{document}
