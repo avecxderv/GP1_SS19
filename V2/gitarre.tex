@@ -3,9 +3,56 @@
 \subsection{Vorwort}
 
 
+\begin{figure}[h]
+	\centering
+	\includegraphics{bilder/gitarre_aufbau.jpg}
+	\caption{Aufbau einer Konzertgitarre}
+\end{figure}
+
+Am Griffbrett der Gitarre mit den Bundstäbchen kann man Töne abgreifen. Der Abstand zwischen zwei Bundstäbchen ist dabei ein Halbtonschritt. Dadurch können identische Töne auf verschiedenen Saiten gespielt werden.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|cccccc}
+Saite & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+Note & e' & b & g & d & A & E \\
+\hline
+Frequenz / Hz & 329.63 & 246.94 & 196.00 & 146.83 & 110.00 & 82.41  
+\end{tabular}
+\caption{Frequenzen der Leersaiten}
+\end{table}
+
+Durch die Überlagerung zweier Schwingungen ähnlicher Frequenz kommt es zu Schwebungseffekten. Dabei ändert sich die Amplitude der resultierenden Schwingung periodisch. Für zwei Schwingungen gleicher Amplitude gilt folgendes Additionstheorem
+$$\sin(\omega_1t)+\sin(\omega_2t) = 2\sin\left( \frac{\omega_2+\omega_1}2t \right) \cos\left( \frac{\omega_2-\omega_1}2t \right)$$
+Es ergibt sich eine Schwebungsfrequenz $\omega_S$ und eine resultierende Frequenz $\omega_R$ gemäß
+$$\omega_S = \frac{\omega_2-\omega_1}2 \hspace{0.5cm} \text{ und } \hspace{0.5cm} \omega_R = \frac{\omega_2+\omega_1}2.$$
+Dieses Phänomen wird im ersten Teilexperiment untersucht.
+Beim Anschlagen einer Gitarrensaite breiten sich Transversalwellen in beide Richtungen aus und werden an Steg und Sattel reflektiert. Dadurch bilden sich stehende Wellen auf der Saite aus. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics{bilder/StehendeWelle.jpg}
+	\caption{Stehende Welle und deren Harmonische bis $n=5$}
+\end{figure}
+
+Da die Stehenden Wellen an den Enden der Saite jeweils Knoten ausbilden, gilt für die Wellenlängen der Moden
+$$\lambda_n = \frac{2L}n$$
+mit $n\in \mathbb N$ und $L$ als Saitenlänge. Die Auslenkung der Saite ergibt sich dabei als Summe der Moden
+$$y(x,t) = \sum_{n=1}^\infty A_n \cos(\omega_nt + \phi_n)\sin(k_nx)$$
+mit $k_n = \frac{2\pi}{\lambda_n}$. Der Anschlagpunkt der Saite ist entscheidend für das Auftreten der Moden. Schlägt man die Saite im Abstand $d=\frac Ln$ an, so fehlt die $n$-te Harmonische und ihre Vielfachen. Dies wird im zweiten Teilexperiment untersucht.
+
+
 \subsection{Versuchsaufbau}
 
-Die Gitarre liegt auf einer Polsterung auf dem Tisch. Das Mirkofon wird mit einem Stativ mittig oberhalb des Schallochs der Gitarre platziert. Das Mikrofon wird auf Amplitudenmodus gestellt und mit dem Sensor-CASSY wird die Ausgangsspannung des Mirkofons gemesssen. Vor der Messung wird die Gitarre mit einem Stimmgerät mit Stimmgenauigkeit von $\pm 1 \, \mathrm{Cent}$ gestimmt.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{bilder/gitarre_beschriftet.jpg}
+	\caption{Versuchsaufbau}
+	\label{aufbauGitarreExp}
+\end{figure}
+
+Eine Akustikgitarre liegt auf einer Polsterung auf dem Tisch. Das Mirkofon wird mit einem Stativ mittig oberhalb des Schallochs der Gitarre platziert. Das Mikrofon wird im Amplitudenmodus betrieben und mit dem Sensor-CASSY wird die Ausgangsspannung des Mirkofons gemesssen (vgl. Abb. \ref{aufbauGitarreExp}). Vor der Messung wird die Gitarre mit einem Stimmgerät mit Stimmgenauigkeit von $\pm 1 \, \mathrm{Cent}$ gestimmt.
 
 
 \subsection{Messung der Schwebung}
@@ -15,6 +62,7 @@ Die Gitarre liegt auf einer Polsterung auf dem Tisch. Das Mirkofon wird mit eine
 
 Nach dem Stimmen der Gitarre wird die A-Saite leicht verstimmt. Anschließend wird die offene D-Saite zusammen mit der im 5. Bund gegriffenen A-Saite angeschlagen und eine Messung mit dem Mikrofon gestartet. Es werden für vier verschiedene Verstimmungen Messungen aufgenommen. Dabei wird für die erste Verstimmung eine Messung aufgenommen und für die restlichen drei jeweils zwei Messungen. Für die ersten beiden, sowie die letzte Messung hat das Sensor-CASSY folgende Messparameter:
 \begin{enumerate}[-]
+\setlength{\itemsep}{-5pt} 
 \item Messbereich: $-10$ bis $10\,$V
 \item Intervall: $200\,\mu$s
 \item Messungen: $16000$
@@ -22,6 +70,7 @@ Nach dem Stimmen der Gitarre wird die A-Saite leicht verstimmt. Anschließend wi
 \end{enumerate}
 Für die anderen Messungen werden folgende Messparameter verwendet:
 \begin{enumerate}[-]
+\setlength{\itemsep}{-5pt} 
 \item Messbereich: $-10$ bis $10\,$V
 \item Intervall: $500\,\mu$s
 \item Messungen: $16000$
@@ -44,13 +93,13 @@ Wir bestimmen nun die Schwebungsfrequenz $f_S$ und die Frequenz der resultierend
 In der ersten Variante werden die Maxima/Minima per Augenmaß aus Plots der Rohdaten abgelesen, wie es in Abbildung \ref{MaxAblesen} zu sehen ist. Um eine Unabhängigkeit der daraus erhaltenen Werte zu erreichen wird aus den Dateien \mbox{``schwebung\_1.lab''}, \mbox{``schwebung\_2.1.lab''}, \mbox{``schwebung\_3.2.lab''} und \mbox{``schwebung\_4.2.lab''} abgelesen und die FFT auf die Daten aus den Dateien \mbox{``schwebung\_1.lab''}, \mbox{``schwebung\_2.2.lab''}, \\
 \mbox{``schwebung\_3.1.lab''} und \mbox{``schwebung\_4.1.lab''} angewendet.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{plots/bspMaxima.pdf}
 	\caption{Bestimmung der Maxima aus den Rohdaten}
 	\label{MaxAblesen}
 \end{figure}
-Beim Ablesen für die resultierende Schwingung ist zu beachten, dass sich bei einem Nulldurchgang der Schwebungschwingung die Art das Extremums, welches wir ablesen wollen, ändert. Die so abgelesenen Zeitpunkte sind in Tabelle \ref{tabTimeRes} dokumentiert. Angesichts der Messintervalle für die Zeit und der Erkennbarkeit der Extrema werden für die Schwebungen 1 und 2 die Zeitunsicherheit $\sigma_t = 0.2 \, \mathrm{ms}$, für die Schwebung 3 $\sigma_t = 0.5 \, \mathrm{ms}$ und für Schwebung 4 $\sigma_t = 0.4 \, \mathrm{ms}$ angesetzt.
+Beim Ablesen für die resultierende Schwingung ist zu beachten, dass sich bei einem Nulldurchgang der Schwebungschwingung die Art das Extremums, welches wir ablesen wollen, ändert. Die so abgelesenen Zeitpunkte sind in Tabelle \ref{tabTimeRes} dokumentiert. Angesichts der Messintervalle für die Zeit und der Erkennbarkeit der Extrema wird für die Schwebungen 1 und 2 die Zeitunsicherheit $\sigma_t = 0.2 \, \mathrm{ms}$, für die Schwebung 3 $\sigma_t = 0.5 \, \mathrm{ms}$ und für die Schwebung 4 $\sigma_t = 0.4 \, \mathrm{ms}$ angesetzt.
 
 \begin{table}[H]
 \centering
@@ -226,7 +275,7 @@ Schwebung & $f_S$ / Hz & $f_R$ / Hz & $f_S$ / Hz & $f_R$ / Hz \\
 
 \subsubsection{Fazit}
 
-Wir haben nun auf zwei verschiedene Arten Werte für die Frequenzen der Schwebungschwingung und der resultierenden Scwhingung erhalten. Zum Vergleich der Werte berechnen wir die relativen Abweichungen.
+Wir haben nun auf zwei verschiedene Arten Werte für die Frequenzen der Schwebungschwingung und der resultierenden Schwingung erhalten. Zum Vergleich der Werte berechnen wir die relativen Abweichungen.
 
 \begin{table}[H]
 \centering
@@ -238,13 +287,27 @@ Schwebung & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 \\
 $\frac{|f_1-f_2|}{\sqrt{\sigma_1^2+\sigma_2^2}}$ & 0.21 & 0.05 & 0.24 & 1.84 & 0.60 & 0.10 & 0.05 & 0.54 
 \end{tabular}
 \end{table}
-Die Werte stimmen überwiegend gut überein. Bei Schwebung 4 liegen die Schwebungsfrequenzen $f_S$ weiter auseinander. Es könnte der Fehler bei der Auswertung mit der FFT unterschätzt worden. Ein Zusammenhang zur Verwendung von verschiedenen Messungen bei der Auswertung kann ausgeschlossen werden, da eine FFT der anderen Messung diegleichen Frequenzen liefert.  
+Die Werte stimmen überwiegend gut überein. Bei Schwebung 4 liegen die Schwebungsfrequenzen $f_S$ weiter auseinander. Es könnte der Fehler bei der Auswertung mit der FFT unterschätzt worden. Besonders die Bestimmung des Peaks ist dabei fraglich. Ein Zusammenhang zur Verwendung von verschiedenen Messungen bei der Auswertung kann ausgeschlossen werden, da eine FFT der anderen Messung diegleichen Frequenzen liefert. 
 
 
 \subsection{Aufnahme eines Frequenzspektrums}
 
 \subsubsection{Versuchsdurchführung}
 
+In diesem Teilversuch wird das Frequenzspektrum der Gitarre in Abhängigkeit des Anschlagpunktes auf der Saite untersucht. Dazu wird die E-Saite an drei verschiedenen Punkten angeschlagen. Die Saite wird dabei bei $d=\frac 12$, $d=\frac 15$ und $d= \frac 13$ der Saitenlänge angeschlagen. Für den ersten und dritten Anschlagpunkt werden zwei Messungen aufgenommen und für den zweiten eine Messung. Die Messparameter des Sensor-CASSY sind dabei, abgesehen vom Messintervall, wie im ersten Teilversuch. Für die erste Messung liegt das Messintervall bei 200 $\mu$s und für die restlichen bei 100 $\mu$s.
+
 
 \subsubsection{Versuchsauswertung}
+
+Jeweils eines der Freqeunzspektren für jeden Anschlagpunkt $d$ ist in Abbildung \ref{anschlagSpec} geplottet. Man sieht jeweils gut, dass der Peak für die $1/d$-te Harmonische deutlich weniger ausgeprägt ist, als die Peaks der benachbarten Harmonischen. Bei den Vielfachen ist dies auch noch leicht zu erkennnen. Das die Peaks trotzdem vorhanden sind hängt vermutlich mit einem unsauberen Anschlag zusammen. Theoretisch könnte man die Peakhöhen ablesen und durch Überlagerung der Moden mit den entsprechenden Amplituden die ursprüngliche Auslenkung der Saite rekonstruieren. Das Auftreten eines Peaks bei etwa 3800 Hz in allen Spektren kommt sicher nicht von der Gitarre. Allerdings fehlt uns auch eine andere Erklärung desssen.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{plots/anschlagspektrum.pdf}
+	\caption{Frequenzspektren bei verschiedenen Anschlagpunkten}
+	\label{anschlagSpec}
+\end{figure}
+
+
+
+
 

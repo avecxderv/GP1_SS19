@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Spyder Editor
 
-Dies ist eine temporäre Skriptdatei.
-"""
 
 from praktikum import analyse
 from praktikum import cassy
@@ -68,6 +64,9 @@ ax1.set_xlim(t1[0], t1[1])
 ax1.set_ylim(-1.5,1.5)
 ax1.set_xticks(np.arange(t1[0], t1[1], 0.001))
 ax1.set_xticks(np.arange(t1[0], t1[1], 0.0002), minor=True)
+ax1.set_xlabel('$t$ / s')
+ax1.set_ylabel('$U$ / V')
+
 
 ax1.axvline(x=1.4036, color='red', label='$t_m$')
 ax1.axvline(x=1.4038, color='red', linestyle='--', label='$t_m \pm \sigma_t$')
@@ -242,7 +241,7 @@ voltage = data.messung(1).datenreihe('U_A1').werte
 fourier = analyse.fourier_fft(timeVal,voltage)
 frequency = fourier[0]
 amplitude = fourier[1]
-plt.figure(figsize=(12,6))
+plt.figure(figsize=(12,4))
 plt.plot(frequency, amplitude, color='orange')
 plt.xlim(0, 800)
 plt.ylabel('Amplitude')
