@@ -37,8 +37,16 @@ tgrenz = {'kleine_45_1': 2.8, 'kleine_45_2': 3.5, 'kleine_45_3': 3.5, 'kleine_45
 
 
 
-m = 16e-3
+m = 0.0165
 em = 0.1/np.sqrt(12)
+p0 = 99400
+d = 16e-3
+ed = 0.01e-3/np.sqrt(12)
+A = np.pi*d**2/4
+rho_h20 = 997
+V_kl = (0.4545-0.1457)/rho_h20
+V_mit = (1.456-0.3403)/rho_h20
+V_gro = 0.011315
 
 def func(x, a, b, c, d,e):
     return a*np.exp(-b*x)*np.sin(c*x+e) + d
@@ -84,7 +92,7 @@ def mittel(groesse,hoehe):
          fft_analysis(groesse,hoehe,'3'), fft_analysis(groesse,hoehe,'4'),
          fft_analysis(groesse,hoehe,'5')]
     ef = np.full((5,),0.5)
-    return analyse.gewichtetes_mittel(f,ef)
+    return analyse.gewichtetes_mittel(f,ef)[0]
 
 f_kl_15 = mittel('kleine','15')
 f_kl_20 = mittel('kleine','20')
@@ -93,3 +101,12 @@ f_kl_30 = mittel('kleine','30')
 f_kl_35 = mittel('kleine','35')
 f_kl_40 = mittel('kleine','40')
 f_kl_45 = mittel('kleine','45')
+
+x = 1/(np.array([f_kl_15, f_kl_20, f_kl_25, f_kl_30, f_kl_35, f_kl_40, f_kl_45])**2)
+ex = np.full((7),0.2236)
+y = V_kl + A*np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
+ey = np.full((7),np.sqrt(2)*em/rho_h20 + ed*np.pi*d/2)
+#Regression für V
+res = analyse.lineare_regression_xy(x,y,ex,ey)
+plt.plot(x,res[0]*x+res[2], linestyle="--", color = 'black')
+plt.scatter(x,y)
