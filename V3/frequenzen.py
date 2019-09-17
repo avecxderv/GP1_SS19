@@ -38,7 +38,7 @@ tgrenz = {'kleine_45_1': 2.8, 'kleine_45_2': 3.5, 'kleine_45_3': 3.5, 'kleine_45
 
 
 m = 0.0165
-em = 0.1/np.sqrt(12)
+em = 0.0001/np.sqrt(12)
 p0 = 99400
 d = 16e-3
 ed = 0.01e-3/np.sqrt(12)
@@ -82,7 +82,7 @@ def fft_analysis_ohnekor(groesse,hoehe,nummer):
     fourier = analyse.fourier_fft(time,pres)
     freq = fourier[0]
     amp = fourier[1]
-    peak = analyse.peakfinder_schwerpunkt(freq[10:100],amp[10:100])
+    peak = analyse.peakfinder_schwerpunkt(freq[3:100],amp[3:100])
     return peak
 
 def mittel(groesse,hoehe):
@@ -94,18 +94,22 @@ def mittel(groesse,hoehe):
     ef = np.full((5,),0.5)
     return analyse.gewichtetes_mittel(f,ef)[0]
 
-f_kl_15 = mittel('kleine','15')
-f_kl_20 = mittel('kleine','20')
-f_kl_25 = mittel('kleine','25')
-f_kl_30 = mittel('kleine','30')
-f_kl_35 = mittel('kleine','35')
-f_kl_40 = mittel('kleine','40')
-f_kl_45 = mittel('kleine','45')
+f_15 = mittel('kleine','15')
+f_20 = mittel('kleine','20')
+f_25 = mittel('kleine','25')
+f_30 = mittel('kleine','30')
+f_35 = mittel('kleine','35')
+f_40 = mittel('kleine','40')
+f_45 = mittel('kleine','45')
+#f_50 = mittel('mittel','50')
 
-x = 1/(np.array([f_kl_15, f_kl_20, f_kl_25, f_kl_30, f_kl_35, f_kl_40, f_kl_45])**2)
-ex = np.full((7),0.2236)
-y = V_kl + A*np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
-ey = np.full((7),np.sqrt(2)*em/rho_h20 + ed*np.pi*d/2)
+
+ef = 0.2236
+
+x = 1/(2*np.pi*np.array([f_15,f_20,f_25,f_30,f_35,f_40,f_45]))**2
+ex = ef/(2*np.pi*np.array([f_15,f_20,f_25,f_30,f_35,f_40,f_45]))**3
+y = V_mit + A*np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
+ey = np.sqrt(2)*em/rho_h20 + ed*np.pi*d/2*np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
 #Regression für V
 res = analyse.lineare_regression_xy(x,y,ex,ey)
 plt.plot(x,res[0]*x+res[2], linestyle="--", color = 'black')
