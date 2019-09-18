@@ -100,28 +100,27 @@ def mittel(groesse,hoehe):
 
 
 #zu verwendende Volumen:
-V = V_kl
+V = V_mi
 
-groesse='kleine'
-w_15, ew_15 = mittel(groesse,'15')
+groesse='mittel'
+#w_15, ew_15 = mittel(groesse,'15')
 w_20, ew_20 = mittel(groesse,'20')
 w_25, ew_25 = mittel(groesse,'25')
 w_30, ew_30 = mittel(groesse,'30')
 w_35, ew_35 = mittel(groesse,'35')
 w_40, ew_40 = mittel(groesse,'40')
 w_45, ew_45 = mittel(groesse,'45')
-#w_50, ew_50 = mittel(groesse,'50')
-ew = np.array([ew_15,ew_20,ew_25,ew_30,ew_35,ew_40,ew_45])
-w = np.array([w_15,w_20,w_25,w_30, w_35,w_40,w_45])
-#ew = np.array([ew_20, ew_25, ew_30, ew_35, ew_40, ew_45])
+w_50, ew_50 = mittel(groesse,'50')
+ew = np.array([ew_20,ew_25,ew_30,ew_35,ew_40,ew_45,ew_50])
+w = np.array([w_20,w_25,w_30, w_35,w_40,w_45,w_50])
 
 x = 1/(w**2)
 ex = ew/(w**3)
-hoehen = np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
+hoehen = np.array([0.20,0.25,0.30,0.35,0.40,0.45,0.5])
 y = V + A*hoehen
 ey = np.sqrt(2*(em/rho_h20)**2 + (ed*np.pi*d/2*hoehen)**2+(A*ex0)**2)
 
-'''
+
 #Regression für V
 res = analyse.lineare_regression_xy(x,y,ex,ey)
 fig, (ax1, ax2) = plt.subplots(2,1, sharex=True, figsize=(12,6), gridspec_kw={'height_ratios': [5, 2]})
@@ -138,7 +137,7 @@ plt.rcParams['axes.labelsize'] = 'large'
 fig.subplots_adjust(hspace=0)
 plt.savefig('plots/regression_grosse.pdf', format='pdf', dpi=1200)
 plt.show()
-'''
+
 
 eV = np.sqrt(1.448e-5**2+(ed*np.pi*d/2*hoehen)**2+(A*ex0)**2)
 p = p0+m*9.81/A
@@ -146,5 +145,4 @@ eA = ed*np.pi*d/2
 ep = np.sqrt(100**2/12 + (9.81*m/A*np.sqrt((eA/A)**2+(em/m)**2))**2)
 kappa = w**2*m*(V+hoehen*A)/(p*A**2)
 ekappa = kappa*np.sqrt(2*(ew/w)**2+(eV/y)**2+(ep/p)**2+2*(eA/A)**2+(em/m)**2)
-
-res = gewichtetes_mittel_in_aus(kappa,ekappa)
+#res = gewichtetes_mittel_in_aus(kappa,ekappa)
