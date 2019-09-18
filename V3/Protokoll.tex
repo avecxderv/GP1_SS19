@@ -104,7 +104,66 @@ Für die Höhe $x_0 = 50 \, \mathrm{cm}$ bei der mittleren Flasche ist das Messi
 Eine typische Messung des Differenzialdrucksensors, sowie des daraus mittels FFT berechneten Frequenzspektrums, ist in Abbildung \ref{rohdaten} zu sehen.
 Folgende Werte wurden während des Versuches gemessen: $m_{\text{Kugel}} = (16.5\pm 0.02)\text{g}$, $d_{\text{Kugel}} = (16.00 \pm 0.002)\text{mm}$, $p_0 = 99400\text{Pa}$, $V_{\text{klein}} = 0.00031\text{m}^3$, $V_{\text{mittel}} = 0.00112 \text{m}^3$ und $V_{\text{groß}} = 0.01132 \text{m}^3$. Die Volumenangaben bezeichnen dabei jeweils die Flaschenvolumen der Mariottschen Flaschen und haben einen vernachlässigbar kleinen Fehler. Das Volumen $V$ in der Formel für $\kappa$ setzt sich jedoch zusammen aus dem Flaschenvolumen $V_F$, dem Volumen im Glasrohr $x_0A$ und dem Restvolumen $V_r$. Man erhält den linearen Zusammenhang
 $$(V_F+x_0A)\left( \frac 1{\omega_0^2}\right) = \frac{p\kappa A^2}m \frac 1{\omega_0^2} - V_r.$$
-Die Fläche $A = \frac{\pi d_{\text{Kugel}}^2}{4} = (2.0106 \pm 0.0007)\,\text{m}^2$ kann mit dem Duchmesser der Kugel berechnet werden. Damit lässt sich eine lineare Regression durchführen, um das nicht gemessene $V_r$ zu bestimmen. Die Regression für die kleine Flasche ist in Abbildung \ref{plt:reg_kle} abgebildet. Die $\omega_0$ werden für jede Höhe auf Grundlage aller fünf Messreihen ermittelt. Dabei wird die Dämpfung numerisch bestimmt und der aus dem Spektrum abgelesene Peak mit dem jeweiligen Wert korrigiert. Der genaue Algorithmus ist in \url{frequenzen.py} einsehbar.
+Die Fläche $A = \frac{\pi d_{\text{Kugel}}^2}{4} = (2.0106 \pm 0.0007)\,\text{m}^2$ kann mit dem Duchmesser der Kugel berechnet werden. Damit lässt sich eine lineare Regression durchführen, um das nicht gemessene $V_r$ zu bestimmen. Die Regression für die kleine Flasche ist in Abbildung \ref{plt:reg_kle} abgebildet. Die Frequenzen $\omega_0$ werden für jede Höhe auf Grundlage aller fünf Messungen ermittelt. Die Kreisfrequenz $\omega$ der Schwingung wird mit der Peakfinder-Methode aus der Praktikumsbibliothek bestimmt. Anschließend werden die Ergebnisse der fünf Messungen gemittelt und der Fehler des Mittelwertes als Unsicherheit genommen. Daraus ergeben sich die Werte in Tabelle \ref{tab:freq}.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c|c}
+\multirow{2}{*}{Höhe [cm]} & \multicolumn{3}{c}{$\omega$ / Hz} \\
+\cline{2-4}
+& Kleine Flasche & Mittlere Flasche & Große Flasche \\
+\hline
+15 & $30.130 \pm 0.116$ &  &  \\
+20 & $29.773 \pm 0.065$ & $16.817 \pm 0.042$ & $5.963 \pm 0.028$ \\
+25 & $29.487 \pm 0.095$ & $16.756 \pm 0.005$ & $5.672 \pm 0.010$ \\
+30 & $28.998 \pm 0.085$ & $16.776 \pm 0.035$ & $5.655 \pm 0.005$ \\
+35 & $28.576 \pm 0.115$ & $16.625 \pm 0.071$ & $5.668 \pm 0.001$ \\
+40 & $28.258 \pm 0.090$ & $16.576 \pm 0.073$ & $5.682 \pm 0.003$ \\
+45 & $27.749 \pm 0.065$ & $16.508 \pm 0.096$ & $5.690 \pm 0.014$ \\
+50 & & $16.282 \pm 0.017$ & 
+\end{tabular}
+\caption{Gemittelte Schwingungsfrequenzen}
+\label{tab:freq}
+\end{table}
+
+
+Die Dämpfung wird durch eine numerische Fittung eines Modells der Form 
+$$p(t) = A e^{-\delta t}\sin(\omega t +\varphi) + B$$ 
+an die Daten bestimmt. Dabei wird wieder aus den fünf Messungen gemittelt und der Fehler auf den Mittelwert genommen. Die Werte sind in Tabelle \ref{tab:delta} und der genaue Algorithmus ist in \url{frequenzen.py} einsehbar.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c|c}
+\multirow{2}{*}{Höhe [cm]} & \multicolumn{3}{c}{$\delta$} \\
+\cline{2-4}
+& Kleine Flasche & Mittlere Flasche & Große Flasche \\
+\hline
+15 & $1.032 \pm 0.050$ & & \\
+20 & $0.912 \pm 0.015$ & $0.465 \pm 0.022$ & $0.334 \pm 0.004$ \\
+25 & $0.894 \pm 0.020$ & $0.441 \pm 0.012$ & $0.248 \pm 0.015$ \\
+30 & $0.861 \pm 0.005$ & $0.493 \pm 0.015$ & $0.204 \pm 0.005$ \\
+35 & $0.928 \pm 0.018$ & $0.482 \pm 0.016$ & $0.228 \pm 0.006$ \\
+40 & $0.973 \pm 0.036$ & $0.461 \pm 0.016$ & $0.247 \pm 0.007$ \\
+45 & $0.921 \pm 0.035$ & $0.470 \pm 0.038$ & $0.259 \pm 0.021$ \\
+50 & & $0.539 \pm 0.027$ & 
+\end{tabular}
+\caption{Gemittelte Dämpfungskonstanten}
+\label{tab:delta}
+\end{table}
+
+Die Anpassung für den Dämpfungskoeffizienten liefert durchaus gute Ergebnisse. Beispielhaft ist dies in Abbildung \ref{abb:delta_anpassung} gezeigt. Andererseits spielt der Fehler auf $\delta$ nur eine untergeordnete Rolle bei der Bestimmung von $\omega_0$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/anpassung_delta.pdf}#
+\caption{Beispiel für die Numerische Bestimmung von $\delta$}
+\label{abb:delta_anpassung}
+\end{figure}
+ 
+Anschließend werden die Frequenzen $\omega_0 = \sqrt{\omega^2 + \delta^2}$ bestimmt. Die Fehler werden mittels Gaußscher Fehlerfortplfanzung bestimmt. Es gilt
+$$\sigma_{\omega_0} = \frac 1{\omega_0} \sqrt{\omega^2\sigma_{\omega}^2 + \delta^2\sigma_{\delta}^2}.$$
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/regression_kleine.pdf}
