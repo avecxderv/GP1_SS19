@@ -1,8 +1,8 @@
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Tue Sep 10 16:22:34 2019
-
 @author: simon
 """
 
@@ -45,8 +45,9 @@ ed = 0.01e-3/np.sqrt(12)
 A = np.pi*d**2/4
 rho_h20 = 997
 V_kl = (0.4545-0.1457)/rho_h20
-V_mit = (1.456-0.3403)/rho_h20
-V_gro = 0.011315
+V_mi = (1.456-0.3403)/rho_h20
+V_gr = 0.011315
+ex0 = 0.003
 
 def func(x, a, b, c, d,e):
     return a*np.exp(-b*x)*np.sin(c*x+e) + d
@@ -69,48 +70,71 @@ def fft_analysis(groesse,hoehe,nummer):
     fourier = analyse.fourier_fft(time,pres)
     freq = fourier[0]
     amp = fourier[1]
-    peak = analyse.peakfinder_schwerpunkt(freq[10:100],amp[10:100])
-    kor = korrektur(time,pres)
-    return np.sqrt(peak**2+kor**2)
-
-def fft_analysis_ohnekor(groesse,hoehe,nummer):
-    #Daten ohne Korrektur
-    dataname = 'daten/' + groesse + '_' + hoehe + '_' + nummer + '.lab'
-    data = cassy.CassyDaten(dataname)
-    time = data.messung(1).datenreihe('t').werte
-    pres = data.messung(1).datenreihe('p_A1').werte
-    fourier = analyse.fourier_fft(time,pres)
-    freq = fourier[0]
-    amp = fourier[1]
     peak = analyse.peakfinder_schwerpunkt(freq[3:100],amp[3:100])
-    return peak
+    delta = korrektur(time,pres)
+    return (2*np.pi*peak, delta)
 
 def mittel(groesse,hoehe):
-    #Standardmaessig mit Korrektur
     #groesse ist aus {'kleine', 'grosse', 'mittel'}
-    f = [fft_analysis(groesse,hoehe,'1'), fft_analysis(groesse,hoehe,'2'),
-         fft_analysis(groesse,hoehe,'3'), fft_analysis(groesse,hoehe,'4'),
-         fft_analysis(groesse,hoehe,'5')]
-    ef = np.full((5,),0.5)
-    return analyse.gewichtetes_mittel(f,ef)[0]
+    w = [fft_analysis(groesse,hoehe,'1')[0], fft_analysis(groesse,hoehe,'2')[0],
+         fft_analysis(groesse,hoehe,'3')[0], fft_analysis(groesse,hoehe,'4')[0],
+         fft_analysis(groesse,hoehe,'5')[0]]
+    
+    delta = [fft_analysis(groesse,hoehe,'1')[1], fft_analysis(groesse,hoehe,'2')[1],
+             fft_analysis(groesse,hoehe,'3')[1], fft_analysis(groesse,hoehe,'4')[1],
+             fft_analysis(groesse,hoehe,'5')[1]]
+    
+    wm, sw = analyse.mittelwert_stdabw(w)
+    deltam, sdelta = analyse.mittelwert_stdabw(delta)
+    sw = sw/np.sqrt(5)
+    sdelta = sdelta/np.sqrt(5)
+    print(wm)
+    print(sw)
+    print(deltam)
+    print(sdelta)
+    return np.sqrt(wm**2+deltam**2), 2*np.sqrt((wm*sw)**2+(deltam*sdelta)**2)/np.sqrt(wm**2+deltam**2)
 
-f_15 = mittel('kleine','15')
-f_20 = mittel('kleine','20')
-f_25 = mittel('kleine','25')
-f_30 = mittel('kleine','30')
-f_35 = mittel('kleine','35')
-f_40 = mittel('kleine','40')
-f_45 = mittel('kleine','45')
-#f_50 = mittel('mittel','50')
+groesse='kleine'
+w_15, ew_15 = mittel(groesse,'15')
+w_20, ew_20 = mittel(groesse,'20')
+w_25, ew_25 = mittel(groesse,'25')
+w_30, ew_30 = mittel(groesse,'30')
+w_35, ew_35 = mittel(groesse,'35')
+w_40, ew_40 = mittel(groesse,'40')
+w_45, ew_45 = mittel(groesse,'45')
+#w_50, ew_50 = mittel(groesse,'50')
+#ew = np.array([ew_20,ew_25,ew_30,ew_35,ew_40,ew_45])
+w = np.array([w_15,w_20,w_25,w_30, w_35,w_40,w_45])
+ew = np.array([ew_15,ew_20, ew_25, ew_30, ew_35, ew_40, ew_45])
 
+x = 1/(w**2)
+ex = ew/(w**3)
+hoehen = np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
+y = V_kl + A*hoehen
+ey = np.sqrt(2*(em/rho_h20)**2 + (ed*np.pi*d/2*hoehen)**2+(A*ex0)**2)
 
-ef = 0.2236
-
-x = 1/(2*np.pi*np.array([f_15,f_20,f_25,f_30,f_35,f_40,f_45]))**2
-ex = ef/(2*np.pi*np.array([f_15,f_20,f_25,f_30,f_35,f_40,f_45]))**3
-y = V_mit + A*np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
-ey = np.sqrt(2)*em/rho_h20 + ed*np.pi*d/2*np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
+'''
 #Regression für V
 res = analyse.lineare_regression_xy(x,y,ex,ey)
-plt.plot(x,res[0]*x+res[2], linestyle="--", color = 'black')
-plt.scatter(x,y)
+fig, (ax1, ax2) = plt.subplots(2,1, sharex=True, figsize=(12,6), gridspec_kw={'height_ratios': [5, 2]})
+ax1.plot(x,res[0]*x+res[2], linestyle="--", color = 'black')
+err = np.sqrt((ex*res[0])**2 + ey**2)
+ax1.errorbar(x,y, yerr=err, color='red', fmt='.', marker='o', markeredgecolor='red')
+ax2.errorbar(x, y-(res[0]*x+res[2]), yerr=err, color='red', fmt='.', marker='o', markeredgecolor='red')
+ax2.axhline(y=0, color='black', linestyle='--')
+ax2.set_xlabel('1/$\omega_0^2$  /  s$^2$')
+ax2.set_ylabel('$y-(a/\omega_0^2-V_r)$  /  m$^3$')
+ax1.set_ylabel('$y$  /  m$^3$')
+plt.rcParams['axes.titlesize'] = 'large'
+plt.rcParams['axes.labelsize'] = 'large'
+fig.subplots_adjust(hspace=0)
+plt.savefig('plots/regression_kleine.pdf', format='pdf', dpi=1200)
+plt.show()
+'''
+
+eV = np.sqrt(1.448e-5**2+(ed*np.pi*d/2*hoehen)**2+(A*ex0)**2)
+p = p0+m*9.81/A
+eA = ed*np.pi*d/2
+ep = p*np.sqrt((eA/A)**2+(em/m)**2)
+kappa = w**2*m*(V_kl+hoehen*A)/(p*A**2)
+ekappa = kappa*np.sqrt(2*(ew/w)**2+(eV/y)**2+(ep/p)**2+2*(eA/A)**2+(em/m)**2)
