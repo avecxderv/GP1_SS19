@@ -11,6 +11,7 @@ from praktikum import cassy
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+from mittel import gewichtetes_mittel_in_aus
 
 
 # Grenzen bis zu denen die Schwingungen sauber sind
@@ -97,8 +98,12 @@ def mittel(groesse,hoehe):
     print(sdelta)
     return np.sqrt(wm**2+deltam**2), 2*np.sqrt((wm*sw)**2+(deltam*sdelta)**2)/np.sqrt(wm**2+deltam**2)
 
-groesse='grosse'
-#w_15, ew_15 = mittel(groesse,'15')
+
+#zu verwendende Volumen:
+V = V_kl
+
+groesse='kleine'
+w_15, ew_15 = mittel(groesse,'15')
 w_20, ew_20 = mittel(groesse,'20')
 w_25, ew_25 = mittel(groesse,'25')
 w_30, ew_30 = mittel(groesse,'30')
@@ -106,14 +111,14 @@ w_35, ew_35 = mittel(groesse,'35')
 w_40, ew_40 = mittel(groesse,'40')
 w_45, ew_45 = mittel(groesse,'45')
 #w_50, ew_50 = mittel(groesse,'50')
-ew = np.array([ew_20,ew_25,ew_30,ew_35,ew_40,ew_45])
-w = np.array([w_20,w_25,w_30, w_35,w_40,w_45])
-#ew = np.array([ew_15,ew_20, ew_25, ew_30, ew_35, ew_40, ew_45])
+ew = np.array([ew_15,ew_20,ew_25,ew_30,ew_35,ew_40,ew_45])
+w = np.array([w_15,w_20,w_25,w_30, w_35,w_40,w_45])
+#ew = np.array([ew_20, ew_25, ew_30, ew_35, ew_40, ew_45])
 
 x = 1/(w**2)
 ex = ew/(w**3)
-hoehen = np.array([0.20,0.25,0.30,0.35,0.40,0.45])
-y = V_kl + A*hoehen
+hoehen = np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
+y = V + A*hoehen
 ey = np.sqrt(2*(em/rho_h20)**2 + (ed*np.pi*d/2*hoehen)**2+(A*ex0)**2)
 
 '''
@@ -131,13 +136,15 @@ ax1.set_ylabel('$y$  /  m$^3$')
 plt.rcParams['axes.titlesize'] = 'large'
 plt.rcParams['axes.labelsize'] = 'large'
 fig.subplots_adjust(hspace=0)
-plt.savefig('plots/regression_kleine.pdf', format='pdf', dpi=1200)
+plt.savefig('plots/regression_grosse.pdf', format='pdf', dpi=1200)
 plt.show()
 '''
 
 eV = np.sqrt(1.448e-5**2+(ed*np.pi*d/2*hoehen)**2+(A*ex0)**2)
 p = p0+m*9.81/A
 eA = ed*np.pi*d/2
-ep = p*np.sqrt((eA/A)**2+(em/m)**2)
-kappa = w**2*m*(V_kl+hoehen*A)/(p*A**2)
+ep = np.sqrt(100**2/12 + (9.81*m/A*np.sqrt((eA/A)**2+(em/m)**2))**2)
+kappa = w**2*m*(V+hoehen*A)/(p*A**2)
 ekappa = kappa*np.sqrt(2*(ew/w)**2+(eV/y)**2+(ep/p)**2+2*(eA/A)**2+(em/m)**2)
+
+res = gewichtetes_mittel_in_aus(kappa,ekappa)

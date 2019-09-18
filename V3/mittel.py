@@ -15,3 +15,7 @@ def gewichtetes_mittel_in_aus(y, ey):
     sx_au = sx_in*np.sqrt(1./(len(y)-1)*s_ab)
     
     return (xm, sx_in, sx_au)
+
+kappa = np.array([1.266, 1.337, 1.494])
+ekappa = np.array([0.019, 0.007, 0.003])
+res = gewichtetes_mittel_in_aus(kappa,ekappa)
