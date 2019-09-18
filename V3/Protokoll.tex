@@ -104,7 +104,7 @@ Für die Höhe $x_0 = 50 \, \mathrm{cm}$ bei der mittleren Flasche ist das Messi
 Eine typische Messung des Differenzialdrucksensors, sowie des daraus mittels FFT berechneten Frequenzspektrums, ist in Abbildung \ref{rohdaten} zu sehen.
 Folgende Werte wurden während des Versuches gemessen: $m_{\text{Kugel}} = (16.5\pm 0.02)\text{g}$, $d_{\text{Kugel}} = (16.00 \pm 0.002)\text{mm}$, $p_0 = 99400\text{Pa}$, $V_{\text{klein}} = 0.00031\text{m}^3$, $V_{\text{mittel}} = 0.00112 \text{m}^3$ und $V_{\text{groß}} = 0.01132 \text{m}^3$. Die Volumenangaben bezeichnen dabei jeweils die Flaschenvolumen der Mariottschen Flaschen und haben einen vernachlässigbar kleinen Fehler. Das Volumen $V$ in der Formel für $\kappa$ setzt sich jedoch zusammen aus dem Flaschenvolumen $V_F$, dem Volumen im Glasrohr $x_0A$ und dem Restvolumen $V_r$. Man erhält den linearen Zusammenhang
 $$(V_F+x_0A)\left( \frac 1{\omega_0^2}\right) = \frac{p\kappa A^2}m \frac 1{\omega_0^2} - V_r.$$
-Die Fläche $A = \frac{\pi d_{\text{Kugel}}^2}{4} = (2.0106 \pm 0.0007)\,\text{m}^2$ kann mit dem Duchmesser der Kugel berechnet werden. Damit lässt sich eine lineare Regression durchführen, um das nicht gemessene $V_r$ zu bestimmen. Die Regression für die kleine Flasche ist in Abbildung \ref{plt:reg_kle} abgebildet. Die Frequenzen $\omega_0$ werden für jede Höhe auf Grundlage aller fünf Messungen ermittelt. Die Kreisfrequenz $\omega$ der Schwingung wird mit der Peakfinder-Methode aus der Praktikumsbibliothek bestimmt. Anschließend werden die Ergebnisse der fünf Messungen gemittelt und der Fehler des Mittelwertes als Unsicherheit genommen. Daraus ergeben sich die Werte in Tabelle \ref{tab:freq}.
+Die Fläche $A = \frac{\pi d_{\text{Kugel}}^2}{4} = (2.0106 \pm 0.0007)\,\text{m}^2$ kann mit dem Duchmesser der Kugel berechnet werden. Damit lässt sich eine lineare Regression durchführen, um das nicht gemessene $V_r$ zu bestimmen. Die Frequenzen $\omega_0$ werden für jede Höhe auf Grundlage aller fünf Messungen ermittelt. Die Kreisfrequenz $\omega$ der Schwingung wird mit der Peakfinder-Methode aus der Praktikumsbibliothek bestimmt. Anschließend werden die Ergebnisse der fünf Messungen gemittelt und der Fehler des Mittelwertes als Unsicherheit genommen. Daraus ergeben sich die Werte in Tabelle \ref{tab:freq}.
 
 
 \begin{table}[H]
@@ -156,18 +156,18 @@ Die Anpassung für den Dämpfungskoeffizienten liefert durchaus gute Ergebnisse.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{plots/anpassung_delta.pdf}#
+\includegraphics[width=\textwidth]{plots/anpassung_delta.pdf}
 \caption{Beispiel für die Numerische Bestimmung von $\delta$}
 \label{abb:delta_anpassung}
 \end{figure}
  
 Anschließend werden die Frequenzen $\omega_0 = \sqrt{\omega^2 + \delta^2}$ bestimmt. Die Fehler werden mittels Gaußscher Fehlerfortplfanzung bestimmt. Es gilt
 $$\sigma_{\omega_0} = \frac 1{\omega_0} \sqrt{\omega^2\sigma_{\omega}^2 + \delta^2\sigma_{\delta}^2}.$$
-
+Die Regression für die kleine Flasche ist in Abbildung \ref{plt:reg_kle} abgebildet.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/regression_kleine.pdf}
-\caption{Regression für die kleine Mariottesche Flasche mit $\chi^2/\text{ndf} = 0.63$}
+\caption{Regression für die kleine Mariottesche Flasche mit $\chi^2/\text{ndf} = 0.88$}
 \label{plt:reg_kle}
 \end{figure}
 Es ergibt sich $V_r = (-7.91 \pm 14,48) \cdot 10^{-6}\,\text{m}^3$. Der Wert ist offensichtlich nicht akzeptabel. Dennoch führen auch die Regressionen der mittleren und großen Flasche zu keinem besseren Ergebnis, wie in Anhang \ref{app:reg} zu sehen ist. Deshalb wird von nun an der Fehler durch die Vernachlässigung des unbestimmbaren Volumens $V_r$ mit einem Fehler $\sigma_V = 1.448 \cdot 10^{-5}\,\text{m}^3$ auf $V = V_{F} + x_0A$ modelliert.
@@ -208,11 +208,11 @@ Der Wert $\kappa = 1.465\pm 0.045$ hat nur eine Abweichung von weniger als $1.5\
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/regression_mittel.pdf}
-\caption{Regression für die mittlere Mariottesche Flasche mit $V_r = (5.203 \pm 0.372)\cdot 10^{-4}\,\text{m}^3$ und $\chi^2/\text{ndf} = 2.31$}
+\caption{Regression für die mittlere Mariottesche Flasche mit $V_r = (5.203 \pm 0.372)\cdot 10^{-4}\,\text{m}^3$ und $\chi^2/\text{ndf} = 3.24$}
 \end{figure}
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/regression_grosse.pdf}
-\caption{Regression für die große Mariottesche Flasche mit $V_r = (-3.339 \pm 0.686)\cdot 10^{-3}\,\text{m}^3$ und $\chi^2/\text{ndf} = 2.22$}
+\caption{Regression für die große Mariottesche Flasche mit $V_r = (-3.339 \pm 0.686)\cdot 10^{-3}\,\text{m}^3$ und $\chi^2/\text{ndf} = 3.34$}
 \end{figure}
 \end{document}
