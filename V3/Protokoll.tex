@@ -92,9 +92,20 @@ Die Masse $m$ der Kugel wird mittels einer Digitalwaage und der Durchmesser $D$ 
 \end{enumerate}
 Für die Höhe $x_0 = 50 \, \mathrm{cm}$ bei der mittleren Flasche ist das Messintervall abweichend auf $200 \,\mu\mathrm s$ festgesetzt. Zusätzlich wurde bei dieser Höhe noch eine Messung mit den anderen Parametern durchgeführt. Das Volumen der kleinen und der mittleren Flasche wird mittels Wiegung der leeren und der mit Wasser gefüllten Flasche nach dem eigentlichen Versuch bestimmt. Für das Volumen der großen Flasche wird der auf einem Aufkleber angegebene Wert benutzt. 
 
-
+\newpage
 
 \section{Versuchsauswertung}
+
+Eine typische Messung des Differenzialdrucksensors, sowie des daraus mittels FFT berechneten Frequenzspektrums, ist in Abbildung \ref{rohdaten} zu sehen.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/rohdaten_log.pdf}
+\caption{Visualisierung der Rohdaten}
+\label{rohdaten}
+\end{figure}
+Das Volumen $V$ in der Formel für $\kappa$ setzt sich zusammen aus dem Flaschenvolumen $V_F$, dem Volumen im Glasrohr $x_0A$ und dem Restvolumen $V_r$. Man erhält einen linearen Zusammenhang
+$$(V_F+x_0A)\left( \frac 1{\omega_0^2}\right) = \frac{p\kappa A^2}m \frac 1{\omega_0^2} - V_r.$$
+ 
 
 \section{Fazit}
 
