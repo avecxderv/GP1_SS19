@@ -47,6 +47,7 @@ rho_h20 = 997
 V_kl = (0.4545-0.1457)/rho_h20
 V_mi = (1.456-0.3403)/rho_h20
 V_gr = 0.011315
+ex0 = 0.003
 
 def func(x, a, b, c, d,e):
     return a*np.exp(-b*x)*np.sin(c*x+e) + d
@@ -109,17 +110,22 @@ ew = np.array([ew_15,ew_20, ew_25, ew_30, ew_35, ew_40, ew_45])
 x = 1/(w**2)
 ex = ew/(w**3)
 hoehen = np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
-y = V_gr + A*hoehen
-ey = np.sqrt(2*(em/rho_h20)**2 + (ed*np.pi*d/2*hoehen)**2)
+y = V_kl + A*hoehen
+ey = np.sqrt(2*(em/rho_h20)**2 + (ed*np.pi*d/2*hoehen)**2+(A*ex0)**2)
 
 #Regression für V
 res = analyse.lineare_regression_xy(x,y,ex,ey)
-fig, (ax1, ax2) = plt.subplots(2,1, sharex=True)
+fig, (ax1, ax2) = plt.subplots(2,1, sharex=True, figsize=(12,6), gridspec_kw={'height_ratios': [5, 2]})
 ax1.plot(x,res[0]*x+res[2], linestyle="--", color = 'black')
 
 err = np.sqrt((ex*res[0])**2 + ey**2)
 ax1.errorbar(x,y, yerr=err, color='red', fmt='.', marker='o', markeredgecolor='red')
 ax2.errorbar(x, y-(res[0]*x+res[2]), yerr=err, color='red', fmt='.', marker='o', markeredgecolor='red')
 ax2.axhline(y=0, color='black', linestyle='--')
+ax2.set_xlabel('1/$\omega_0^2$  /  s$^2$')
+ax2.set_ylabel('$y-(a/\omega_0^2-V_r)$  /  m$^3$')
+ax1.set_ylabel('$y$  /  m$^3$')
 
+fig.subplots_adjust(hspace=0)
+plt.savefig('plots/regression_kleine.pdf', format='pdf', dpi=1200)
 plt.show()
