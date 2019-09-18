@@ -76,13 +76,16 @@ def fft_analysis(groesse,hoehe,nummer):
 
 def mittel(groesse,hoehe):
     #groesse ist aus {'kleine', 'grosse', 'mittel'}
-    w = [fft_analysis(groesse,hoehe,'1')[0], fft_analysis(groesse,hoehe,'2')[0],
-         fft_analysis(groesse,hoehe,'3')[0], fft_analysis(groesse,hoehe,'4')[0],
-         fft_analysis(groesse,hoehe,'5')[0]]
     
-    delta = [fft_analysis(groesse,hoehe,'1')[1], fft_analysis(groesse,hoehe,'2')[1],
-             fft_analysis(groesse,hoehe,'3')[1], fft_analysis(groesse,hoehe,'4')[1],
-             fft_analysis(groesse,hoehe,'5')[1]]
+    temp1 = fft_analysis(groesse,hoehe,'1')
+    temp2 = fft_analysis(groesse,hoehe,'2')
+    temp3 = fft_analysis(groesse,hoehe,'3')
+    temp4 = fft_analysis(groesse,hoehe,'4')
+    temp5 = fft_analysis(groesse,hoehe,'5')
+    
+    w = [temp1[0], temp2[0], temp3[0], temp4[0], temp5[0]]
+    
+    delta = [temp1[1], temp2[1], temp3[1], temp4[1], temp5[1]]
     
     wm, sw = analyse.mittelwert_stdabw(w)
     deltam, sdelta = analyse.mittelwert_stdabw(delta)
@@ -94,8 +97,8 @@ def mittel(groesse,hoehe):
     print(sdelta)
     return np.sqrt(wm**2+deltam**2), 2*np.sqrt((wm*sw)**2+(deltam*sdelta)**2)/np.sqrt(wm**2+deltam**2)
 
-groesse='kleine'
-w_15, ew_15 = mittel(groesse,'15')
+groesse='grosse'
+#w_15, ew_15 = mittel(groesse,'15')
 w_20, ew_20 = mittel(groesse,'20')
 w_25, ew_25 = mittel(groesse,'25')
 w_30, ew_30 = mittel(groesse,'30')
@@ -103,13 +106,13 @@ w_35, ew_35 = mittel(groesse,'35')
 w_40, ew_40 = mittel(groesse,'40')
 w_45, ew_45 = mittel(groesse,'45')
 #w_50, ew_50 = mittel(groesse,'50')
-#ew = np.array([ew_20,ew_25,ew_30,ew_35,ew_40,ew_45])
-w = np.array([w_15,w_20,w_25,w_30, w_35,w_40,w_45])
-ew = np.array([ew_15,ew_20, ew_25, ew_30, ew_35, ew_40, ew_45])
+ew = np.array([ew_20,ew_25,ew_30,ew_35,ew_40,ew_45])
+w = np.array([w_20,w_25,w_30, w_35,w_40,w_45])
+#ew = np.array([ew_15,ew_20, ew_25, ew_30, ew_35, ew_40, ew_45])
 
 x = 1/(w**2)
 ex = ew/(w**3)
-hoehen = np.array([0.15,0.20,0.25,0.30,0.35,0.40,0.45])
+hoehen = np.array([0.20,0.25,0.30,0.35,0.40,0.45])
 y = V_kl + A*hoehen
 ey = np.sqrt(2*(em/rho_h20)**2 + (ed*np.pi*d/2*hoehen)**2+(A*ex0)**2)
 
