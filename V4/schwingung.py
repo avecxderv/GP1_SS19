@@ -94,7 +94,7 @@ cond1 = np.arange(0,30,1)
 cond2 = (np.mod(cond1,6) == 0)
 T = reg1[cond2]
 delta = -reg2[cond2]
-cond1 = cond1+1
+cond1 = cond1-1
 cond2 = (np.mod(cond1,6) == 0)
 eT = reg1[cond2]
 edelta = reg2[cond2]
