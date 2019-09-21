@@ -101,6 +101,13 @@ edelta = reg2[cond2]
 R = np.array([1.008,5.101,9.99,19.82,46.67])
 eR = np.array([0.001,0.001,0.002,0.01,0.01])
 
+data = cassy.CassyDaten(dic2[5])
+time = data.messung(1).datenreihe('t').werte
+vol = data.messung(1).datenreihe('U_B1').werte
+delt1 = -(np.log(vol[max5[0]]-offset5)-np.log(vol[max5[2]]-offset5))/(time[max5[0]]-time[max5[2]])
+delt2 = -(np.log(-vol[max5[1]]+offset5)-np.log(-vol[max5[3]]+offset5))/(time[max5[1]]-time[max5[3]])
+delta[4] = (delt1+delt2)/2
+edelta[4] = 5
 
 reg = analyse.lineare_regression_xy(R,delta,eR,edelta)
 
@@ -111,9 +118,4 @@ ax2.axhline(y=0., color='black', linestyle='--')
 ax2.errorbar(R, (delta-(reg[0]*R+reg[2])), yerr=np.sqrt(edelta**2+eR**2), color='red', fmt='.', marker='o', markeredgecolor='red')
 plt.tight_layout()
 f.subplots_adjust(hspace=0.0)
-plt.close(f)
-
-data = cassy.CassyDaten(dic2[5])
-time = data.messung(1).datenreihe('t').werte
-vol = data.messung(1).datenreihe('U_B1').werte
-plt.plot(time,vol)
+#plt.close(f)
