@@ -77,7 +77,9 @@ $$Q(0) = CU_0 \hspace{0.5cm} \text{ und } \hspace{0.5cm} I(0) = 0.$$
 Hier ist eine echte Schwingung zu beobachten. Es gilt
 $$Q(t) = e^{-\delta t}( A\cos(\omega t) + B\sin(\omega t)).$$
 Aus den Anfangsbedingungen erhält man $A = CU_0$ und $B = A \frac{\delta}{\omega}$. Für den Strom gilt wegen $I = \frac{dQ}{dt}$
-$$I(t) = -CU_0 e^{-\delta t} \left( \omega + \frac{\delta^2}{\omega}\right)\sin(\omega t).$$ 
+\begin{equation}\label{eq:i_lsg}
+I(t) = -CU_0 e^{-\delta t} \left( \omega + \frac{\delta^2}{\omega}\right)\sin(\omega t)\text{.}
+\end{equation}
 
 \textbf{Kriechfall ($\delta > \omega_0$)} \\ 
 In diesem Fall ist die Dämpfung so stark, dass der Kondensator seine Spannung nur sehr langsam verliert. Zudem findet keine Schwingung statt.
@@ -116,6 +118,71 @@ Die Rohdaten für alle verschiedenen Fälle sind in Abbildung \ref{abb:rohdaten_
 \caption{Rohdaten mit Schwing-, Kriech- und Aperiodischem Grenzfall}
 \label{abb:rohdaten_ska}
 \end{figure}
+
+\subsubsection{Schwingfall}
+Zunächst bestimmen wir die Frequenzen und die Dämpfungen der aufgenommenen Schwingungen für die verschiedenen verwendeten Ohmschen Widerstände. Im folgenden sind die verwendeten Widerstände mit Herstellerangabe und gemessenen Werten angegeben:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+Herstellerangabe / $\Omega$ & Gemessener Wert / $\Omega$ \\
+\hline
+$1$ & $1.008 \pm 0.001$ \\
+$5.1$ & $5.101 \pm 0.001$ \\
+$10$ & $9.990 \pm 0.002$ \\
+$20$ & $19.82 \pm 0.01$ \\
+$47$ & $46.67 \pm 0.01$ \\
+$100$ & $99.24 \pm 0.04$ 
+\end{tabular}
+\end{table}
+Für alle nun folgenden Rechnungen wurden die gemessenen Widerstandswerte verwendet. Es existieren zwei Möglichkeiten, um die Frequenz bzw. die Periodendauer zu bestimmen. Einerseits ist die Analyse mittels FFT möglich. Andererseits können die Extrema aus den Rohdaten abgelesen und die Periodendauer mittels Regression über die Schwingungsanzahl bestimmt werden.
+Analog dazu besteht die Möglichkeit, die Dämpfung $\delta$ aus Gleichung \ref{eq:i_lsg} durch logarithmisches Auftragen der Extrema, d.h. mit Regression, zu bestimmen: Für die Zeitpunkte $t_i$ an denen $I$ bzw. $U_C$ ein Extremum annimmt, gilt
+$$sin(\omega t_i) = \pm 1$$.
+Durch logarithmieren der Gleichung erhält man 
+$$\log \lvert I(t_i)\rvert = -\delta t_i + \log\left\lvert CU_0 \left(\omega+\frac{\delta^2}{\omega}\right)\right\rvert$$
+beziehungsweise eine analoge Form für $U_C$. Natürlich kann $\delta$ durch die Verwendung eines Steigungsdreiecks auch nur bei zwei ablesbaren Maxima oder Minima bestimmt werden:
+$$\delta = \frac{\log\left(\frac{U_C(t_0)}{U_C(t_1)}\right)}{t_1-t_0}$$
+Bei beiden Vorgehensweisen muss der Offset korrigiert werden.
+Eine Regression ist für den $100\Omega$ Widerstand nicht praktikabel, da aufgrund der starken Dämpfung zu wenige Extrema genau ablesbar sind. Ein beispielhaftes Ergebnis für die Regression von abgelesenen Extrema bei der Schwingung des $10\Omega$ Widerstand ist in Abbildung \ref{abb:reg1} dargestellt. Die übrigen durchgeführten Regressionen sind im Anhang \ref{app:reg} abgebildet.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_schwingung3.pdf}
+\caption{Regression für den $10\Omega$ Widerstand}
+\label{abb:reg1}
+\end{figure}
+
+Für die Frequenzen ergeben sich folgende Werte:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|cc}
+Ohmscher Widerstand / $\Omega$ & Regression / Hz & FFT / Hz \\
+\hline
+$1$ & $3393.9 \pm 1.2$ & \\
+$5.1$ & $3392.7 \pm 1.4$ & \\
+$10$ & $3390.2 \pm 2.0$ & \\
+$20$ & $3378.4 \pm 4.3$ & \\
+$47$ & $3257.3 \pm 9.7$ & \\
+$100$ & - &
+\end{tabular}
+\end{table}
+
+Folgende Dämpfungswerte wurden berechnet:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+Herstellerangabe / $\Omega$ & Dämpfung / Hz \\
+\hline
+$1$ & \\
+$5.1$ & \\
+$10$ &  \\
+$20$ & \\
+$47$ & \\
+$100$ & 
+\end{tabular}
+\end{table}
 
 
 \subsection{Fazit}
@@ -185,4 +252,22 @@ $$\Delta t \approx \frac{1}{\omega_s} \left( \frac{\pi}{2} - \arctan\left(  \fra
 
 \subsection{Fazit}
 
+\appendix
+\section{Regressionen der übrigen Widerstände}\label{app:reg}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_schwingung1.pdf}
+\caption{Regression für den $1\Omega$ Widerstand}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_schwingung2.pdf}
+\caption{Regression für den $5.1\Omega$ Widerstand}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_schwingung4.pdf}
+\caption{Regression für den $20\Omega$ Widerstand}
+\label{abb:reg1}
+\end{figure}
 \end{document}
