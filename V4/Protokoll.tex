@@ -34,9 +34,9 @@
 	\centering
 	{\Huge\bfseries Versuchsprotokoll\par}
 	\vspace{2cm}
-	{\scshape\LARGE Wärmelehre \par}
+	{\scshape\LARGE Elektrizitätslehre \par}
 	\vspace{1cm}
-	{\Large Bestimmung des Adiabatenkoeffizients \\ mit der Rüchardt-Methode\par}
+	{\Large Gedämpfter LCR-Schwingkreis und \\ Gekoppelte LC-Schwingkreise\par}
 	\vfill
 	{\large\itshape Simon Schwarz und Marius Ising\par}
 
@@ -57,9 +57,9 @@ In einer Serienschaltung aus Spule $L$, Kondensator $C$ und Ohmschem Widerstand 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\draw (0,0) node[ocirc]{} -- (0,3) to [C, a=$C$] (2,3) node[ground]{} to [R, a=$R$] (4,3)  to [cute inductor, a=$L$] (6,3) to[rmeterwa, t=$I$] (8,3) -- (8,0) node[ocirc]{};
-\draw (0,1) to[push button] (8,1);
-\draw (0,3) -- (0,4.5) to [rmeterwa, t=$U_C$] (2,4.5) -- (2,3);
+\draw (2,0) node[ocirc]{} -- (2,1) to [C, a=$C$] (2,3) to [R, a=$R$] (4,3)  to [cute inductor, a=$L$] (6,3) to[rmeterwa, t=$I$] (6,1) -- (6,0) node[ocirc]{};
+\draw (2,1) to [push button] (6,1);
+\draw (2,1.2) -- (1,1.2) to [rmeterwa, t=$U_C$] (1,2.8) -- (2,2.8);
 \end{tikzpicture}
 \caption{Schaltbild des LCR-Schwingkreises}
 \label{abb:schaltLCR}
@@ -100,7 +100,7 @@ mit $A = CU_0$ und $B=\delta A$.
 \caption{Versuchsaufbau LCR-Schwingkreis}
 \label{abb:aufbau_lcr}
 \end{figure}
-Das Schaltbild aus Abbildung \ref{abb:schaltLCR} wird auf der Rastersteckplatte aufgebaut. Dies ist in Abbildung \ref{abb:aufbau_lcr} zu sehen. Als Spannungsquelle dient die Spannungsquelle des Sensor-CASSY. Die Spannung am Kondensator wird am Eingang B und die Stromstärke am Eingang A gemessen. Zusätzlich wird die Spannung am Kondensator am Channel 1 und die Spannung am Widerstand am Channel 2 des Oszilloskops gemessen. Die Erde liegt dabei zwischen Kondensator und Widerstand, wie im Schaltbild eingezeichnet.
+Das Schaltbild aus Abbildung \ref{abb:schaltLCR} wird auf der Rastersteckplatte aufgebaut. Dies ist in Abbildung \ref{abb:aufbau_lcr} zu sehen. Als Spannungsquelle dient die Spannungsquelle des Sensor-CASSY. Die Spannung am Kondensator wird am Eingang B und die Stromstärke am Eingang A gemessen. Zusätzlich wird die Spannung am Kondensator am Channel 1 und die Spannung am Widerstand am Channel 2 des Oszilloskops gemessen. Die Erde liegt dabei zwischen Kondensator und Widerstand.
 
 \subsection{Versuchsdurchführung}
 
@@ -130,7 +130,33 @@ Die Rohdaten für alle verschiedenen Fälle sind in Abbildung \ref{abb:rohdaten_
 
 In diesem Versuch werden zwei Schwingkreise induktiv miteinander gekoppelt. Speziell werden hier die beiden Fundamentalschwingungen bei gleichsinniger und gegensinniger Anregung und eine Schwebung aufgezeichnet.
 
-Für den gekoppelten Schwingkreis gelten die folgenden Differentialgleichungen
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+% Linke Schwingkreise
+\draw (0,0.2) -- (-1,0.2) to [rmeterwa, t=$U_1$] (-1,1.8) -- (0,1.8);
+\draw (0.8,0) node[ocirc]{} -- (0,0) to [C, a=$C$] (0,2) -- (2,2) to [cute inductor, a=$L$] (2,0) -- (1.2,0) node[ocirc]{};
+\draw (3.55,0) node[ocirc]{} -- (2.75,0) to [cute inductor, a=$L$] (2.75,2) -- (4.75,2) to[C, a=$C$] (4.75,0) -- (3.95,0) node[ocirc]{};
+\draw (4.75,0.2) -- (5.75,0.2) to [rmeterwa, t=$U_2$] (5.75,1.8) -- (4.75,1.8);
+\draw (2,0) to [normal open switch] (2,-1) -- (0,-1) -- (0,0);
+\draw (2.75,0) to [normal open switch] (2.75,-1) -- (4.75,-1) -- (4.75,0);
+\draw[dashed, thin] (2.15,-0.5) -- (2.85,-0.5); 
+
+
+% Rechte Schwingkreise
+\draw (8,0.2) -- (7,0.2) to [rmeterwa, t=$U_1$] (7,1.8) -- (8,1.8);
+\draw (8.8,0) node[ocirc]{} -- (8,0) to [C, a=$C$] (8,2) -- (10,2) to [cute inductor, a=$L$] (10,0) -- (9.2,0) node[ocirc]{};
+\draw (11.55,0) node[ocirc]{} -- (10.75,0) to [cute inductor, a=$L$] (10.75,2) -- (12.75,2) to[C, a=$C$] (12.75,0) -- (11.95,0) node[ocirc]{};
+\draw (12.75,0.2) -- (13.75,0.2) to [rmeterwa, t=$U_2$] (13.75,1.8) -- (12.75,1.8);
+\draw (10,0) to [normal open switch] (10,-1) -- (8,-1) -- (8,0);
+\draw (10.75,0) to [normal open switch] (10.75,-1) -- (12.75,-1) -- (12.75,0);
+\draw[dashed, thin] (10.15,-0.5) -- (10.85,-0.5); 
+
+\end{tikzpicture}
+\caption{Fundamentalschwingungen der gekoppelten Schwingkreise bei gleichsinniger (links) und gegensinniger Anregung (rechts)}
+\end{figure}
+
+Bei überbrückter Spannungsquelle gelten für den gekoppelten Schwingkreis die folgenden Differentialgleichungen 
 \begin{align*}
 \ddot I_1 + k \ddot I_2 + \frac{1}{LC}I_1 &= 0 \\
 \ddot I_2 + k \ddot I_1 + \frac{1}{LC}I_2 &= 0
