@@ -98,12 +98,22 @@ cond1 = cond1-1
 cond2 = (np.mod(cond1,6) == 0)
 eT = reg1[cond2]
 edelta = reg2[cond2]
-R = np.array([1,5.1,10,20,47])
+R = np.array([1.008,5.101,9.99,19.82,46.67])
+eR = np.array([0.001,0.001,0.002,0.01,0.01])
 
-'''
-#Omega korrigieren?
-w = 2*np.pi/T
-w = np.sqrt(w**2-delta**2)
-'''
 
-reg = analyse.lineare_regression(R,delta,edelta)
+reg = analyse.lineare_regression_xy(R,delta,eR,edelta)
+
+f, (ax1 , ax2) = plt.subplots(2,1,sharex = 'col')
+ax1.plot(R,(reg[0]*R+reg[2]), linestyle="--", color = 'black')
+ax1.errorbar(R,delta, yerr = edelta, xerr = eR, color='red', fmt='.', marker ='o')
+ax2.axhline(y=0., color='black', linestyle='--')
+ax2.errorbar(R, (delta-(reg[0]*R+reg[2])), yerr=np.sqrt(edelta**2+eR**2), color='red', fmt='.', marker='o', markeredgecolor='red')
+plt.tight_layout()
+f.subplots_adjust(hspace=0.0)
+plt.close(f)
+
+data = cassy.CassyDaten(dic2[5])
+time = data.messung(1).datenreihe('t').werte
+vol = data.messung(1).datenreihe('U_B1').werte
+plt.plot(time,vol)
