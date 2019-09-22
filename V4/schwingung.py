@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Sep 20 16:11:09 2019
-
 @author: simon
 """
 
@@ -42,6 +41,8 @@ dic4 = {1:'daten/schwingung_1Ohm_',2:'daten/schwingung_5.1Ohm_',3:'daten/schwing
 
 reg1 = np.array([])
 reg2 = np.array([])
+reg2plus = np.array([])
+reg2minus = np.array([])
 
 '''
 #Frequenzen mit FFT bestimmen
@@ -58,7 +59,6 @@ for i in range(1,7,1):
         ymax = amp.argmax()
         res_fft[i-1][j-1] = peak
         efft[i-1][j-1] = np.abs(freq[ymax]-peak)
-
         plt.plot(freq[0:100],amp[0:100])
         plt.axvline(x = freq[ymax], color='red', linestyle='--')
         plt.axvline(x= peak, color='green', linestyle='-.')
@@ -93,10 +93,15 @@ for i in range(1,6,1):
     y = np.log(np.abs(vol[dic1[i]])-dic3[i])
     temp = 4.8e-03/np.sqrt(12)+0.01*np.abs(vol[dic1[i]])
     ey = temp*1/(np.abs(vol[dic1[i]])-dic3[i])
+    ey_sys = 0.01*np.sqrt(vol[dic1[i]]**2+dic3[i]**2)/(np.abs(vol[dic1[i]])-dic3[i])
     res1 = analyse.lineare_regression(n,x,ex)
     res2 = analyse.lineare_regression_xy(x,y,ex,ey)
+    res2plus = analyse.lineare_regression_xy(x,y+ey_sys, ex, ey)
+    res2minus = analyse.lineare_regression_xy(x,y-ey_sys, ex, ey)
     reg1 = np.concatenate((reg1,res1))
     reg2 = np.concatenate((reg2,res2))
+    reg2plus = np.concatenate((reg2plus, res2plus))
+    reg2minus = np.concatenate((reg2minus, res2minus))
     
     
     #Plot
@@ -137,10 +142,13 @@ cond1 = np.arange(0,30,1)
 cond2 = (np.mod(cond1,6) == 0)
 T = 2*reg1[cond2]
 delta = -reg2[cond2]
+delta_plus = -reg2plus[cond2]
+delta_minus = -reg2minus[cond2]
 cond1 = cond1-1
 cond2 = (np.mod(cond1,6) == 0)
 eT = 2*reg1[cond2]
 edelta = reg2[cond2]
+edelta_sys = 1/2*(np.abs(delta-delta_plus)+np.abs(delta-delta_minus))
 R = np.array([1.008,5.101,9.99,19.82,46.67])
 eR = np.array([0.001,0.001,0.002,0.01,0.01])
 freq = 1/T
