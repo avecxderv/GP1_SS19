@@ -62,38 +62,52 @@ for i in range(1,6,1):
     reg2plus = np.concatenate((reg2plus, res2plus))
     reg2minus = np.concatenate((reg2minus, res2minus))
     
+    '''
     #Plot
     f, ((ax1,ax2), (ax3,ax4)) = plt.subplots(2,2, sharex='col', gridspec_kw={'height_ratios': [5, 2]})
     #1. Regression Vanilla Plot [Zeiten in Mikrosekunden]
     ax1.plot(n,(res1[0]*n+res1[2])*1e+6, linestyle="--", color = 'black')
     ax1.errorbar(n,x*1e+6, yerr = 1e+6*ex, color='red', fmt='.', marker ='o')
+    ax1.text(0.03,0.92,s='Steigung: (' + "{0:.3f}".format(res1[0]*1e+6) + r'$\pm$' + "{0:.3f}".format(res1[1]*1e+6) + ')$\mu s$',
+             fontsize = '13', color='blue',transform=ax1.transAxes)
+    ax1.text(0.03,0.85,s='y-Achsenabschnitt: (' + "{0:.3f}".format(res1[2]*1e+6) + r'$\pm$' + "{0:.3f}".format(res1[3]*1e+6) + ')$\mu s$',
+             fontsize = '13', color='blue',transform=ax1.transAxes)
+    ax1.text(0.03,0.78,s='$\chi^2$/ndf: ' + "{0:.1f}".format(res1[4]/(dic1[i].size-2)),
+             fontsize = '13', color='blue',transform=ax1.transAxes)
     ax1.set_ylabel('$t$ / $\mu s$')
     ax1.grid()
     ax1.set_title('Regression zur Bestimmung der Periodendauer')
     #2. Regression Vanilla Plot
     ax2.plot(1e+6*x,res2[0]*x+res2[2], linestyle="--", color = 'black')
     ax2.errorbar(1e+6*x,y, yerr = ey, xerr = 1e+6*ex, color='red', fmt='.', marker = 'o')
+    ax2.text(0.97,0.92,s='Steigung: (' + "{0:.3f}".format(res2[0]) + r'$\pm$' + "{0:.3f}".format(res2[1]) + ')Hz',
+             fontsize = '13', color='blue',ha='right',transform=ax2.transAxes)
+    ax2.text(0.97,0.85,s='y-Achsenabschnitt: ' + "{0:.3f}".format(res2[2]) + r'$\pm$' + "{0:.3f}".format(res2[3]),
+             fontsize = '13', color='blue', ha='right',transform=ax2.transAxes)
+    ax2.text(0.97,0.78,s='$\chi^2$/ndf: ' + "{0:.1f}".format(res2[4]/(dic1[i].size-2)),
+             fontsize = '13', color='blue',ha='right',transform=ax2.transAxes)
     ax2.grid()
-    ax2.set_ylabel('$\log | U | $')
+    ax2.set_ylabel('$\log | U_C | $')
     ax2.set_title('Regression zur Bestimmung der Dämpfung')
     #1. Regression Residuenplot
     ax3.axhline(y=0., color='black', linestyle='--')
     ax3.errorbar(n, 1e+6*(x-(res1[0]*n+res1[2])), yerr=ex*1e+6, color='red', fmt='.', marker='o', markeredgecolor='red')
     ax3.set_xlabel('Anzahl an Extrema')
-    ax3.set_ylabel('($t - (T\, n + t_{off})$) / $\mu s$')
+    ax3.set_ylabel(r'$\left(t - \left(\frac{T}{2}\, n + t_{off}\right)\right)$ / $\mu s$')
     #2. Regression Residuenplot
     ax4.axhline(y=0., color='black', linestyle='--')
     ax4.errorbar(1e+6*x,y-(res2[0]*x+res2[2]), yerr=np.sqrt(ex**2+ey**2), color='red', fmt='.', marker='o', markeredgecolor='red')
     ax4.set_xlabel('$t$ / $\mu s$')
-    ax4.set_ylabel('$(\log |U| - (\delta t + \log U_0)$')
+    ax4.set_ylabel('$(\log |U_C| - (\delta t + \log U_0)$')
     #Plotparameter
     plt.rcParams["figure.figsize"] = (12,6)
     plt.rcParams['axes.titlesize'] = 'large'
     plt.rcParams['axes.labelsize'] = 'large'
     plt.tight_layout()
     f.subplots_adjust(hspace=0.0)
-    plt.savefig('plots/reg_schwingung'+str(i)+'.pdf', format='pdf', dpi=1200)
-    plt.close(f) 
+    #plt.savefig('plots/reg_schwingung'+str(i)+'.pdf', format='pdf', dpi=1200)
+    plt.close(f)
+    '''
 
 #relevante Größen aus Regressionergebnissen ablesen
 cond1 = np.arange(0,30,1)

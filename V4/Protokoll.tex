@@ -106,7 +106,16 @@ Das Schaltbild aus Abbildung \ref{abb:schaltLCR} wird auf der Rastersteckplatte 
 
 \subsection{Versuchsdurchführung}
 
-Im folgenden sind die verwendeten Widerstände mit Herstellerangabe und gemessenen Werten angegeben:
+Die Schwingungen werden im Modus \glqq automatische Aufnahme\grqq{} mit folgenden Messparametern aufgenommen:
+\begin{enumerate}[-]
+\item Messbereich Strom $I$: $\pm 0.3$A
+\item Messbereich Spannung am Kondensator $U_C$: $\pm 10V$
+\item Messintervall: $10\mu\text{s}$
+\item Anzahl an Messpunkten: $2000$
+\item Messzeit: $20$ms
+\end{enumerate}
+Um möglich direkt nach Betätigung des Tasters die Aufnahme zu beginnen, wird ein Trigger verwendet. Dieser aktiviert die Messung bei einer steigenden Flanke von $U_C$, die den Schwellenwert von $-9.2$V überschreitet. Das ist sinnvoll, weil die Spannungsquelle auf $U_0 = 9.4$V eingestellt ist und die Polung des Messgerätes zu einer gemessenen Kondensatorspannung von $-9.4$V bei offenem Taster führt. 
+Vorab werden die im Versuch verwendeten Widerstände mit Hilfe eines Multimeters auf ihren tatsächlichen Widerstandswert geprüft. In Tabelle \tef{tab:widerstaende} sind die verwendeten Widerstände mit Herstellerangabe und gemessenen Werten angegeben.
 
 \begin{table}[H]
 \centering
@@ -121,12 +130,14 @@ $47$ & $46.67 \pm 0.01$ \\
 $100$ & $99.24 \pm 0.04$ \\
 $1000$ & $991.20\pm 0.08$
 \end{tabular}
+\caption{Herstellerangaben für die verwendeten Widerstände und deren mittels Multimeter gemessene Widerstandswerte samt Fehler.}
+\label{tab:widerstaende}
 \end{table}
-Für alle nun folgenden Rechnungen wurden die gemessenen Widerstandswerte verwendet.
+Die nun folgenden Rechnungen verwenden die gemessenen Widerstandswerte. Zusätzlich werden drei in Reihe geschaltete $1\text{k}\Omega$ Widerstädnde verwendet, um einen Widerstand von $3\text{k}\Ohm$ zu erreichen. Da diese Messung jedoch nur zur Visualisierung des Kriechsfalls dient, wird kein genauer Wert benötigt. 
 
 \subsection{Versuchsauswertung}
 
-Die Rohdaten für alle verschiedenen Fälle sind in Abbildung \ref{abb:rohdaten_ska} zu sehen.
+Beispielhafte Rohdaten für alle verschiedenen Fälle sind in Abbildung \ref{abb:rohdaten_ska} zu sehen.
 
 \begin{figure}[H]
 \centering
@@ -137,19 +148,19 @@ Die Rohdaten für alle verschiedenen Fälle sind in Abbildung \ref{abb:rohdaten_
 
 \subsubsection{Schwingfall}
 Zunächst bestimmen wir die Frequenzen und die Dämpfungen der aufgenommenen Schwingungen für die verschiedenen verwendeten Ohmschen Widerstände. Um die Frequenz bzw. die Periodendauer zu bestimmen, existieren zwei Möglichkeiten. Einerseits ist die Analyse mittels FFT möglich. Andererseits können die Extrema aus den Rohdaten abgelesen und die Periodendauer mittels Regression über die Schwingungsanzahl bestimmt werden.
-Analog dazu besteht die Möglichkeit, die Dämpfung $\delta$ aus Gleichung \ref{eq:i_lsg} durch logarithmisches Auftragen der Extrema, d.h. mit Regression, zu bestimmen: Für die Zeitpunkte $t_i$ an denen $I$ bzw. $U_C$ ein Extremum annimmt, gilt
-$$sin(\omega t_i) = \pm 1$$.
-Durch logarithmieren der Gleichung erhält man 
+Analog dazu besteht die Möglichkeit, die Dämpfung $\delta$ aus Gleichung \ref{eq:i_lsg} durch logarithmisches Auftragen der Extrema, d.h. mit Regression, zu berechnen: Es gilt
+$$sin(\omega t_i) = \pm 1$$
+für die Zeitpunkte $t_i$ an denen $I$ bzw. $U_C$ ein Extremum annimmt. Durch logarithmieren der Gleichung \ref{eq:i_lsg} erhält man für diese Zeiten $t_i$ dann
 $$\log \lvert I(t_i)\rvert = -\delta t_i + \log\left\lvert CU_0 \left(\omega+\frac{\delta^2}{\omega}\right)\right\rvert$$
 beziehungsweise eine analoge Form für $U_C$. Natürlich kann $\delta$ durch die Verwendung eines Steigungsdreiecks auch nur bei zwei ablesbaren Maxima oder Minima bestimmt werden:
 $$\delta = \frac{\log\left(\frac{U_C(t_0)}{U_C(t_1)}\right)}{t_1-t_0}$$
-Bei beiden Vorgehensweisen muss der Offset korrigiert werden.
-Eine Regression ist für den $100\Omega$ Widerstand nicht praktikabel, da - aufgrund der starken Dämpfung - zu wenige Extrema genau ablesbar sind. Ein beispielhaftes Ergebnis für die Regression von abgelesenen Extrema bei der Schwingung des $10\Omega$ Widerstand ist in Abbildung \ref{abb:reg1} dargestellt. Die übrigen durchgeführten Regressionen sind im Anhang \ref{app:reg} abgebildet.
+Bei beiden Vorgehensweisen muss der Offset korrigiert werden. Als zweite Option für die Berechnung von $\delta$ kann eine Exponentialfunktion als Einhüllende gefittet werden und die Dämpfung $\delta$ aus dem Fit abgelesen werden.
+Für den $100\Omega$ Widerstand sind Regressionen nicht praktikabel, da - aufgrund der starken Dämpfung - zu wenige Extrema genau ablesbar sind. Ein beispielhaftes Ergebnis für die Regression von abgelesenen Extrema bei der Schwingung des $10\Omega$ Widerstand ist in Abbildung \ref{abb:reg1} dargestellt. Die übrigen durchgeführten Regressionen sind im Anhang \ref{app:reg} abgebildet.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{plots/reg_schwingung3.pdf}
-\caption{Regression für den $10\Omega$ Widerstand.}
+\caption{Regressionen für den $10\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$.}
 \label{abb:reg1}
 \end{figure}
 
@@ -199,6 +210,11 @@ $47$ & \\
 $100$ & 
 \end{tabular}
 \end{table}
+
+\subsubsection{Aperiodischer Grenzfall}
+
+\subsubsection{Kriechfall}
+
 
 
 \subsection{Fazit}
@@ -268,45 +284,51 @@ $$\Delta t \approx \frac{1}{\omega_s} \left( \frac{\pi}{2} - \arctan\left(  \fra
 
 \subsection{Fazit}
 
+\newpage
 \appendix
 \section{LCR-Schwingfall: Regressionen der übrigen Widerstände}\label{app:reg}
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/reg_schwingung1.pdf}
-\caption{Regression für den $1\Omega$ Widerstand}
+\caption{Regressionen für den $1\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/reg_schwingung2.pdf}
-\caption{Regression für den $5.1\Omega$ Widerstand}
+\caption{Regressionen für den $5.1\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/reg_schwingung4.pdf}
-\caption{Regression für den $20\Omega$ Widerstand}
+\caption{Regressionen für den $20\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_schwingung5.pdf}
+\caption{Regressionen für den $47\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$}
 \end{figure}
 \section{LCR-Schwingfall: FFT der übrigen Widerstände}\label{app:fft}
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/fft/fft_schwingung1_1.pdf}
 \caption{Mittels FFT berechnetes Spektrum für die erste Messung des $1\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/fft/fft_schwingung2_1.pdf}
 \caption{Mittels FFT berechnetes Spektrum für die erste Messung des $5.1\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/fft/fft_schwingung4_1.pdf}
 \caption{Mittels FFT berechnetes Spektrum für die erste Messung des $20\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/fft/fft_schwingung5_1.pdf}
 \caption{Mittels FFT berechnetes Spektrum für die erste Messung des $47\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{plots/fft/fft_schwingung6_1.pdf}
 \caption{Mittels FFT berechnetes Spektrum für die erste Messung des $100\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}

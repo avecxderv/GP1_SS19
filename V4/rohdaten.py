@@ -29,7 +29,10 @@ plt.plot(time, volt_a, color='red', label='Aperiodischer Grenzfall')
 plt.xlim(0,5)
 plt.grid()
 plt.xlabel('$t$ / ms')
-plt.ylabel('$U$ / V')
+plt.ylabel('$U_C$ / V')
+plt.rcParams["figure.figsize"] = (12,6)
+plt.rcParams['axes.titlesize'] = 'large'
+plt.rcParams['axes.labelsize'] = 'large'
 plt.legend()
 
 plt.savefig('plots/rohdaten_ska.pdf', format='pdf', dpi=1200)
