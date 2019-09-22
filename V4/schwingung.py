@@ -62,7 +62,6 @@ for i in range(1,6,1):
     reg2plus = np.concatenate((reg2plus, res2plus))
     reg2minus = np.concatenate((reg2minus, res2minus))
     
-    
     #Plot
     f, ((ax1,ax2), (ax3,ax4)) = plt.subplots(2,2, sharex='col', gridspec_kw={'height_ratios': [5, 2]})
     #1. Regression Vanilla Plot [Zeiten in Mikrosekunden]
@@ -94,7 +93,7 @@ for i in range(1,6,1):
     plt.tight_layout()
     f.subplots_adjust(hspace=0.0)
     plt.savefig('plots/reg_schwingung'+str(i)+'.pdf', format='pdf', dpi=1200)
-    plt.close(f)    
+    plt.close(f) 
 
 #relevante Größen aus Regressionergebnissen ablesen
 cond1 = np.arange(0,30,1)
@@ -130,4 +129,4 @@ ax2.axhline(y=0., color='black', linestyle='--')
 ax2.errorbar(R, (delta-(reg[0]*R+reg[2])), yerr=np.sqrt(edelta**2+eR**2), color='red', fmt='.', marker='o', markeredgecolor='red')
 plt.tight_layout()
 f.subplots_adjust(hspace=0.0)
-plt.close(f)
+#plt.close(f)
