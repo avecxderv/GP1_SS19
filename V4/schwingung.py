@@ -59,7 +59,7 @@ for i in range(1,7,1):
         res_fft[i-1][j-1] = peak
         efft[i-1][j-1] = np.abs(freq[ymax]-peak)
 
-        plt.plot(freq[0:500],amp[0:500])
+        plt.plot(freq[0:100],amp[0:100])
         plt.axvline(x = freq[ymax], color='red', linestyle='--')
         plt.axvline(x= peak, color='green', linestyle='-.')
         plt.xlabel('Frequenz / Hz')
@@ -68,7 +68,7 @@ for i in range(1,7,1):
         plt.rcParams['axes.titlesize'] = 'large'
         plt.rcParams['axes.labelsize'] = 'large'
         plt.tight_layout()
-        plt.xlim(0,25000)
+        plt.xlim(0,5000)
         plt.grid()
         plt.text(15000,0.8*amp[ymax],s='Peak='+"{0:.1f}".format(freq[ymax]) + ' Hz',fontsize='13',color='red')
         plt.text(15000,0.75*amp[ymax],s='Peak-Schwerpunkt='+"{0:.1f}".format(peak) + ' Hz',fontsize='13',color='green')

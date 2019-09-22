@@ -182,7 +182,7 @@ $100$ & - & $1294.7\pm 154.6$ & $1293.4\pm 155.8$ & $1339.0\pm 110.3$ & $1316.4 
 \label{tab:freq}
 \end{table}
 
-Die Messungen des $100\Omega$ Widerstands werden von nun an nicht weiter ausgewertet, da die kurze Schwingzeit keine zuverlässigen Ergebnisse ermöglicht. Desweiteren arbeitet die Peakfinder-Methode wegen der groben Diskretisierung der Frequenz durch den FFT-Algorithmus nicht korrekt, sodass die Frequenzen der Regressionsmethode als weitere Berechnungsgrundlage dienen. Ein Indiz für die systematisch fehlerhaften Frequenzwerte aus dem Spektrum ist, dass die Frequenzwerte mit steigendem Widerstand fallen müssen, da
+Die Messungen des $100\Omega$ Widerstands werden von nun an nicht weiter ausgewertet, da die kurze Schwingzeit keine zuverlässigen Ergebnisse ermöglicht. Desweiteren arbeitet die Peakfinder-Methode wegen der groben Diskretisierung der Frequenz durch den FFT-Algorithmus nicht korrekt, sodass die Frequenzen der Regressionsmethode als weitere Berechnungsgrundlage dienen. Ein Indiz dafür, dass die systematisch fehlerhaften Frequenzwerte aus dem Spektrum ist, dass die Frequenzwerte mit steigendem Widerstand fallen müssen, da
 $$\omega^2 = \omega_0^2 + \delta^2$$
 mit der korrigierten Frequenz $\omega_0$ und der Dämpfung $\delta$ gilt. Folgende Dämpfungswerte wurden berechnet:
 
@@ -285,8 +285,6 @@ $$\Delta t \approx \frac{1}{\omega_s} \left( \frac{\pi}{2} - \arctan\left(  \fra
 \includegraphics[width=\textwidth]{plots/reg_schwingung4.pdf}
 \caption{Regression für den $20\Omega$ Widerstand}
 \end{figure}
-\end{document}
-
 \section{LCR-Schwingfall: FFT der übrigen Widerstände}\label{app:fft}
 \begin{figure}[h]
 \centering
@@ -313,3 +311,6 @@ $$\Delta t \approx \frac{1}{\omega_s} \left( \frac{\pi}{2} - \arctan\left(  \fra
 \includegraphics[width=\textwidth]{plots/fft/fft_schwingung6_1.pdf}
 \caption{Mittels FFT berechnetes Spektrum für die erste Messung des $100\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
 \end{figure}
+
+
+\end{document}
