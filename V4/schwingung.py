@@ -10,6 +10,7 @@ from praktikum import analyse
 from praktikum import cassy
 import numpy as np
 import matplotlib.pyplot as plt
+from mittel import gewichtetes_mittel_in_aus 
 
 #Maxima für 1 Ohm (als Indizes)
 #max1 = np.array([27,57,86,115,145,174,204,233,263,292,322,351,381,410,439,469,498,528,557,587,617])
@@ -36,11 +37,52 @@ dic1 = {1:max1,2:max2,3:max3,4:max4,5:max5,6:max6}
 dic2 = {1:'daten/schwingung_1Ohm_1.lab',2:'daten/schwingung_5.1Ohm_1.lab',3:'daten/schwingung_10Ohm_1.lab',
         4:'daten/schwingung_20Ohm_1.lab',5:'daten/schwingung_47Ohm_1.lab',6:'daten/schwingung_100Ohm_1.lab'}
 dic3 = {1:offset1,2:offset2,3:offset3,4:offset4,5:offset5,6:offset6}
+dic4 = {1:'daten/schwingung_1Ohm_',2:'daten/schwingung_5.1Ohm_',3:'daten/schwingung_10Ohm_',
+        4:'daten/schwingung_20Ohm_',5:'daten/schwingung_47Ohm_',6:'daten/schwingung_100Ohm_'}
 
 reg1 = np.array([])
 reg2 = np.array([])
 
-#Frequenzen und Dämpfungen bestimmen
+'''
+#Frequenzen mit FFT bestimmen
+res_fft = np.full((6,3),0.5)
+efft = np.full((6,3),0.5)
+for i in range(1,7,1):
+    for j in range(1,4,1):
+        n = np.arange(1,1+dic1[i].size,1)
+        data = cassy.CassyDaten(dic4[i]+str(j)+'.lab')
+        time = data.messung(1).datenreihe('t').werte
+        vol = data.messung(1).datenreihe('U_B1').werte
+        freq, amp = analyse.fourier_fft(time,vol)
+        peak = analyse.peakfinder_schwerpunkt(freq[2:500],amp[2:500])
+        ymax = amp.argmax()
+        res_fft[i-1][j-1] = peak
+        efft[i-1][j-1] = np.abs(freq[ymax]-peak)
+
+        plt.plot(freq[0:500],amp[0:500])
+        plt.axvline(x = freq[ymax], color='red', linestyle='--')
+        plt.axvline(x= peak, color='green', linestyle='-.')
+        plt.xlabel('Frequenz / Hz')
+        plt.ylabel('Amplitude')
+        plt.rcParams["figure.figsize"] = (12,6)
+        plt.rcParams['axes.titlesize'] = 'large'
+        plt.rcParams['axes.labelsize'] = 'large'
+        plt.tight_layout()
+        plt.xlim(0,25000)
+        plt.grid()
+        plt.text(15000,0.8*amp[ymax],s='Peak='+"{0:.1f}".format(freq[ymax]) + ' Hz',fontsize='13',color='red')
+        plt.text(15000,0.75*amp[ymax],s='Peak-Schwerpunkt='+"{0:.1f}".format(peak) + ' Hz',fontsize='13',color='green')
+        plt.savefig('plots/fft/fft_schwingung'+str(i)+"_"+str(j)+'.pdf', format='pdf', dpi=1200)
+        #plt.show()
+        plt.close()
+fr = np.full((6,2),0.1)
+for i in range(0,6,1):
+    mu, inn, aus = gewichtetes_mittel_in_aus(res_fft[i],efft[i])
+    fr[i][0] = mu
+    fr[i][1] = max(inn,aus)
+'''
+
+#Frequenzen und Dämpfungen bestimmen (Regression)
 for i in range(1,6,1):
     n = np.arange(1,1+dic1[i].size,1)
     data = cassy.CassyDaten(dic2[i])
@@ -55,6 +97,7 @@ for i in range(1,6,1):
     res2 = analyse.lineare_regression_xy(x,y,ex,ey)
     reg1 = np.concatenate((reg1,res1))
     reg2 = np.concatenate((reg2,res2))
+    
     
     #Plot
     f, ((ax1,ax2), (ax3,ax4)) = plt.subplots(2,2, sharex='col', gridspec_kw={'height_ratios': [5, 2]})
@@ -92,14 +135,16 @@ for i in range(1,6,1):
 #relevante Größen aus Regressionergebnissen ablesen
 cond1 = np.arange(0,30,1)
 cond2 = (np.mod(cond1,6) == 0)
-T = reg1[cond2]
+T = 2*reg1[cond2]
 delta = -reg2[cond2]
 cond1 = cond1-1
 cond2 = (np.mod(cond1,6) == 0)
-eT = reg1[cond2]
+eT = 2*reg1[cond2]
 edelta = reg2[cond2]
 R = np.array([1.008,5.101,9.99,19.82,46.67])
 eR = np.array([0.001,0.001,0.002,0.01,0.01])
+freq = 1/T
+efreq = freq*(eT/T)
 
 data = cassy.CassyDaten(dic2[5])
 time = data.messung(1).datenreihe('t').werte
@@ -118,4 +163,4 @@ ax2.axhline(y=0., color='black', linestyle='--')
 ax2.errorbar(R, (delta-(reg[0]*R+reg[2])), yerr=np.sqrt(edelta**2+eR**2), color='red', fmt='.', marker='o', markeredgecolor='red')
 plt.tight_layout()
 f.subplots_adjust(hspace=0.0)
-#plt.close(f)
+plt.close(f)

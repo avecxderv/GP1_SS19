@@ -106,7 +106,23 @@ Das Schaltbild aus Abbildung \ref{abb:schaltLCR} wird auf der Rastersteckplatte 
 
 \subsection{Versuchsdurchführung}
 
+Im folgenden sind die verwendeten Widerstände mit Herstellerangabe und gemessenen Werten angegeben:
 
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+Herstellerangabe / $\Omega$ & Gemessener Wert / $\Omega$ \\
+\hline
+$1$ & $1.008 \pm 0.001$ \\
+$5.1$ & $5.101 \pm 0.001$ \\
+$10$ & $9.990 \pm 0.002$ \\
+$20$ & $19.82 \pm 0.01$ \\
+$47$ & $46.67 \pm 0.01$ \\
+$100$ & $99.24 \pm 0.04$ \\
+$1000$ & $991.20\pm 0.08$
+\end{tabular}
+\end{table}
+Für alle nun folgenden Rechnungen wurden die gemessenen Widerstandswerte verwendet.
 
 \subsection{Versuchsauswertung}
 
@@ -120,22 +136,7 @@ Die Rohdaten für alle verschiedenen Fälle sind in Abbildung \ref{abb:rohdaten_
 \end{figure}
 
 \subsubsection{Schwingfall}
-Zunächst bestimmen wir die Frequenzen und die Dämpfungen der aufgenommenen Schwingungen für die verschiedenen verwendeten Ohmschen Widerstände. Im folgenden sind die verwendeten Widerstände mit Herstellerangabe und gemessenen Werten angegeben:
-
-\begin{table}[H]
-\centering
-\begin{tabular}{c|c}
-Herstellerangabe / $\Omega$ & Gemessener Wert / $\Omega$ \\
-\hline
-$1$ & $1.008 \pm 0.001$ \\
-$5.1$ & $5.101 \pm 0.001$ \\
-$10$ & $9.990 \pm 0.002$ \\
-$20$ & $19.82 \pm 0.01$ \\
-$47$ & $46.67 \pm 0.01$ \\
-$100$ & $99.24 \pm 0.04$ 
-\end{tabular}
-\end{table}
-Für alle nun folgenden Rechnungen wurden die gemessenen Widerstandswerte verwendet. Es existieren zwei Möglichkeiten, um die Frequenz bzw. die Periodendauer zu bestimmen. Einerseits ist die Analyse mittels FFT möglich. Andererseits können die Extrema aus den Rohdaten abgelesen und die Periodendauer mittels Regression über die Schwingungsanzahl bestimmt werden.
+Zunächst bestimmen wir die Frequenzen und die Dämpfungen der aufgenommenen Schwingungen für die verschiedenen verwendeten Ohmschen Widerstände. Um die Frequenz bzw. die Periodendauer zu bestimmen, existieren zwei Möglichkeiten. Einerseits ist die Analyse mittels FFT möglich. Andererseits können die Extrema aus den Rohdaten abgelesen und die Periodendauer mittels Regression über die Schwingungsanzahl bestimmt werden.
 Analog dazu besteht die Möglichkeit, die Dämpfung $\delta$ aus Gleichung \ref{eq:i_lsg} durch logarithmisches Auftragen der Extrema, d.h. mit Regression, zu bestimmen: Für die Zeitpunkte $t_i$ an denen $I$ bzw. $U_C$ ein Extremum annimmt, gilt
 $$sin(\omega t_i) = \pm 1$$.
 Durch logarithmieren der Gleichung erhält man 
@@ -143,32 +144,47 @@ $$\log \lvert I(t_i)\rvert = -\delta t_i + \log\left\lvert CU_0 \left(\omega+\fr
 beziehungsweise eine analoge Form für $U_C$. Natürlich kann $\delta$ durch die Verwendung eines Steigungsdreiecks auch nur bei zwei ablesbaren Maxima oder Minima bestimmt werden:
 $$\delta = \frac{\log\left(\frac{U_C(t_0)}{U_C(t_1)}\right)}{t_1-t_0}$$
 Bei beiden Vorgehensweisen muss der Offset korrigiert werden.
-Eine Regression ist für den $100\Omega$ Widerstand nicht praktikabel, da aufgrund der starken Dämpfung zu wenige Extrema genau ablesbar sind. Ein beispielhaftes Ergebnis für die Regression von abgelesenen Extrema bei der Schwingung des $10\Omega$ Widerstand ist in Abbildung \ref{abb:reg1} dargestellt. Die übrigen durchgeführten Regressionen sind im Anhang \ref{app:reg} abgebildet.
+Eine Regression ist für den $100\Omega$ Widerstand nicht praktikabel, da - aufgrund der starken Dämpfung - zu wenige Extrema genau ablesbar sind. Ein beispielhaftes Ergebnis für die Regression von abgelesenen Extrema bei der Schwingung des $10\Omega$ Widerstand ist in Abbildung \ref{abb:reg1} dargestellt. Die übrigen durchgeführten Regressionen sind im Anhang \ref{app:reg} abgebildet.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{plots/reg_schwingung3.pdf}
-\caption{Regression für den $10\Omega$ Widerstand}
+\caption{Regression für den $10\Omega$ Widerstand.}
 \label{abb:reg1}
 \end{figure}
 
-Für die Frequenzen ergeben sich folgende Werte:
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung3_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $10\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\label{abb:fft1}
+\end{figure}
+
+Für die Frequenzen ergeben sich die in Tabelle \ref{tab:freq} dargestellten Werte. Die FFT-Werte stammen aus der Peakfinder-Methode. Dabei sollte man beachten, dass der FFT-Algorithmus die Frequenz mit einer Breite von $h\approx 49.975 \text{Hz}$ diskretisiert. Dies mindert die Qualität der Methode. Als Fehler der Einzelmessungen wurde die Differenz aus Argument-Maximum der Amplitude und Peak-Schwerpunkt verwendet. Der Fehler des gewichteten Mittels ist der innere Fehler der Einzelmessungen. Das Frequenzspektrum der ersten Messung des $10\Omega$ Widerstands ist in Abbildung \ref{abb:fft1} zu sehen. Für die übrigen Widerstände befindet sich jeweils das Spektrum der 1. Messung im Anhang \ref{app:fft}.
 
 \begin{table}[H]
 \centering
-\begin{tabular}{c|cc}
-Ohmscher Widerstand / $\Omega$ & Regression / Hz & FFT / Hz \\
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{c|c|cccc}
+\multirow{2}{*}{Ohmscher Widerstand / $\Omega$} & \multirow{2}{*}{Regression / Hz} & \multicolumn{4}{c}{FFT / Hz} \\
+\cline{3-6}
+& & Messung 1 & Messung 2 & Messung 3 & Mittel\\
 \hline
-$1$ & $3393.9 \pm 1.2$ & \\
-$5.1$ & $3392.7 \pm 1.4$ & \\
-$10$ & $3390.2 \pm 2.0$ & \\
-$20$ & $3378.4 \pm 4.3$ & \\
-$47$ & $3257.3 \pm 9.7$ & \\
-$100$ & - &
+$1$ & $1696.9 \pm 0.6$ & $1715.7\pm 16.6$ & $1715.2\pm 16.1$ & $1715.3\pm 16.1$ & $1715.4\pm 9.4$\\
+$5.1$ & $1696.3 \pm 0.7$ & $1718.9\pm 19.7$ & $1719.0\pm 19.8$ & $1719.0\pm 19.8$ & $1718.9\pm 11.4$\\
+$10$ & $1695.1 \pm 1.0$ & $1719.3\pm 20.1$ & $1719.3\pm 20.1$ & $1719.2\pm 20.0$ & $1719.2\pm 11.6$ \\
+$20$ & $1689.2 \pm 2.1$ & $1720.4\pm 21.3$ & $1720.3\pm 21.2$ & $1720.3\pm 21.2$ & $1720.4\pm 12.2$\\
+$47$ & $1628.6 \pm 4.8$ & $1761.1\pm 62.0$ & $1761.3\pm 62.1$ & $1741.5\pm 42.4$ & $1751.0 \pm 30.5$\\
+$100$ & - & $1294.7\pm 154.6$ & $1293.4\pm 155.8$ & $1339.0\pm 110.3$ & $1316.4 \pm 77.8$
 \end{tabular}
+\end{adjustbox}
+\caption{Mit Regression und FFT ermittelte Frequenzwerte.}
+\label{tab:freq}
 \end{table}
 
-Folgende Dämpfungswerte wurden berechnet:
+Die Messungen des $100\Omega$ Widerstands werden von nun an nicht weiter ausgewertet, da die kurze Schwingzeit keine zuverlässigen Ergebnisse ermöglicht. Desweiteren arbeitet die Peakfinder-Methode wegen der groben Diskretisierung der Frequenz durch den FFT-Algorithmus nicht korrekt, sodass die Frequenzen der Regressionsmethode als weitere Berechnungsgrundlage dienen. Ein Indiz für die systematisch fehlerhaften Frequenzwerte aus dem Spektrum ist, dass die Frequenzwerte mit steigendem Widerstand fallen müssen, da
+$$\omega^2 = \omega_0^2 + \delta^2$$
+mit der korrigierten Frequenz $\omega_0$ und der Dämpfung $\delta$ gilt. Folgende Dämpfungswerte wurden berechnet:
 
 \begin{table}[H]
 \centering
@@ -253,7 +269,7 @@ $$\Delta t \approx \frac{1}{\omega_s} \left( \frac{\pi}{2} - \arctan\left(  \fra
 \subsection{Fazit}
 
 \appendix
-\section{Regressionen der übrigen Widerstände}\label{app:reg}
+\section{LCR-Schwingfall: Regressionen der übrigen Widerstände}\label{app:reg}
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{plots/reg_schwingung1.pdf}
@@ -268,6 +284,32 @@ $$\Delta t \approx \frac{1}{\omega_s} \left( \frac{\pi}{2} - \arctan\left(  \fra
 \centering
 \includegraphics[width=\textwidth]{plots/reg_schwingung4.pdf}
 \caption{Regression für den $20\Omega$ Widerstand}
-\label{abb:reg1}
 \end{figure}
 \end{document}
+
+\section{LCR-Schwingfall: FFT der übrigen Widerstände}\label{app:fft}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung1_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $1\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung2_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $5.1\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung4_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $20\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung5_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $47\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung6_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $100\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\end{figure}
