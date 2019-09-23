@@ -1,5 +1,4 @@
 \documentclass[a4paper, 12pt]{scrartcl}
-
 \usepackage{scrpage2}
 \usepackage[left=2.5cm,right=2.5cm, top=3cm, bottom=4cm]{geometry}
 \usepackage[utf8]{inputenc}
@@ -10,14 +9,21 @@
 \usepackage{amsfonts}
 
 \usepackage{graphicx}
+\usepackage{caption}
 
 \usepackage{float}
 \usepackage{adjustbox}
 \usepackage{hyperref}
 \usepackage{textcomp}
+\usepackage{multirow}
+\usepackage{array}
 
 %\usepackage{enumerate}
 \usepackage[shortlabels]{enumitem}
+
+%Zeichnungen
+\usepackage{tikz}
+\usepackage[european]{circuitikz}
 
 % Einrücken verhindern
 \setlength{\parindent}{0em} 
@@ -25,14 +31,13 @@
 
 \begin{document}
 
-
 \begin{titlepage}
 	\centering
 	{\Huge\bfseries Versuchsprotokoll\par}
 	\vspace{2cm}
-	{\scshape\LARGE Mechanik \par}
+	{\scshape\LARGE Elektrizitätslehre \par}
 	\vspace{1cm}
-	{\Large Pendel- und Fallexperiment zur Bestimmung der Erdbeschleunigung\par}
+	{\Large Gedämpfter LCR-Schwingkreis und \\ Gekoppelte LC-Schwingkreise\par}
 	\vfill
 	{\large\itshape Simon Schwarz und Marius Ising\par}
 
@@ -42,177 +47,304 @@
 \tableofcontents
 \newpage
 
-\section{Erdbeschleunigung mit dem Fallexperiment}
+
+\section{Gedämpfter LCR-Schwingkreis}
 
 
 \subsection{Versuchsbeschreibung}
 
-Das Ziel des folgenden Versuchs ist die Bestimmung der Erdbeschleunigung $g$. Für eine gleichmäßig beschleunigte Bewegung gilt die Differentialgleichung
-$$\ddot s = \frac{d^2s}{dt^2} = a = \mathrm{const}.$$
-Durch zweifache Integration erhält man das Weg-Zeit-Gesetz dieser Bewegung
-$$s(t) = s_0 + v_0t + \frac a2 t^2.$$
-Dabei ist $v_0$ die Anfangsgeschwindigkeit und $s_0$ der anfängliche Weg zum Zeitpunkt $t=0$. Für den betrachteten freien Fall ist dabei die Beschleunigung $a$ gleich der Erdbeschleunigung $g$. Aufgrund der geringen auftretenden Geschwindigkeiten werden zudem Luftreibungseffekte vernachlässigt. Durch eine Weg-Zeit-Messung lässt sich somit $g$ bestimmen.
+In einer Serienschaltung aus Spule $L$, Kondensator $C$ und Ohmschem Widerstand $R$ (vgl. Abb. \ref{abb:schaltLCR}) wird der Kondensator zunächst aufgeladen und anschließend die Spannungsquelle mit einem Taster überbrückt, sodass der Kondensator sich über den Widerstand entladen kann. Dabei entlädt sich der Kondensator nicht sofort, sondern er schwingt sich bei der Spannung $U=0$ ein. Dieser Einschwingvorgang hängt wesentlich von der Dämpfung der Schwingung durch die Ohmschen Widerstände der Schaltung ab.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\draw (2,0) node[ocirc]{} -- (2,1) to [C, a=$C$] (2,3) to [R, a=$R$] (4,3)  to [cute inductor, a=$L$] (6,3) to[rmeterwa, t=$I$] (6,1) -- (6,0) node[ocirc]{};
+\draw (2,1) to [push button] (6,1);
+\draw (2,1.2) -- (1,1.2) to [rmeterwa, t=$U_C$] (1,2.8) -- (2,2.8);
+\end{tikzpicture}
+\caption{Schaltbild des LCR-Schwingkreises}
+\label{abb:schaltLCR}
+\end{figure}
+
+Nach der Kirchhoffschen Maschenregel gilt für die Schaltung bei gedrücktem Taster
+$$0 = U_C + U_R + U_L = \frac QC + RI + L \frac{dI}{dt}$$
+Mit $I = \frac{dQ}{dt}$ erhält man folgende Differentialgleichung
+$$\frac{d^2Q}{dt^2} + \frac{R}{L} \frac{dQ}{dt} + \frac{1}{LC}Q = 0$$
+Dies ist die DGL einer gedämpften harmonischen Schwingung. Dabei bezeichnet $\delta = \frac{R}{2L}$ die Dämpfungskonstante und $\omega_0 = \frac{1}{\sqrt{LC}}$ die Schwingungsfrequenz der ungedämpften Schwingung. 
+Für die Lösung der DGL unterscheiden wir drei Fälle. In allen Fällen gelten die gleichen Anfangsbedingungen
+$$Q(0) = CU_0 \hspace{0.5cm} \text{ und } \hspace{0.5cm} I(0) = 0.$$
+
+\textbf{Schwingfall ($\delta < \omega_0$)} \\
+Hier ist eine echte Schwingung zu beobachten. Es gilt
+$$Q(t) = e^{-\delta t}( A\cos(\omega t) + B\sin(\omega t)).$$
+Aus den Anfangsbedingungen erhält man $A = CU_0$ und $B = A \frac{\delta}{\omega}$. Für den Strom gilt wegen $I = \frac{dQ}{dt}$
+\begin{equation}\label{eq:i_lsg}
+I(t) = -CU_0 e^{-\delta t} \left( \omega + \frac{\delta^2}{\omega}\right)\sin(\omega t)\text{.}
+\end{equation}
+
+\textbf{Kriechfall ($\delta > \omega_0$)} \\ 
+In diesem Fall ist die Dämpfung so stark, dass der Kondensator seine Spannung nur sehr langsam verliert. Zudem findet keine Schwingung statt.
+$$Q(t) = Ae^{\left( -\delta + \sqrt{\delta^2-\omega_0^2} \right)t} + Be^{\left(-\delta - \sqrt{\delta^2-\omega_0^2} \right)t}$$
+Aus den Anfangsbedingungen ergibt sich
+$$A = CU_0 \frac{\delta +\sqrt{\delta^2-\omega_0^2}}{2\sqrt{\delta^2-\omega_0^2}} \hspace{0.5cm} \text{ und } \hspace{0.5cm}
+B = CU_0 \frac{-\delta+\sqrt{\delta^2-\omega_0^2}}{2\sqrt{\delta^2-\omega_0^2}}$$
+
+\textbf{Aperiodischer Grenzfall ($\delta = \omega_0$)} \\
+Der Kondensator wird innerhalb der kürzesten Zeit entladen. Die Lösung hat die Form
+$$Q(t) = e^{-\delta t}(A + Bt)$$
+mit $A = CU_0$ und $B=\delta A$.
 
 
 \subsection{Versuchsaufbau}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics{bilder/Aufbau_fF_be.jpg}
-	\caption{Versuchsaufbau}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{bilder/LCR_aufbau_beschriftet.jpg}
+\caption{Versuchsaufbau LCR-Schwingkreis}
+\label{abb:aufbau_lcr}
 \end{figure}
-Der Versuchsaufbau dient der Messung der Fallzeit einer Stahlkugel für einstellbare Höhen von 10 bis 90 mm. In eine Grundplatte mit integrierter Auffangplatte wird eine Stativstange mit Skala montiert. Zudem wird eine höhenverstellbare Startkonsole mit Auslösevorrichtung für die Metallkugel an die Stange angebracht. Verlässt die Metallkugel die Haltezunge mit Mikromagnet, so wird ein elektrisches Startsignal ausgelöst. Beim Aufprall auf der Platte entsteht ein Stopp-Signal und die Zeitmessung wird beendet. Die Zeitmessung erfolgt dabei wahlweise mit einem Digital-Zähler oder dem Oszilloskop. Der Zähler und das Oszilloskop werden dabei gleichzeitig angeschlossen (siehe Abb. \ref{AnschlussOsDz}).
-
-\begin{figure}[h]
-	\centering
-	\includegraphics{bilder/Aufbau_Detail_ff.jpg}
-	\caption{Anschluss von Digital-Zähler und Oszilloskop}
-	\label{AnschlussOsDz}
-\end{figure}
-
-
+Das Schaltbild aus Abbildung \ref{abb:schaltLCR} wird auf der Rastersteckplatte aufgebaut. Dies ist in Abbildung \ref{abb:aufbau_lcr} zu sehen. Als Spannungsquelle dient die Spannungsquelle des Sensor-CASSY. Die Spannung am Kondensator wird am Eingang B und die Stromstärke am Eingang A gemessen. Zusätzlich wird die Spannung am Kondensator am Channel 1 und die Spannung am Widerstand am Channel 2 des Oszilloskops gemessen. Die Erde liegt dabei zwischen Kondensator und Widerstand.
 
 \subsection{Versuchsdurchführung}
 
-Die Fallzeiten werden für verschiedene Höhen von 10 bis 90 cm in Schritten von 10 cm durchgeführt. Dabei werden für jede Höhe 10 Zeitmessungen mit dem Digitalzähler und eine Messung mit dem Oszilloskop durchgeführt. Das Oszilloskop wird dabei auf Single Seq eingestellt und auf die steigende Flanke des Startsignals getriggert. Das Triggerlevel liegt dabei bei 620 mV. Um eine Startgeschwindidkeit der Kugel zu vermeiden, wird der Auslösebügel möglichst feinfühlig betätigt. Es werden stets alle Messungen für eine Höhe durchgeführt, ehe die Höhe verstellt wird. Bei der Höheneinstellung wird versucht mit der oberen Bohrungskante der Startkonsole genau den Strich der Säulenskala zu treffen.
+Die Schwingungen werden im Modus \glqq automatische Aufnahme\grqq{} mit folgenden Messparametern aufgenommen:
+\begin{enumerate}[-]
+\item Messbereich Strom $I$: $\pm 0.3$A
+\item Messbereich Spannung am Kondensator $U_C$: $\pm 10$V
+\item Messintervall: $10\mu\text{s}$
+\item Anzahl an Messpunkten: $2000$
+\item Messzeit: $20$ms
+\end{enumerate}
+Die Spannungsquelle des Sensor-CASSYs ist stets eingeschaltet, so dass der Kondensator geladen ist. Eine Messung wird ausgelöst, indem der Taster gedrückt und somit der Stromkreis geschlossen wird. Um möglich direkt nach Betätigung des Tasters die Aufnahme zu beginnen, wird ein Trigger verwendet. Dieser aktiviert die Messung bei einer steigenden Flanke von $U_C$, die den Schwellenwert von $-9.2$V überschreitet. Das ist sinnvoll, weil die Spannungsquelle auf $U_0 = 9.4$V eingestellt ist und die Polung des Messgerätes zu einer gemessenen Kondensatorspannung von $-9.4$V bei offenem Taster führt. 
+Vorab werden die im Versuch verwendeten Widerstände mit Hilfe eines Multimeters auf ihren tatsächlichen Widerstandswert geprüft. In Tabelle \ref{tab:widerstaende} sind die verwendeten Widerstände mit Herstellerangabe und gemessenen Werten angegeben.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+Herstellerangabe / $\Omega$ & Gemessener Wert / $\Omega$ \\
+\hline
+$1$ & $1.008 \pm 0.001$ \\
+$5.1$ & $5.101 \pm 0.001$ \\
+$10$ & $9.990 \pm 0.002$ \\
+$20$ & $19.82 \pm 0.01$ \\
+$47$ & $46.67 \pm 0.01$ \\
+$100$ & $99.24 \pm 0.04$ \\
+$1000$ & $991.20\pm 0.08$
+\end{tabular}
+\caption{Herstellerangaben für die verwendeten Widerstände und deren mittels Multimeter gemessene Widerstandswerte samt Fehler.}
+\label{tab:widerstaende}
+\end{table}
+Die nun folgenden Rechnungen verwenden die gemessenen Widerstandswerte. Zusätzlich werden drei in Reihe geschaltete $1\text{k}\Omega$ Widerstädnde verwendet, um einen Widerstand von $3\text{k}\Omega$ zu erreichen. Da diese Messung jedoch nur zur Visualisierung des Kriechsfalls dient, wird kein genauer Wert benötigt. Um den aperiodischen Grenzfall einzustellen, wird außerdem ein Potentiometer verwendet. Durch sukzessives Erhöhen des Widerstandes nimmt $\delta$ zu, sodass ab einem gewissen Wert keine Schwingung mehr am Oszilloskop beobachtbar ist. Dieses Vorgehen wird in Abbildung dargestellt.
+
+\begin{minipage}[t]{0.3\textwidth}
+\includegraphics[width=\textwidth]{bilder/oszi1.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.3\textwidth}
+\includegraphics[width=\textwidth]{bilder/oszi2.jpg}
+%\captionof{Messungen der Schwingungen mit verschiedenen Einstellungen des Potentiometers (v.l: $60\Omega$, $160\Omega$ und $186\Omega$). Man erkennt gut, wie durch das Erhöhen des Widerstandwertes die Schwingung abnimmt.}
+%\label{pic:oszi}
+\end{minipage}
+\begin{minipage}[t]{0.3\textwidth}
+\includegraphics[width=\textwidth]{bilder/oszi3.jpg}
+\end{minipage}
 
 
 \subsection{Versuchsauswertung}
 
-\subsubsection{Messung mit dem Digitalzähler}
+Beispielhafte Rohdaten für alle verschiedenen Fälle sind in Abbildung \ref{abb:rohdaten_ska} zu sehen.
 
-Für die Höhenmessung ist entscheidend mit welcher Genauigkeit man den Skalenstrich trifft. Dabei wird die Unsicherheit auf $\sigma_s = 1 \, \mathrm{mm}$ geschätzt. Mit dem Digitalzähler ergaben sich die Messsungen aus Tabelle \ref{tableDz}.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/rohdaten_ska.pdf}
+\caption{Rohdaten mit Schwing-, Kriech- und Aperiodischem Grenzfall}
+\label{abb:rohdaten_ska}
+\end{figure}
+
+\subsubsection{Schwingfall}
+Zunächst bestimmen wir die Frequenzen und die Dämpfungen der aufgenommenen Schwingungen für die verschiedenen verwendeten Ohmschen Widerstände. Um die Frequenz bzw. die Periodendauer zu bestimmen, existieren zwei Möglichkeiten. Einerseits ist die Analyse mittels FFT möglich. Andererseits können die Extrema aus den Rohdaten abgelesen und die Periodendauer mittels Regression über die Schwingungsanzahl bestimmt werden.
+Analog dazu besteht die Möglichkeit, die Dämpfung $\delta$ aus Gleichung \ref{eq:i_lsg} durch logarithmisches Auftragen der Extrema, d.h. mit Regression, zu berechnen: Es gilt
+$$sin(\omega t_i) = \pm 1$$
+für die Zeitpunkte $t_i$ an denen $I$ bzw. $U_C$ ein Extremum annimmt. Durch logarithmieren der Gleichung \ref{eq:i_lsg} erhält man für diese Zeiten $t_i$ dann
+$$\log \lvert I(t_i)\rvert = -\delta t_i + \log\left\lvert CU_0 \left(\omega+\frac{\delta^2}{\omega}\right)\right\rvert$$
+beziehungsweise eine analoge Form für $U_C$. Natürlich kann $\delta$ durch die Verwendung eines Steigungsdreiecks auch nur bei zwei ablesbaren Maxima oder Minima bestimmt werden:
+$$\delta = \frac{\log\left(\frac{U_C(t_0)}{U_C(t_1)}\right)}{t_1-t_0}$$
+Bei beiden Vorgehensweisen muss der Offset korrigiert werden. Als zweite Option für die Berechnung von $\delta$ kann eine Exponentialfunktion als Einhüllende gefittet werden und die Dämpfung $\delta$ aus dem Fit abgelesen werden.
+Für den $100\Omega$ Widerstand sind Regressionen nicht praktikabel, da - aufgrund der starken Dämpfung - zu wenige Extrema genau ablesbar sind. Ein beispielhaftes Ergebnis für die Regression von abgelesenen Extrema bei der Schwingung des $10\Omega$ Widerstand ist in Abbildung \ref{abb:reg1} dargestellt. Die übrigen durchgeführten Regressionen sind im Anhang \ref{app:reg} abgebildet.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_schwingung3.pdf}
+\caption{Regressionen für den $10\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$.}
+\label{abb:reg1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung3_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $10\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\label{abb:fft1}
+\end{figure}
+
+Für die Frequenzen ergeben sich die in Tabelle \ref{tab:freq} dargestellten Werte. Die FFT-Ergebnisse sind mit der Peakfinder-Methode berechnet. Dabei sollte man beachten, dass der FFT-Algorithmus die Frequenz mit einer Breite von $h\approx 49.975 \text{Hz}$ diskretisiert. Dies mindert die Qualität der Resultate spürbar. Als Fehler der Einzelmessungen wird die Differenz aus Argument-Maximum der Amplitude und Peak-Schwerpunkt verwendet. Der Fehler des gewichteten Mittels ist der innere Fehler der Einzelmessungen. Das Frequenzspektrum der ersten Messung des $10\Omega$ Widerstands ist in Abbildung \ref{abb:fft1} zu sehen. Für die übrigen Widerstände befindet sich jeweils das Spektrum der 1. Messung im Anhang \ref{app:fft}.
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{c|c|cccc}
+\multirow{2}{*}{Ohmscher Widerstand / $\Omega$} & \multirow{2}{*}{Regression / Hz} & \multicolumn{4}{c}{$f$ mit FFT / Hz} \\
+\cline{3-6}
+& & Messung 1 & Messung 2 & Messung 3 & Mittel\\
+\hline
+$1$ & $1696.9 \pm 0.6$ & $1715.7\pm 16.6$ & $1715.2\pm 16.1$ & $1715.3\pm 16.1$ & $1715.4\pm 9.4$\\
+$5.1$ & $1696.3 \pm 0.7$ & $1718.9\pm 19.7$ & $1719.0\pm 19.8$ & $1719.0\pm 19.8$ & $1718.9\pm 11.4$\\
+$10$ & $1695.1 \pm 1.0$ & $1719.3\pm 20.1$ & $1719.3\pm 20.1$ & $1719.2\pm 20.0$ & $1719.2\pm 11.6$ \\
+$20$ & $1689.2 \pm 2.1$ & $1720.4\pm 21.3$ & $1720.3\pm 21.2$ & $1720.3\pm 21.2$ & $1720.4\pm 12.2$\\
+$47$ & $1628.6 \pm 4.8$ & $1761.1\pm 62.0$ & $1761.3\pm 62.1$ & $1741.5\pm 42.4$ & $1751.0 \pm 30.5$\\
+$100$ & - & $1294.7\pm 154.6$ & $1293.4\pm 155.8$ & $1339.0\pm 110.3$ & $1316.4 \pm 77.8$
+\end{tabular}
+\end{adjustbox}
+\caption{Mit Regression und FFT ermittelte Frequenzwerte.}
+\label{tab:freq}
+\end{table}
+
+Die Messungen des $100\Omega$ Widerstands werden von nun an nicht weiter ausgewertet, da die kurze Schwingzeit keine zuverlässigen Ergebnisse ermöglicht. Des Weiteren arbeitet die Peakfinder-Methode wegen der groben Diskretisierung der Frequenz durch den FFT-Algorithmus nicht korrekt, sodass die Frequenzen der Regressionsmethode als weitere Berechnungsgrundlage dienen. Ein Indiz dafür, dass die Frequenzwerte aus dem Spektrum systematisch fehlerhaft sind, ist, dass sie mit steigendem Widerstand steigen, obwohl
+$$\omega^2 = \omega_0^2 + \delta^2$$
+mit der korrigierten Frequenz $\omega_0$ und der Dämpfung $\delta$ gilt und sie daher, wie die Regressionsdaten, fallen müssten.
 
 \begin{table}[h]
-\begin{center}
-\begin{tabular}{c|r|r|r|r|r|r|r|r|r}
-$s$ / cm & 10 & 20 & 30 & 40 & 50 & 60 & 70 & 80 & 90 \\
-\hline
-$t$ / ms & 140 & 200 & 245 & 284 & 318 & 348 & 376 & 403 & 427 \\
-         & 140 & 200 & 246 & 284 & 318 & 348 & 377 & 403 & 427 \\
-	 & 140 & 200 & 246 & 284 & 318 & 348 & 376 & 403 & 427 \\
-	 & 141 & 200 & 246 & 284 & 318 & 348 & 377 & 403 & 427 \\
-	 & 141 & 200 & 246 & 284 & 318 & 348 & 377 & 402 & 407 \\
-	 & 141 & 200 & 245 & 284 & 318 & 348 & 376 & 402 & 427 \\
-	 & 141 & 200 & 246 & 284 & 318 & 348 & 376 & 402 & 427 \\
-	 & 141 & 200 & 245 & 284 & 318 & 348 & 376 & 402 & 427 \\
-	 & 141 & 200 & 245 & 284 & 318 & 348 & 376 & 403 & 427 \\
-	 & 141 & 200 & 246 & 284 & 318 & 348 & 376 & 402 & 427 \\
-\hline
-$\bar t$ / ms & 140.7 & 200.0 & 245.6 & 284.0 & 318.0 & 348.0 & 376.3 & 402.5 & 427.0
-\end{tabular}
-\caption{Messreihe mit dem Digitalzähler}
-\label{tableDz}
-\end{center}
-\end{table}
-
-Aufgrund der geringen statistischen Effekte in der Messreihe werden statistische Unsicherheiten vernachlässigt und die Unsicherheit aufgrund der zeitlichen Auflösung des Zählers unter Annahme einer Gleichverteilung zu $\sigma_t = 1/\sqrt{12} \, \mathrm{ms} \approx 0.29 \, \mathrm{ms}$ bestimmt. Wir führen nun mit den berechneten Mittelwerten eine Regression durch. Da in unserem Experiment die Anfangsgeschwindigkeit $v_0$ der Kugel vernachlässigbar sein sollte, haben wir einen linearen Zusammenhang zwischen $s$ und $t^2$. Es gilt
-$$s(t) = s_0 + mt^2.$$
-Deswegen führen wir eine lineare Regression von $s$ über $t^2$ durch. Dazu berechnen wir zunächst die Werte für $t^2$ und bestimmen den Fehler dieser gemäß
-$$\sigma_{t^2} = 2|t|\sigma_t.$$
-Die Ergebnisse der Regression sind in Tabelle \ref{tableReg1} aufgelistet.
-
-\begin{table}[h!]
-\begin{center}
-\begin{tabular}{c|c|c}
-$m$ & $s_0$ & $\chi^2/n_{df}$ \\
-\hline
-$(4.9221 \pm 0.0084) \, \mathrm m / \mathrm s^2$ & $(0.0028 \pm 0.0009) \, \mathrm m$ & $0.14$
-\end{tabular}
-\caption{Ausgabe der Regression}
-\label{tableReg1}
-\end{center}
-\end{table}
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{plots/regression_fF1.pdf}
-	\caption{Residuenplot für den Digitalzähler}
-	\label{ResDz}
-\end{figure}
-
-Der sehr schlechte Wert für $\chi^2/n_{df}$ spiegelt sich auch im Residuengraph wieder (Abb. \ref{ResDz}), wo alle Fehlerbalken deutlich die Nulllinie treffen. Zusammen führt dies zu dem Schluss, dass die Fehlerabschätzungen für $s$ und $t$ zu grob sind. Da wir jedoch keine bessseren Abschätzungen machen können, führen wir noch eine alternative Auswertung der Daten durch. Dazu berechnen wir für je zwei benachbarte Datenpunkte in unserem $s-t^2$-Diagramm die Steigung, wobei der erste Wert nicht verwendet wird. Für die Steigung gilt
-$$m = \frac{s_{i+1}-s_i}{t_{i+1}^2-t_{i}^2}.$$
-Dies liefert uns vier Schätzungen für die Steigung. Die Fehler werden mit einer Gaußschen Fehlerfortplanzung bestimmt. Diese liefert uns
-$$\frac{\sigma_m^2}{m^2} = \frac{2}{(s_{i+1}-s_i)^2}\cdot\sigma_s^2 + \frac{4(t_{i+1}^2 + t_i^2)}{(t_{i+1}^2-t_i^2)^2}\cdot\sigma_t^2.$$
-Anschließend werden die vier Steigungswerte mit ihren Unsicherheiten gewichtet gemittelt und innerer und äußerer Fehler des Mittelwertes bestimmt. Die Ergebnisse dieser Kalkulation sind in Tabelle \ref{tableAltAus} zu sehen. 
-
-\begin{table}[h!]
-\begin{center}
+\centering
 \begin{tabular}{c|c}
-$m_1$ & $(4.921 \pm 0.083) \, \mathrm m / \mathrm s^2$ \\ 
-$m_2$ & $(4.886 \pm 0.091) \, \mathrm m / \mathrm s^2$ \\
-$m_3$ & $(4.879 \pm 0.099) \, \mathrm m / \mathrm s^2$ \\
-$m_4$ & $(4.921 \pm 0.109) \, \mathrm m / \mathrm s^2$ \\
+Ohmscher Widerstand / $\Omega$ & $\delta \pm \sigma_{\delta\text{, stat}} \pm \sigma_{\delta\text{, syst}}$ (mit Regression berechnet) / Hz \\
 \hline
-$\bar m$ & $4.902 \, \mathrm m / \mathrm s^2$ \\
-$\sigma^{in}_{\bar m}$ & $0.047 \, \mathrm m / \mathrm s^2$ \\
-$\sigma^{au}_{\bar m}$ & $0.011 \, \mathrm m / \mathrm s^2$
+$1$ & $341.02 \pm 0.26 \pm 0.02$ \\
+$5.1$ & $565.81 \pm 0.57 \pm 0.04$\\
+$10$ & $860.24 \pm 1.25 \pm 0.05$ \\
+$20$ & $1421.97 \pm 3.57 \pm 0.18$ \\
+$47$ & $2820.46 \pm 16.19 \pm 0.92$\\
+$100$ & $-$
 \end{tabular}
-\caption{Alternative Auswertung der Daten}
-\label{tableAltAus}
-\end{center}
-\end{table}
-Aus dem Wert der Steigung ergibt sich dann die Schätzung für die Erdbeschleunigung
-$$g = (9.80 \pm 0.09) \, \mathrm m / \mathrm s^2 .$$
-
-\subsubsection{Messung mit dem Oszilloskop}
-
-Die Messungen mit dem Oszilloskop sind in Tabelle \ref{tableOs} aufgeführt. 
-\begin{table}[h!]
-\begin{center}
-\begin{tabular}{c|r|r|r|r|r|r|r|r|r}
-$s$ / cm & 10 & 20 & 30 & 40 & 50 & 60 & 70 & 80 & 90 \\
-\hline
-$t$ / ms & 140.8 & 200.0 & 245.2 & 283.8 & 318.2 & 348.4 & 376.6 & 402.7 & 427.2 \\
-\end{tabular}
-\caption{Messreihe mit dem Oszilloskop}
-\label{tableOs}
-\end{center}
+\caption{Mittels Regression berechnete Dämpfungswerte}
+\label{tab:daempfung1}
 \end{table}
 
-Die Genauigkeit der Zeitmessung mit dem Oszilloskop wird auf $\sigma_t = 0.1 \, \mathrm{ms}$ geschätzt. Wir führen wieder ein lineare Regression von $s$ über $t^2$ durch. Die Ergebnisse befinden sich in Tabelle \ref{tableReg2}.
+Die aus der Regression von $\log \lvert U_C \rvert$ über $t$ bestimmten Dämpfungswerte sind in Tabelle \ref{tab:daempfung1} einsehbar. Die Regressionen selber sind in Abbildung \ref{abb:reg1} und Anhang \ref{app:reg} geplottet. Die systematischen Fehler $\sigma_{syst}$ ergeben sich aus den systematischen Fehlern von $U_C$. Für $U_C$ wird ein statistischer Fehler von $\sigma_{U_C} = 4.89$mV verwendet. Dies entspricht der Diskretisierungsbreite des Sensor-CASSYs für den vorliegenden Messbereich $\pm 10$V.
 
-\begin{table}[h!]
-\begin{center}
-\begin{tabular}{c|c|c}
-$m$ & $s_0$ & $\chi^2/n_{df}$ \\
-\hline
-$(4.9123 \pm 0.0066) \, \mathrm m / \mathrm s^2$ & $(0.0035 \pm 0.0007) \, \mathrm m$ & $0.5$
-\end{tabular}
-\caption{Ausgabe der Regression}
-\label{tableReg2}
-\end{center}
-\end{table}
-
-Der Wert für $\chi^2/n_{df}$ deutet wieder auf eine zu grobe Fehlerabschätzung hin. Dies zeigt sich auch wieder im Residuenplot (Abb. \ref{ResOz}), wo fast alle Fehlerbalken die Nulllinie treffen.
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{plots/regression_fF2.pdf}
-	\caption{Residuenplot für das Oszilloskop}
-	\label{ResOz}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend3_2.pdf}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $10\Omega$ Widerstands.}
+\label{abb:einhuellende1}
 \end{figure}
-Trotzdessen verwenden wir die Ergebnisse dieser Regression, da die Anpassung deutlich besser ist, als im Falle des Digitalzählers. Aus der Steigung ermitteln wir folgende Schätzung für die Erdbeschleunigung
-$$g = (9.824 \pm 0.013) \, \mathrm m / \mathrm s^2 .$$
+
+Die berechneten Dämpfungen mittels Fit einer einhüllenden Exponentialfunktion um die Schwingung können aus Tabelle \ref{tab:daempfung2} abgelesen werden. Die Größe der systematischen Fehler liegt dabei unter 1\% der statistischen Fehler, so dass die systematischen Fehler vernachlässigt werden. Die Fehler der gewichteten Mittel sind die äußeren Fehler der drei Messungen. Für eine Messung mit dem $10\Omega$ Widerstand ist die Einhüllende in Abbildung \ref{abb:einhuellende1} geplotet. Im Anhang \ref{app:expein} befinden sich Einhüllende für jeweils eine Messung der übrigen Widerstände.
+
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{c|cccc}
+\multirow{2}{*}{Ohmscher Widerstand / $\Omega$} & \multicolumn{4}{c}{$\delta$ mit Exp-Einhüllender / Hz} \\
+\cline{2-5}
+& Messung 1 & Messung 2 & Messung 3 & Mittel\\
+\hline
+$1$ & $348.56 \pm 0.27$ & $324.45\pm 0.23$ & $325.60\pm 0.23$ & $331.32\pm 7.38$ \\
+$5.1$ & $562.21 \pm 0.55$ & $574.88\pm 0.57$ & $575.29\pm 0.57$ & $570.61\pm 4.34$ \\
+$10$ & $858.22 \pm 1.05$ & $856.24\pm 1.05$ & $849.17\pm 1.03$ & $854.48\pm 2.76$ \\
+$20$ & $1409.89 \pm 2.51$ & $1417.40\pm 2.54$ & $1409.46\pm 2.51$ & $1412.21\pm 2.57$ \\
+$47$ & $2995.46 \pm 13.28$ & $2891.72\pm 8.96$ & $2922.18\pm 12.57$ & $2923.66\pm 29.28$
+\end{tabular}
+\end{adjustbox}
+\caption{Durch Anwendung der Pythonmethode \url{analyse.exp_einhuellende} bestimmte Dämpfungen.}
+\label{tab:daempfung2}
+\end{table}
+
+
+
+\subsubsection{Aperiodischer Grenzfall}
+
+\subsubsection{Kriechfall}
+
 
 
 \subsection{Fazit}
 
-Wir haben nun zwei Schätzungen für die Erdbeschleunigung $g$ ermittelt. Wie im Fazit des zweiten Versuchs erläutert, verwenden wir als Literaturwert für die Erbeschleunigung in Aachen $g_L = 9.811 \, \mathrm m / \mathrm s^2$. 
-Zur Bewertung der beiden Ergebnisse berechnen wir
-\begin{align*}
-\frac{|g_L-g_{Dz}|}{\sigma_{g_{Dz}}} &= 0.12 \\
-\frac{|g_L-g_{Os}|}{\sigma_{g_{Os}}} &= 1
-\end{align*}
-In beiden Fällen liegen wir somit im $1\sigma$-Intervall. Zur Überprüfung der Übereinstimmung der beiden Werte untereinander berechnen wir noch
-$$\frac{|g_{Os}-g_{Dz}|}{\sqrt{\sigma_{g_{Dz}}^2 + \sigma_{g_{Os}}^2}} \approx 0.03 \ll 1.$$
-Die beiden Werten stimmen also im Rahmen der Unsicherheiten sehr gut überein. 
+
+\newpage
+\input{gekoppelteSchwingkreise.tex}
+
 
 
 \newpage
+\appendix
+\section{LCR-Schwingfall: Regressionen der übrigen Widerstände}\label{app:reg}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_schwingung1.pdf}
+\caption{Regressionen für den $1\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_schwingung2.pdf}
+\caption{Regressionen für den $5.1\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_schwingung4.pdf}
+\caption{Regressionen für den $20\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_schwingung5.pdf}
+\caption{Regressionen für den $47\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$}
+\end{figure}
 
+\section{LCR-Schwingfall: FFT der übrigen Widerstände}\label{app:fft}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung1_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $1\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung2_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $5.1\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung4_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $20\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung5_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $47\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/fft/fft_schwingung6_1.pdf}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $100\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\end{figure}
 
-\input{pendel.tex}
-
+\section{LCR-Schwingfall: Exp-Einhüllende der übrigen Widerstände}\label{app:expein}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend1_2.pdf}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $1\Omega$ Widerstands.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend2_2.pdf}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $5.1\Omega$ Widerstands.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend4_2.pdf}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $20\Omega$ Widerstands.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend5_2.pdf}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $47\Omega$ Widerstands.}
+\end{figure}
 
 \end{document}
