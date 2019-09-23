@@ -42,7 +42,7 @@ plt.savefig('plots/rohdaten_ska.pdf', format='pdf', dpi=1200)
 plt.close()
 '''
 
-plt.plot(time,volt_a, color = 'red', label=')
+plt.plot(time,volt_a, color = 'red', label='186$\Omega$')
 plt.plot(time,volt_k, color ='blue', label='1k$\Omega$')
 plt.plot(time,volt_k2, color = 'orange', label='3k$\Omega$')
 plt.xlim(0,10)
