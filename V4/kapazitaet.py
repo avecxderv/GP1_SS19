@@ -48,7 +48,7 @@ fig, (ax1, ax2) = plt.subplots(2,1, sharex=True, figsize=(12,6), gridspec_kw={'h
 ax1.errorbar(delta2,omega2, color='red', xerr=edelta2, yerr=eomega2, fmt='.', marker='o', markeredgecolor='red')
 ax1.plot(delta2, -delta2+reg[0], color='black', linestyle='--')
 ax1.set_ylabel('$\omega^2$ / $1/s^2$')
-ax1.text(0.97,0.92,s='Steigung: ' + str(-1) + '(festgesetzt)', 
+ax1.text(0.97,0.92,s='Steigung: ' + str(-1) + ' (festgesetzt)', 
          fontsize = '13', color='blue',ha='right',transform=ax1.transAxes)
 ax1.text(0.97,0.85,s='y-Achsenabschnitt: (' + "{0:.3f}".format(reg[0]) + r'$\pm$' + "{0:.3f}".format(reg[1]) + ')$1/s^2$', 
          fontsize = '13', color='blue',ha='right',transform=ax1.transAxes)
