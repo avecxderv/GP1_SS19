@@ -9,6 +9,7 @@
 \usepackage{amsfonts}
 
 \usepackage{graphicx}
+\usepackage{caption}
 
 \usepackage{float}
 \usepackage{adjustbox}
@@ -109,12 +110,12 @@ Das Schaltbild aus Abbildung \ref{abb:schaltLCR} wird auf der Rastersteckplatte 
 Die Schwingungen werden im Modus \glqq automatische Aufnahme\grqq{} mit folgenden Messparametern aufgenommen:
 \begin{enumerate}[-]
 \item Messbereich Strom $I$: $\pm 0.3$A
-\item Messbereich Spannung am Kondensator $U_C$: $\pm 10V$
+\item Messbereich Spannung am Kondensator $U_C$: $\pm 10$V
 \item Messintervall: $10\mu\text{s}$
 \item Anzahl an Messpunkten: $2000$
 \item Messzeit: $20$ms
 \end{enumerate}
-Um möglich direkt nach Betätigung des Tasters die Aufnahme zu beginnen, wird ein Trigger verwendet. Dieser aktiviert die Messung bei einer steigenden Flanke von $U_C$, die den Schwellenwert von $-9.2$V überschreitet. Das ist sinnvoll, weil die Spannungsquelle auf $U_0 = 9.4$V eingestellt ist und die Polung des Messgerätes zu einer gemessenen Kondensatorspannung von $-9.4$V bei offenem Taster führt. 
+Die Spannungsquelle des Sensor-CASSYs ist stets eingeschaltet, so dass der Kondensator geladen ist. Eine Messung wird ausgelöst, indem der Taster gedrückt und somit der Stromkreis geschlossen wird. Um möglich direkt nach Betätigung des Tasters die Aufnahme zu beginnen, wird ein Trigger verwendet. Dieser aktiviert die Messung bei einer steigenden Flanke von $U_C$, die den Schwellenwert von $-9.2$V überschreitet. Das ist sinnvoll, weil die Spannungsquelle auf $U_0 = 9.4$V eingestellt ist und die Polung des Messgerätes zu einer gemessenen Kondensatorspannung von $-9.4$V bei offenem Taster führt. 
 Vorab werden die im Versuch verwendeten Widerstände mit Hilfe eines Multimeters auf ihren tatsächlichen Widerstandswert geprüft. In Tabelle \ref{tab:widerstaende} sind die verwendeten Widerstände mit Herstellerangabe und gemessenen Werten angegeben.
 
 \begin{table}[H]
@@ -133,7 +134,20 @@ $1000$ & $991.20\pm 0.08$
 \caption{Herstellerangaben für die verwendeten Widerstände und deren mittels Multimeter gemessene Widerstandswerte samt Fehler.}
 \label{tab:widerstaende}
 \end{table}
-Die nun folgenden Rechnungen verwenden die gemessenen Widerstandswerte. Zusätzlich werden drei in Reihe geschaltete $1\text{k}\Omega$ Widerstädnde verwendet, um einen Widerstand von $3\text{k}\Omega$ zu erreichen. Da diese Messung jedoch nur zur Visualisierung des Kriechsfalls dient, wird kein genauer Wert benötigt. 
+Die nun folgenden Rechnungen verwenden die gemessenen Widerstandswerte. Zusätzlich werden drei in Reihe geschaltete $1\text{k}\Omega$ Widerstädnde verwendet, um einen Widerstand von $3\text{k}\Omega$ zu erreichen. Da diese Messung jedoch nur zur Visualisierung des Kriechsfalls dient, wird kein genauer Wert benötigt. Um den aperiodischen Grenzfall einzustellen, wird außerdem ein Potentiometer verwendet. Durch sukzessives Erhöhen des Widerstandes nimmt $\delta$ zu, sodass ab einem gewissen Wert keine Schwingung mehr am Oszilloskop beobachtbar ist. Dieses Vorgehen wird in Abbildung dargestellt.
+
+\begin{minipage}[t]{0.3\textwidth}
+\includegraphics[width=\textwidth]{bilder/oszi1.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.3\textwidth}
+\includegraphics[width=\textwidth]{bilder/oszi2.jpg}
+%\captionof{Messungen der Schwingungen mit verschiedenen Einstellungen des Potentiometers (v.l: $60\Omega$, $160\Omega$ und $186\Omega$). Man erkennt gut, wie durch das Erhöhen des Widerstandwertes die Schwingung abnimmt.}
+%\label{pic:oszi}
+\end{minipage}
+\begin{minipage}[t]{0.3\textwidth}
+\includegraphics[width=\textwidth]{bilder/oszi3.jpg}
+\end{minipage}
+
 
 \subsection{Versuchsauswertung}
 
@@ -171,13 +185,13 @@ Für den $100\Omega$ Widerstand sind Regressionen nicht praktikabel, da - aufgru
 \label{abb:fft1}
 \end{figure}
 
-Für die Frequenzen ergeben sich die in Tabelle \ref{tab:freq} dargestellten Werte. Die FFT-Werte stammen aus der Peakfinder-Methode. Dabei sollte man beachten, dass der FFT-Algorithmus die Frequenz mit einer Breite von $h\approx 49.975 \text{Hz}$ diskretisiert. Dies mindert die Qualität der Methode. Als Fehler der Einzelmessungen wurde die Differenz aus Argument-Maximum der Amplitude und Peak-Schwerpunkt verwendet. Der Fehler des gewichteten Mittels ist der innere Fehler der Einzelmessungen. Das Frequenzspektrum der ersten Messung des $10\Omega$ Widerstands ist in Abbildung \ref{abb:fft1} zu sehen. Für die übrigen Widerstände befindet sich jeweils das Spektrum der 1. Messung im Anhang \ref{app:fft}.
+Für die Frequenzen ergeben sich die in Tabelle \ref{tab:freq} dargestellten Werte. Die FFT-Ergebnisse sind mit der Peakfinder-Methode berechnet. Dabei sollte man beachten, dass der FFT-Algorithmus die Frequenz mit einer Breite von $h\approx 49.975 \text{Hz}$ diskretisiert. Dies mindert die Qualität der Resultate spürbar. Als Fehler der Einzelmessungen wird die Differenz aus Argument-Maximum der Amplitude und Peak-Schwerpunkt verwendet. Der Fehler des gewichteten Mittels ist der innere Fehler der Einzelmessungen. Das Frequenzspektrum der ersten Messung des $10\Omega$ Widerstands ist in Abbildung \ref{abb:fft1} zu sehen. Für die übrigen Widerstände befindet sich jeweils das Spektrum der 1. Messung im Anhang \ref{app:fft}.
 
 \begin{table}[H]
 \centering
 \begin{adjustbox}{width=\textwidth}
 \begin{tabular}{c|c|cccc}
-\multirow{2}{*}{Ohmscher Widerstand / $\Omega$} & \multirow{2}{*}{Regression / Hz} & \multicolumn{4}{c}{FFT / Hz} \\
+\multirow{2}{*}{Ohmscher Widerstand / $\Omega$} & \multirow{2}{*}{Regression / Hz} & \multicolumn{4}{c}{$f$ mit FFT / Hz} \\
 \cline{3-6}
 & & Messung 1 & Messung 2 & Messung 3 & Mittel\\
 \hline
@@ -193,23 +207,58 @@ $100$ & - & $1294.7\pm 154.6$ & $1293.4\pm 155.8$ & $1339.0\pm 110.3$ & $1316.4 
 \label{tab:freq}
 \end{table}
 
-Die Messungen des $100\Omega$ Widerstands werden von nun an nicht weiter ausgewertet, da die kurze Schwingzeit keine zuverlässigen Ergebnisse ermöglicht. Desweiteren arbeitet die Peakfinder-Methode wegen der groben Diskretisierung der Frequenz durch den FFT-Algorithmus nicht korrekt, sodass die Frequenzen der Regressionsmethode als weitere Berechnungsgrundlage dienen. Ein Indiz dafür, dass die Frequenzwerte aus dem Spektrum systematisch fehlerhaft sind, ist, dass sie mit steigendem Widerstand steigen, obwohl
+Die Messungen des $100\Omega$ Widerstands werden von nun an nicht weiter ausgewertet, da die kurze Schwingzeit keine zuverlässigen Ergebnisse ermöglicht. Des Weiteren arbeitet die Peakfinder-Methode wegen der groben Diskretisierung der Frequenz durch den FFT-Algorithmus nicht korrekt, sodass die Frequenzen der Regressionsmethode als weitere Berechnungsgrundlage dienen. Ein Indiz dafür, dass die Frequenzwerte aus dem Spektrum systematisch fehlerhaft sind, ist, dass sie mit steigendem Widerstand steigen, obwohl
 $$\omega^2 = \omega_0^2 + \delta^2$$
-mit der korrigierten Frequenz $\omega_0$ und der Dämpfung $\delta$ gilt und sie daher, wie die Regressionsdaten, fallen müssten. Folgende Dämpfungswerte wurden berechnet:
+mit der korrigierten Frequenz $\omega_0$ und der Dämpfung $\delta$ gilt und sie daher, wie die Regressionsdaten, fallen müssten.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c}
+Ohmscher Widerstand / $\Omega$ & $\delta \pm \sigma_{\delta\text{, stat}} \pm \sigma_{\delta\text{, syst}}$ (mit Regression berechnet) / Hz \\
+\hline
+$1$ & $341.02 \pm 0.26 \pm 0.02$ \\
+$5.1$ & $565.81 \pm 0.57 \pm 0.04$\\
+$10$ & $860.24 \pm 1.25 \pm 0.05$ \\
+$20$ & $1421.97 \pm 3.57 \pm 0.18$ \\
+$47$ & $2820.46 \pm 16.19 \pm 0.92$\\
+$100$ & $-$
+\end{tabular}
+\caption{Mittels Regression berechnete Dämpfungswerte}
+\label{tab:daempfung1}
+\end{table}
+
+Die aus der Regression von $\log \lvert U_C \rvert$ über $t$ bestimmten Dämpfungswerte sind in Tabelle \ref{tab:daempfung1} einsehbar. Die Regressionen selber sind in Abbildung \ref{abb:reg1} und Anhang \ref{app:reg} geplottet. Die systematischen Fehler $\sigma_{syst}$ ergeben sich aus den systematischen Fehlern von $U_C$. Für $U_C$ wird ein statistischer Fehler von $\sigma_{U_C} = 4.89$mV verwendet. Dies entspricht der Diskretisierungsbreite des Sensor-CASSYs für den vorliegenden Messbereich $\pm 10$V.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend3_2.pdf}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $10\Omega$ Widerstands.}
+\label{abb:einhuellende1}
+\end{figure}
+
+Die berechneten Dämpfungen mittels Fit einer einhüllenden Exponentialfunktion um die Schwingung können aus Tabelle \ref{tab:daempfung2} abgelesen werden. Die Größe der systematischen Fehler liegt dabei unter 1\% der statistischen Fehler, so dass die systematischen Fehler vernachlässigt werden. Die Fehler der gewichteten Mittel sind die äußeren Fehler der drei Messungen. Für eine Messung mit dem $10\Omega$ Widerstand ist die Einhüllende in Abbildung \ref{abb:einhuellende1} geplotet. Im Anhang \ref{app:expein} befinden sich Einhüllende für jeweils eine Messung der übrigen Widerstände.
+
 
 \begin{table}[H]
 \centering
-\begin{tabular}{c|c}
-Ohmscher Widerstand / $\Omega$ & $\delta \pm \sigma_{stat} \pm \sigma_{syst}$ (mit Regression berechnet) / Hz \\
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{c|cccc}
+\multirow{2}{*}{Ohmscher Widerstand / $\Omega$} & \multicolumn{4}{c}{$\delta$ mit Exp-Einhüllender / Hz} \\
+\cline{2-5}
+& Messung 1 & Messung 2 & Messung 3 & Mittel\\
 \hline
-$1$ & $341.02 \pm 0.26$ \\
-$5.1$ & $565.81 \pm 0.57$\\
-$10$ & $860.24 \pm 1.25$ \\
-$20$ & $1421.97 \pm 3.57$ \\
-$47$ & $2820.46 \pm 16.19$\\
-$100$ & $-$
+$1$ & $348.56 \pm 0.27$ & $324.45\pm 0.23$ & $325.60\pm 0.23$ & $331.32\pm 7.38$ \\
+$5.1$ & $562.21 \pm 0.55$ & $574.88\pm 0.57$ & $575.29\pm 0.57$ & $570.61\pm 4.34$ \\
+$10$ & $858.22 \pm 1.05$ & $856.24\pm 1.05$ & $849.17\pm 1.03$ & $854.48\pm 2.76$ \\
+$20$ & $1409.89 \pm 2.51$ & $1417.40\pm 2.54$ & $1409.46\pm 2.51$ & $1412.21\pm 2.57$ \\
+$47$ & $2995.46 \pm 13.28$ & $2891.72\pm 8.96$ & $2922.18\pm 12.57$ & $2923.66\pm 29.28$
 \end{tabular}
+\end{adjustbox}
+\caption{Durch Anwendung der Pythonmethode \url{analyse.exp_einhuellende} bestimmte Dämpfungen.}
+\label{tab:daempfung2}
 \end{table}
+
+
 
 \subsubsection{Aperiodischer Grenzfall}
 
@@ -352,6 +401,7 @@ Schwebung & $k$ \\
 \includegraphics[width=\textwidth]{plots/reg_schwingung5.pdf}
 \caption{Regressionen für den $47\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$}
 \end{figure}
+
 \section{LCR-Schwingfall: FFT der übrigen Widerstände}\label{app:fft}
 \begin{figure}[H]
 \centering
@@ -379,5 +429,26 @@ Schwebung & $k$ \\
 \caption{Mittels FFT berechnetes Spektrum für die erste Messung des $100\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
 \end{figure}
 
+\section{LCR-Schwingfall: Exp-Einhüllende der übrigen Widerstände}\label{app:expein}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend1_2.pdf}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $1\Omega$ Widerstands.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend2_2.pdf}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $5.1\Omega$ Widerstands.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend4_2.pdf}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $20\Omega$ Widerstands.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend5_2.pdf}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $47\Omega$ Widerstands.}
+\end{figure}
 
 \end{document}

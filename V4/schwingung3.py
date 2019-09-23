@@ -55,55 +55,38 @@ for i in range(1,6,1):
         ex1 = analyse.exp_einhuellende(time, vol, np.full((vol.size),4.8e-3))
         ex2 = analyse.exp_einhuellende(time,-vol,np.full((vol.size),4.8e-3))
         
-        #Systematik
-        vol_sys = (0.01*vol + 0.005*10)/np.sqrt(3)
-        vol_oben = vol+vol_sys
-        vol_unt = vol-vol_sys
-        ex1_ob = analyse.exp_einhuellende(time, vol+vol_oben, np.full((vol.size),4.8e-3))
-        ex1_un = analyse.exp_einhuellende(time, vol+vol_unt, np.full((vol.size),4.8e-3))
-        ex2_ob = analyse.exp_einhuellende(time, -vol-vol_oben, np.full((vol.size),4.8e-3))
-        ex2_un = analyse.exp_einhuellende(time, -vol-vol_unt, np.full((vol.size),4.8e-3))
-        ex1_sys = 0.5*(np.abs(ex1_ob[2]-ex1[2])+np.abs(ex1_un[2]-ex1[2]))
-        ex2_sys = 0.5*(np.abs(ex2_ob[2]-ex2[2])+np.abs(ex2_un[2]-ex2[2]))
         
         mu, inn, au = gewichtetes_mittel_in_aus(np.array([ex1[2],ex2[2]]),np.array([ex1[3],ex2[3]]))
-        mu1, _, _ = gewichtetes_mittel_in_aus(np.array([ex1[2]+ex1_sys,ex2[2]+ex2_sys]),np.array([ex1[3],ex2[3]]))
-        mu2, _, _ = gewichtetes_mittel_in_aus(np.array([ex1[2]-ex1_sys,ex2[2]-ex2_sys]),np.array([ex1[3],ex2[3]]))
-        delta_e[i-1][j-1] = mu
-        edelta_e[i-1][j-1] = max(inn,au)
-        delta_sys_e[i-1][j-1] = 0.5*(np.abs(mu-mu1)+np.abs(mu-mu2))
+        delta_e[i-1][j-1] = ex1[2] #mu
+        edelta_e[i-1][j-1] = ex1[3]#max(inn,au)
         
         #Plot
         fig, ax = plt.subplots()
         ax.plot(time*1e+6,vol)
         ax.plot(time*1e+6,ex1[0]*np.exp(-ex1[2]*time))
-        ax.plot(time*1e+6,-ex2[0]*np.exp(-ex2[2]*time))
+        #ax.plot(time*1e+6,-ex2[0]*np.exp(-ex2[2]*time))
         ax.set_xlabel('$t$ / s')
         ax.set_ylabel('$U_C$ / V')
         ax.set_xlim(0,dic5[i])
-        fig.text(0.75,0.90,s='Dämpfung, oberer Fit: (' + "{0:.1f}".format(ex1[2]) + r'$\pm$' + "{0:.1f}".format(ex1[3]) + ')Hz', 
-                 fontsize = '14', color='orange',ha='right',transform=ax.transAxes)
-        fig.text(0.75,0.10,s='Dämpfung, unterer Fit: (' + "{0:.1f}".format(ex2[2]) + r'$\pm$' + "{0:.1f}".format(ex2[3]) + ')Hz', 
-                 fontsize = '14', color='green',ha='right',transform=ax.transAxes)
+        fig.text(0.75,0.91,s='Dämpfung: (' + "{0:.2f}".format(ex1[2]) + r'$\pm$' + "{0:.2f}".format(ex1[3]) + ')Hz', 
+                 fontsize = '16', color='orange',ha='right',transform=ax.transAxes)
+        #fig.text(0.75,0.10,s='Dämpfung, unterer Fit: (' + "{0:.1f}".format(ex2[2]) + r'$\pm$' + "{0:.1f}".format(ex2[3]) + ')Hz', 
+        #         fontsize = '14', color='green',ha='right',transform=ax.transAxes)
         plt.rcParams["figure.figsize"] = (12,6)
         plt.rcParams['axes.titlesize'] = 'large'
         plt.rcParams['axes.labelsize'] = 'large'
         plt.tight_layout()
         ax.grid()
-        plt.savefig('plots/einhuellend/exp_einhuellend'+str(i)+"_"+str(j)+'.pdf', format='pdf', dpi=1200)
+        #plt.savefig('plots/einhuellend/exp_einhuellend'+str(i)+"_"+str(j)+'.pdf', format='pdf', dpi=1200)
         plt.close(fig)
         
-dele = np.full((5,3),0.1)
+dele = np.full((5,2),0.1)
 for i in range(0,5,1):
     mu, inn, aus = gewichtetes_mittel_in_aus(delta_e[i],edelta_e[i])
-    mu1, _, _ = gewichtetes_mittel_in_aus(delta_e[i]+delta_sys_e[i], edelta_e[i])
-    mu2, _, _ = gewichtetes_mittel_in_aus(delta_e[i]-delta_sys_e[i], edelta_e[i])
     dele[i][0] = mu
     dele[i][1] = max(inn,aus)
-    dele[i][2] = 0.5*(np.abs(mu-mu1)+np.abs(mu-mu2))
 delta = np.array([dele[0][0],dele[1][0],dele[2][0],dele[3][0],dele[4][0]])
 edelta = np.array([dele[0][1],dele[1][1],dele[2][1],dele[3][1],dele[4][1]])
-edelta_sys = np.array([dele[0][2],dele[1][2],dele[2][2],dele[3][2],dele[4][2]])
 R = np.array([1.008,5.101,9.99,19.82,46.67])
 eR = np.array([0.001,0.001,0.002,0.01,0.01])
 
