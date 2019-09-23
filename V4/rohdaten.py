@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 
 data_s = cassy.CassyDaten('daten/schwingung_10Ohm_1.lab')
 data_k = cassy.CassyDaten('daten/schwingung_1000Ohm_1.lab')
+data_k2 = cassy.CassyDaten('daten/schwingung_3000Ohm_1.lab')
 data_a = cassy.CassyDaten('daten/aperiodisch_3_186.lab')
 
 time = data_s.messung(1).datenreihe('t').werte
@@ -19,10 +20,12 @@ time = data_s.messung(1).datenreihe('t').werte
 time = time*1000
 volt_s = data_s.messung(1).datenreihe('U_B1').werte
 volt_k = data_k.messung(1).datenreihe('U_B1').werte
+volt_k2 = data_k2.messung(1).datenreihe('U_B1').werte
 volt_a = data_a.messung(1).datenreihe('U_B1').werte
 
 plt.figure(figsize=(12,6))
 
+'''
 plt.plot(time, volt_s, color='blue', label='Schwingung')
 plt.plot(time, volt_k, color='green', label='Kriechfall')
 plt.plot(time, volt_a, color='red', label='Aperiodischer Grenzfall')
@@ -36,5 +39,20 @@ plt.rcParams['axes.labelsize'] = 'large'
 plt.legend()
 
 plt.savefig('plots/rohdaten_ska.pdf', format='pdf', dpi=1200)
+plt.close()
+'''
+
+plt.plot(time,volt_a, color = 'red', label=')
+plt.plot(time,volt_k, color ='blue', label='1k$\Omega$')
+plt.plot(time,volt_k2, color = 'orange', label='3k$\Omega$')
+plt.xlim(0,10)
+plt.grid()
+plt.xlabel('$t$ / ms')
+plt.ylabel('$U_C$ / V')
+plt.rcParams["figure.figsize"] = (12,6)
+plt.rcParams['axes.titlesize'] = 'large'
+plt.rcParams['axes.labelsize'] = 'large'
+plt.legend()
+plt.savefig('plots/rohdaten_kriech.pdf', format='pdf', dpi=1200)
 
 plt.show()
