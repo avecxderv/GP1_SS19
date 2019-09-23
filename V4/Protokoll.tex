@@ -115,7 +115,7 @@ Die Schwingungen werden im Modus \glqq automatische Aufnahme\grqq{} mit folgende
 \item Messzeit: $20$ms
 \end{enumerate}
 Um möglich direkt nach Betätigung des Tasters die Aufnahme zu beginnen, wird ein Trigger verwendet. Dieser aktiviert die Messung bei einer steigenden Flanke von $U_C$, die den Schwellenwert von $-9.2$V überschreitet. Das ist sinnvoll, weil die Spannungsquelle auf $U_0 = 9.4$V eingestellt ist und die Polung des Messgerätes zu einer gemessenen Kondensatorspannung von $-9.4$V bei offenem Taster führt. 
-Vorab werden die im Versuch verwendeten Widerstände mit Hilfe eines Multimeters auf ihren tatsächlichen Widerstandswert geprüft. In Tabelle \tef{tab:widerstaende} sind die verwendeten Widerstände mit Herstellerangabe und gemessenen Werten angegeben.
+Vorab werden die im Versuch verwendeten Widerstände mit Hilfe eines Multimeters auf ihren tatsächlichen Widerstandswert geprüft. In Tabelle \ref{tab:widerstaende} sind die verwendeten Widerstände mit Herstellerangabe und gemessenen Werten angegeben.
 
 \begin{table}[H]
 \centering
@@ -133,7 +133,7 @@ $1000$ & $991.20\pm 0.08$
 \caption{Herstellerangaben für die verwendeten Widerstände und deren mittels Multimeter gemessene Widerstandswerte samt Fehler.}
 \label{tab:widerstaende}
 \end{table}
-Die nun folgenden Rechnungen verwenden die gemessenen Widerstandswerte. Zusätzlich werden drei in Reihe geschaltete $1\text{k}\Omega$ Widerstädnde verwendet, um einen Widerstand von $3\text{k}\Ohm$ zu erreichen. Da diese Messung jedoch nur zur Visualisierung des Kriechsfalls dient, wird kein genauer Wert benötigt. 
+Die nun folgenden Rechnungen verwenden die gemessenen Widerstandswerte. Zusätzlich werden drei in Reihe geschaltete $1\text{k}\Omega$ Widerstädnde verwendet, um einen Widerstand von $3\text{k}\Omega$ zu erreichen. Da diese Messung jedoch nur zur Visualisierung des Kriechsfalls dient, wird kein genauer Wert benötigt. 
 
 \subsection{Versuchsauswertung}
 
@@ -275,14 +275,59 @@ $$f_k = \frac{f_- + f_+}{2} \hspace{0.2cm} \text{ und } \hspace{0.2cm} f_s = \fr
 bestimmen. Aufgrund der unvermeidbaren Dämpfung der beiden Schwingkreise sind die Extrema des einen Schwingkreises gegen die Nulldurchgänge des anderen verschoben. Für Kopplungen $k < 0.2$ gilt näherungsweise für die zeitliche Verschiebung
 $$\Delta t \approx \frac{1}{\omega_s} \left( \frac{\pi}{2} - \arctan\left(  \frac kR \sqrt{\frac LC}\right) \right).$$
 
+\subsection{Schwebung}
 
-\subsection{Versuchsaufbau}
+\subsubsection{Versuchsaufbau}
 
-\subsection{Versuchsdurchführung}
+\subsubsection{Versuchsdurchführung}
 
-\subsection{Versuchsauswertung}
+\subsubsection{Versuchsauswertung}
 
-\subsection{Fazit}
+Die Schwebung bei direkt aneinander platzierten Spulen ist in Abbildung \ref{abb:schwebung_roh} beispielhaft zu sehen.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/schwebung_roh.pdf}
+\caption{Rohdaten der Schwebung}
+\label{abb:schwebung_roh}
+\end{figure}
+
+Da sich die Periodendauer der Schwebung bei den beiden anderen Schwebungen garnicht anhand der Schwebungsmaxima bestimmen lässt, wird ausschließlich eine Auswertung mittels FFT vorgenommen. Dabei ergeben sich die Frequenzen in Tabelle \ref{tab:freq_schweb} für die aufgezeichnete Spannung am ersten Kondensator.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c}
+Schwebung & $f_+$ / Hz & $f_-$ / Hz \\
+\hline
+1 & $1598.65 \pm 0.95$ & $1832.1 \pm 7.5$ \\
+2 & $1639 \pm 11$ & $1727 \pm 23$ \\
+3 & $631.8 \pm 6.9$ & $1094 \pm 19$
+\end{tabular}
+\caption{Frequenzen aus FFT}
+\label{tab:freq_schweb}
+\end{table}
+
+Mithilfe der Frequenzen lassen sich nun die Kopplungsgrade der drei Konfigurationen berechnen. Es gilt
+$$k = \frac{f_-^2 - f_+^2}{f_-^2 + f_+^2}.$$
+Mittels Gaußscher Fehlerfortpflanzung lässt sich der Fehler auf $k$ zu
+$$\sigma_k = \frac{4f_-f_+}{(f_-^2+f_+^2)^2} \sqrt{f_+^2 \sigma_{f_-}^2 + f_-^2 \sigma_{f_+}^2}$$
+bestimmen. Es ergeben sich die Werte in Tabelle \ref{tab:kopplung}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c}
+Schwebung & $k$ \\
+\hline
+1 & $0.1355 \pm 0.0041$ \\
+2 & $0.0522 \pm 0.0146$ \\
+3 & $0.4999 \pm 0.0155$
+\end{tabular}
+\caption{Berechnete Kopplungsgrade}
+\label{tab:kopplung}
+\end{table}
+
+
+\subsubsection{Fazit}
 
 \newpage
 \appendix
