@@ -5,33 +5,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.odr
 
-delta = np.array([3.475527699156500603e+02, 
-         5.671994945727682307e+02, 
-         8.622797075022784838e+02, 
-         1.423902697807471668e+03, 
-         2.817100889200921301e+03])
+delta = np.array([ 341.01810569, 565.81381857, 860.23879874, 1421.9702776,2820.46265235])
+edelta = np.array([ 0.25891746,  0.56634525,  1.25160131,  3.57130468, 16.18687673])
+omega = 2*np.pi*np.array([1696.93,1696.33,1695.12,1689.19,1628.66])
+eomega = 2*np.pi*np.array([0.599133,0.695859,0.991429,2.12677,4.84287])
 
-edelta = np.array([1.291419319783521091e+00,
-          1.656171559933282467e+00,
-          2.586223358873092959e+00,
-          5.865760609950476656e+00,
-          1.673288272530401599e+01])
-
-
-T = 2*np.array([2.946493524283939403e-04,
-     2.947543878945637903e-04,
-     2.949642877086130002e-04,
-     2.960000061041986744e-04,
-     3.069999977014959834e-04])
-
-eT = 2*np.array([1.040312973220598787e-07,
-      1.209127083516686427e-07,
-      1.725163898355886481e-07,
-      3.726779962499649375e-07,
-      9.128709291752770334e-07])
-
-omega2 = 4*np.pi**2/(T**2)
-eomega2 = 2*omega2*eT/T
+omega2 = omega**2
+eomega2 = 2*omega*eomega
 
 delta2 = delta**2
 edelta2 = 2*delta*edelta
@@ -57,20 +37,33 @@ reg = lineare_regression_minus1(delta2, omega2, edelta2, eomega2)
 
 
 # Kapazitaet berechnen
-L = 9e-3
+L = 0.008759471427456488
+eL = 0.000079
 C = 1/(L*reg[0])
+eC = C*np.sqrt( (reg[1]/reg[0])**2 + (eL/L)**2)
 
 # Plot
-fig, (ax1, ax2) = plt.subplots(2,1, sharex=True, figsize=(12,6))
+fig, (ax1, ax2) = plt.subplots(2,1, sharex=True, figsize=(12,6), gridspec_kw={'height_ratios': [5, 2]})
 
 ax1.errorbar(delta2,omega2, color='red', xerr=edelta2, yerr=eomega2, fmt='.', marker='o', markeredgecolor='red')
 ax1.plot(delta2, -delta2+reg[0], color='black', linestyle='--')
-
+ax1.set_ylabel('$\omega^2$ / $1/s^2$')
+ax1.text(0.97,0.92,s='Steigung: ' + str(-1) + '(festgesetzt)', 
+         fontsize = '13', color='blue',ha='right',transform=ax1.transAxes)
+ax1.text(0.97,0.85,s='y-Achsenabschnitt: (' + "{0:.3f}".format(reg[0]) + r'$\pm$' + "{0:.3f}".format(reg[1]) + ')$1/s^2$', 
+         fontsize = '13', color='blue',ha='right',transform=ax1.transAxes)
+ax1.text(0.97,0.78,s='$\chi^2$/ndf: ' + "{0:.1f}".format(reg[2]/4),
+         fontsize = '13', color='blue',ha='right',transform=ax1.transAxes)
 reserr = np.sqrt(edelta2**2 + eomega2**2)
 ax2.errorbar(delta2, omega2+delta2-reg[0], yerr=reserr, color='red', fmt='.', marker='o', markeredgecolor='red')
 ax2.axhline(y=0, color='black', linestyle='--')
-
+ax2.set_xlabel('$\delta^2$ / $1/s^2$')
+ax2.set_ylabel('$\omega^2 + \delta^2 - \omega_0^2$ / $1/s^2$')
+#Plotparameter
+plt.rcParams["figure.figsize"] = (12,6)
+plt.rcParams['axes.titlesize'] = 'large'
+plt.rcParams['axes.labelsize'] = 'large'
 plt.subplots_adjust(hspace=0)
-
+#plt.savefig('plots/reg_delomega.pdf', format='pdf', dpi=1200)
 plt.show()
 

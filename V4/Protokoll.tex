@@ -9,7 +9,7 @@
 \usepackage{amsfonts}
 
 \usepackage{graphicx}
-\usepackage{caption}
+\usepackage{subfigure}
 
 \usepackage{float}
 \usepackage{adjustbox}
@@ -134,20 +134,23 @@ $1000$ & $991.20\pm 0.08$
 \caption{Herstellerangaben für die verwendeten Widerstände und deren mittels Multimeter gemessene Widerstandswerte samt Fehler.}
 \label{tab:widerstaende}
 \end{table}
-Die nun folgenden Rechnungen verwenden die gemessenen Widerstandswerte. Zusätzlich werden drei in Reihe geschaltete $1\text{k}\Omega$ Widerstädnde verwendet, um einen Widerstand von $3\text{k}\Omega$ zu erreichen. Da diese Messung jedoch nur zur Visualisierung des Kriechsfalls dient, wird kein genauer Wert benötigt. Um den aperiodischen Grenzfall einzustellen, wird außerdem ein Potentiometer verwendet. Durch sukzessives Erhöhen des Widerstandes nimmt $\delta$ zu, sodass ab einem gewissen Wert keine Schwingung mehr am Oszilloskop beobachtbar ist. Dieses Vorgehen wird in Abbildung dargestellt.
+Die nun folgenden Rechnungen verwenden die gemessenen Widerstandswerte. Zusätzlich werden drei in Reihe geschaltete $1\text{k}\Omega$ Widerstädnde verwendet, um einen Widerstand von $3\text{k}\Omega$ zu erreichen. Da diese Messung jedoch nur zur Visualisierung des Kriechsfalls dient, wird kein genauer Wert benötigt. Um den aperiodischen Grenzfall einzustellen, wird außerdem ein Potentiometer verwendet. Durch sukzessives Erhöhen des Widerstandes nimmt $\delta$ zu, sodass ab einem gewissen Wert keine Schwingung mehr am Oszilloskop beobachtbar ist. Dieses Vorgehen wird in Abbildung \ref{pic:oszi} dargestellt.
 
-\begin{minipage}[t]{0.3\textwidth}
-\includegraphics[width=\textwidth]{bilder/oszi1.jpg}
-\end{minipage}
-\begin{minipage}[t]{0.3\textwidth}
-\includegraphics[width=\textwidth]{bilder/oszi2.jpg}
-%\captionof{Messungen der Schwingungen mit verschiedenen Einstellungen des Potentiometers (v.l: $60\Omega$, $160\Omega$ und $186\Omega$). Man erkennt gut, wie durch das Erhöhen des Widerstandwertes die Schwingung abnimmt.}
-%\label{pic:oszi}
-\end{minipage}
-\begin{minipage}[t]{0.3\textwidth}
-\includegraphics[width=\textwidth]{bilder/oszi3.jpg}
-\end{minipage}
+\begin{figure}[h]
+\centering
+\subfigure[$60\Omega$]{
+\includegraphics[width=.37\textwidth]{bilder/oszi1.jpg}
+}
+\subfigure[$160\Omega$]{
+\includegraphics[width=.37\textwidth]{bilder/oszi2.jpg}
+}
 
+\subfigure[$186\Omega$]{
+\includegraphics[width=.37\textwidth]{bilder/oszi3.jpg}
+}
+\caption{Messungen der Schwingung mit verschiedenen Einstellungen des Potentiometers. Man erkennt gut, wie durch das Erhöhen des Widerstandwertes die Schwingung abnimmt.}
+\label{pic:oszi}
+\end{figure}
 
 \subsection{Versuchsauswertung}
 
@@ -155,7 +158,7 @@ Beispielhafte Rohdaten für alle verschiedenen Fälle sind in Abbildung \ref{abb
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{plots/rohdaten_ska.pdf}
+\includegraphics[width=.9\textwidth]{plots/rohdaten_ska.pdf}
 \caption{Rohdaten mit Schwing-, Kriech- und Aperiodischem Grenzfall}
 \label{abb:rohdaten_ska}
 \end{figure}
@@ -208,7 +211,9 @@ $100$ & - & $1294.7\pm 154.6$ & $1293.4\pm 155.8$ & $1339.0\pm 110.3$ & $1316.4 
 \end{table}
 
 Die Messungen des $100\Omega$ Widerstands werden von nun an nicht weiter ausgewertet, da die kurze Schwingzeit keine zuverlässigen Ergebnisse ermöglicht. Des Weiteren arbeitet die Peakfinder-Methode wegen der groben Diskretisierung der Frequenz durch den FFT-Algorithmus nicht korrekt, sodass die Frequenzen der Regressionsmethode als weitere Berechnungsgrundlage dienen. Ein Indiz dafür, dass die Frequenzwerte aus dem Spektrum systematisch fehlerhaft sind, ist, dass sie mit steigendem Widerstand steigen, obwohl
-$$\omega^2 = \omega_0^2 + \delta^2$$
+\begin{equation}\label{eq:korrektur}
+\omega^2 = \omega_0^2 - \delta^2
+\end{equation}
 mit der korrigierten Frequenz $\omega_0$ und der Dämpfung $\delta$ gilt und sie daher, wie die Regressionsdaten, fallen müssten.
 
 \begin{table}[h]
@@ -257,6 +262,44 @@ $47$ & $2995.46 \pm 13.28$ & $2891.72\pm 8.96$ & $2922.18\pm 12.57$ & $2923.66\p
 \caption{Durch Anwendung der Pythonmethode \url{analyse.exp_einhuellende} bestimmte Dämpfungen.}
 \label{tab:daempfung2}
 \end{table}
+
+Nun kann $\delta$ über $R$ aufgetragen und eine Regression durchgeführt werden. Dies ist sowohl für die Daten aus Tabelle \ref{tab:daempfung1} als auch aus Tabelle \ref{tab:daempfung2} in Abbildung \ref{abb:reg_Rdelta} dargestelt.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_delR.pdf}
+\caption{Regressionen von $\delta$ über R zur Bestimmung von L.}
+\label{abb:reg_Rdelta}
+\end{figure}
+
+Die Daten, die mit den Einhüllenden berechnet wurden, liefern die bessere Regression und werden daher für die weitere Auswertung verwendet. Im Gegensatz zu den Frequenzen kann man hier nicht direkt an der Tabelle erkennen, welche Daten qualitativ besser sind. Ein Nachteil von den Dämpfungswerten aus der Methode \url{exp_einhuellende} sind die (verglichen mit den Regressions-Daten) großen Fehler, die aufgrund unterschiedlicher Ergebnisse in den einzelnen Messreihen entstehen. Mit der linken Regressiongerade $\text{reg}(R) = \Delta \cdot R + \alpha$ aus Abbildung \ref{abb:reg_Rdelta} folgt nun
+\begin{enumerate}[-]
+\item $R_0 = \frac{\alpha}{\Delta r} = 4.93 \Omega$
+\item $\sigma_{R_0} = R_0 \sqrt{\left(\frac{\sigma_\alpha}{\alpha}\right)^2 + \left(\frac{\sigma_\Delta}{\Delta}\right)^2} = 0.07 \Omega$
+\item $L = \frac{1}{2\Delta} = 8.759$mH
+\item $\sigma_{L} = \frac{\sigma_\Delta}{\Delta^2} = 0.079$mH.
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_delomega.pdf}
+\caption{Regression von $\omega^2$ über $\delta^2$ zur Bestimmung von $\omega_0$.}
+\label{abb:reg_delomega}
+\end{figure}
+
+
+Mit diesen Ergebnissen liefert eine Regression von $\omega^2$ über $\delta^2$, die in Abbildung \ref{abb:reg_delomega} gezeigt ist, die Grundfrequenz $\omega_0 = (10673.58\pm 2.53)$Hz, d.h. $f_0 = (1698.75\pm 0.40)$Hz, und eine Kapazität von $C = \frac{1}{L\omega_0^2} = (1.002\pm 0.009)\mu$F. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{plots/reg_Rome.pdf}
+\caption{Regression von $\omega^2$ über $(R+R_0)^2$ zur Bestimmung von $\omega_0$ und $L$.}
+\label{abb:reg_Rome}
+\end{figure}
+
+Alternativ kann auch der Restwiderstand $R_0 = (4.93\pm 0.07)\Omega$ aus der Regression \ref{abb:reg_Rdelta} verwendet werden, um eine Regression von $\omega^2$ über $(R+R_0)^2$ anzufertigen. Aus \ref{eq:korrektur} folgt nämlich
+$$\omega^2 = \omega_0^2 - \frac{1}{4L^2} R_{\text{Ges}}^2\text{.}$$
+Somit kann $\omega_0$ als Wurzel des y-Achsenabschnitts und $L$ aus der Steigung bestimmt werden. Diese Regression ist in Abbildung \ref{reg_Rome} dargestellt und liefert $\omega_0 = (10672.64\pm 2.85)$Hz, d.h. $f_0 = (1698.60\pm0.45)$Hz und $L = (9.020\pm0.317)$mH. Dies wiederum ergibt eine Kapazität von $C = \frac{1}{L\omega_0^2} = (0.973\pm 0.034)\mu$F.
 
 
 

@@ -85,19 +85,56 @@ for i in range(0,5,1):
     mu, inn, aus = gewichtetes_mittel_in_aus(delta_e[i],edelta_e[i])
     dele[i][0] = mu
     dele[i][1] = max(inn,aus)
-delta = np.array([dele[0][0],dele[1][0],dele[2][0],dele[3][0],dele[4][0]])
-edelta = np.array([dele[0][1],dele[1][1],dele[2][1],dele[3][1],dele[4][1]])
+delta1 = np.array([dele[0][0],dele[1][0],dele[2][0],dele[3][0],dele[4][0]])
+edelta1 = np.array([dele[0][1],dele[1][1],dele[2][1],dele[3][1],dele[4][1]])
 R = np.array([1.008,5.101,9.99,19.82,46.67])
 eR = np.array([0.001,0.001,0.002,0.01,0.01])
 
+#Werte aus schwingung.py importieren
+delta2 = np.array([ 341.01810569, 565.81381857, 860.23879874, 1421.9702776, 2820.46265235])
+edelta2 = np.array([ 0.25891746,  0.56634525,  1.25160131,  3.57130468, 16.18687673])
 
-reg = analyse.lineare_regression_xy(R,delta,eR,edelta)
+reg1 = analyse.lineare_regression_xy(R,delta1,eR,edelta1)
+reg2 = analyse.lineare_regression_xy(R,delta2,eR,edelta2)
 
-f, (ax1 , ax2) = plt.subplots(2,1,sharex = 'col')
-ax1.plot(R,(reg[0]*R+reg[2]), linestyle="--", color = 'black')
-ax1.errorbar(R,delta, yerr = edelta, xerr = eR, color='red', fmt='.', marker ='o')
+
+f, ((ax1 , ax3),(ax2,ax4)) = plt.subplots(2,2,sharex = 'col',gridspec_kw={'height_ratios': [5, 2]})
+
+ax1.set_title('Regression mit Dämpfungswerten aus Exp-Einhüllende')
+ax1.plot(R,(reg1[0]*R+reg1[2]), linestyle="--", color = 'black')
+ax1.errorbar(R,delta1, yerr = edelta1, xerr = eR, color='red', fmt='.', marker ='o')
+ax1.text(0.03,0.92,s='Steigung: (' + "{0:.3f}".format(reg1[0]) + r'$\pm$' + "{0:.3f}".format(reg1[1]) + ')1/$\Omega$s', 
+         fontsize = '13', color='blue',transform=ax1.transAxes)
+ax1.text(0.03,0.85,s='y-Achsenabschnitt: (' + "{0:.3f}".format(reg1[2]) + r'$\pm$' + "{0:.3f}".format(reg1[3]) + ')Hz', 
+         fontsize = '13', color='blue',transform=ax1.transAxes)
+ax1.text(0.03,0.78,s='$\chi^2$/ndf: ' + "{0:.1f}".format(reg1[4]/(3)),
+         fontsize = '13', color='blue',transform=ax1.transAxes)
+ax1.set_ylabel('$\delta$ / Hz')
+ax2.set_ylabel(r'$\delta - \frac{1}{2L} \left( R + R_0\right)$')
+ax2.set_xlabel('R / $\Omega$')
 ax2.axhline(y=0., color='black', linestyle='--')
-ax2.errorbar(R, (delta-(reg[0]*R+reg[2])), yerr=np.sqrt(edelta**2+eR**2), color='red', fmt='.', marker='o', markeredgecolor='red')
+ax2.errorbar(R, (delta1-(reg1[0]*R+reg1[2])), yerr=np.sqrt(edelta1**2+eR**2), color='red', fmt='.', marker='o', markeredgecolor='red')
+
+ax3.set_title('Regression mit Dämpfungswerten aus Regression von $\log\,U_C$ über $t$')
+ax3.plot(R,(reg2[0]*R+reg2[2]), linestyle="--", color = 'black')
+ax3.errorbar(R,delta2, yerr = edelta2, xerr = eR, color='red', fmt='.', marker ='o')
+ax3.text(0.03,0.92,s='Steigung: (' + "{0:.3f}".format(reg2[0]) + r'$\pm$' + "{0:.3f}".format(reg2[1]) + ')1/$\Omega$s', 
+         fontsize = '13', color='blue',transform=ax3.transAxes)
+ax3.text(0.03,0.85,s='y-Achsenabschnitt: (' + "{0:.3f}".format(reg2[2]) + r'$\pm$' + "{0:.3f}".format(reg2[3]) + ')Hz', 
+         fontsize = '13', color='blue',transform=ax3.transAxes)
+ax3.text(0.03,0.78,s='$\chi^2$/ndf: ' + "{0:.1f}".format(reg2[4]/(3)),
+         fontsize = '13', color='blue',transform=ax3.transAxes)
+ax3.set_ylabel('$\delta$ / Hz')
+ax4.set_ylabel(r'$\delta - \frac{1}{2L} \left( R + R_0\right)$')
+ax4.set_xlabel('R / $\Omega$')
+ax4.axhline(y=0., color='black', linestyle='--')
+ax4.errorbar(R, (delta2-(reg2[0]*R+reg2[2])), yerr=np.sqrt(edelta2**2+eR**2), color='red', fmt='.', marker='o', markeredgecolor='red')
+
+#Plotparameter
+plt.rcParams["figure.figsize"] = (12,6)
+plt.rcParams['axes.titlesize'] = 'large'
+plt.rcParams['axes.labelsize'] = 'large'
 plt.tight_layout()
+#plt.savefig('plots/reg_delR.pdf', format='pdf', dpi=1200)
 f.subplots_adjust(hspace=0.0)
-#plt.close(f)
+plt.close(f)
