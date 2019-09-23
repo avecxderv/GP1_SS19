@@ -44,8 +44,9 @@ dic5 = {1: 15000,2:10000,3:7000,4:5000,5:2500}
 
 
 #Exp-Einhüllende
-delta_e = np.full((6,3),0.5)
-edelta_e = np.full((6,3),0.5)
+delta_e = np.full((5,3),0.5)
+edelta_e = np.full((5,3),0.5)
+delta_sys_e = np.full((5,3),0.5)
 for i in range(1,6,1):
     for j in range(1,4,1):
         data = cassy.CassyDaten(dic4[i]+str(j)+'.lab')
@@ -53,9 +54,24 @@ for i in range(1,6,1):
         vol = data.messung(1).datenreihe('U_B1').werte #- dic3[i]
         ex1 = analyse.exp_einhuellende(time, vol, np.full((vol.size),4.8e-3))
         ex2 = analyse.exp_einhuellende(time,-vol,np.full((vol.size),4.8e-3))
+        
+        #Systematik
+        vol_sys = (0.01*vol + 0.005*10)/np.sqrt(3)
+        vol_oben = vol+vol_sys
+        vol_unt = vol-vol_sys
+        ex1_ob = analyse.exp_einhuellende(time, vol+vol_oben, np.full((vol.size),4.8e-3))
+        ex1_un = analyse.exp_einhuellende(time, vol+vol_unt, np.full((vol.size),4.8e-3))
+        ex2_ob = analyse.exp_einhuellende(time, -vol-vol_oben, np.full((vol.size),4.8e-3))
+        ex2_un = analyse.exp_einhuellende(time, -vol-vol_unt, np.full((vol.size),4.8e-3))
+        ex1_sys = 0.5*(np.abs(ex1_ob[2]-ex1[2])+np.abs(ex1_un[2]-ex1[2]))
+        ex2_sys = 0.5*(np.abs(ex2_ob[2]-ex2[2])+np.abs(ex2_un[2]-ex2[2]))
+        
         mu, inn, au = gewichtetes_mittel_in_aus(np.array([ex1[2],ex2[2]]),np.array([ex1[3],ex2[3]]))
+        mu1, _, _ = gewichtetes_mittel_in_aus(np.array([ex1[2]+ex1_sys,ex2[2]+ex2_sys]),np.array([ex1[3],ex2[3]]))
+        mu2, _, _ = gewichtetes_mittel_in_aus(np.array([ex1[2]-ex1_sys,ex2[2]-ex2_sys]),np.array([ex1[3],ex2[3]]))
         delta_e[i-1][j-1] = mu
         edelta_e[i-1][j-1] = max(inn,au)
+        delta_sys_e[i-1][j-1] = 0.5*(np.abs(mu-mu1)+np.abs(mu-mu2))
         
         #Plot
         fig, ax = plt.subplots()
@@ -74,14 +90,20 @@ for i in range(1,6,1):
         plt.rcParams['axes.labelsize'] = 'large'
         plt.tight_layout()
         ax.grid()
-        #plt.close(fig)
-dele = np.full((5,2),0.1)
+        plt.savefig('plots/einhuellend/exp_einhuellend'+str(i)+"_"+str(j)+'.pdf', format='pdf', dpi=1200)
+        plt.close(fig)
+        
+dele = np.full((5,3),0.1)
 for i in range(0,5,1):
     mu, inn, aus = gewichtetes_mittel_in_aus(delta_e[i],edelta_e[i])
+    mu1, _, _ = gewichtetes_mittel_in_aus(delta_e[i]+delta_sys_e[i], edelta_e[i])
+    mu2, _, _ = gewichtetes_mittel_in_aus(delta_e[i]-delta_sys_e[i], edelta_e[i])
     dele[i][0] = mu
     dele[i][1] = max(inn,aus)
+    dele[i][2] = 0.5*(np.abs(mu-mu1)+np.abs(mu-mu2))
 delta = np.array([dele[0][0],dele[1][0],dele[2][0],dele[3][0],dele[4][0]])
 edelta = np.array([dele[0][1],dele[1][1],dele[2][1],dele[3][1],dele[4][1]])
+edelta_sys = np.array([dele[0][2],dele[1][2],dele[2][2],dele[3][2],dele[4][2]])
 R = np.array([1.008,5.101,9.99,19.82,46.67])
 eR = np.array([0.001,0.001,0.002,0.01,0.01])
 
