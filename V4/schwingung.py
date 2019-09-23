@@ -35,6 +35,8 @@ dic1 = {1:max1,2:max2,3:max3,4:max4,5:max5,6:max6}
 dic2 = {1:'daten/schwingung_1Ohm_1.lab',2:'daten/schwingung_5.1Ohm_1.lab',3:'daten/schwingung_10Ohm_1.lab',
         4:'daten/schwingung_20Ohm_1.lab',5:'daten/schwingung_47Ohm_1.lab',6:'daten/schwingung_100Ohm_1.lab'}
 dic3 = {1:offset1,2:offset2,3:offset3,4:offset4,5:offset5,6:offset6}
+dic4 = {1:'daten/schwingung_1Ohm_',2:'daten/schwingung_5.1Ohm_',3:'daten/schwingung_10Ohm_',
+        4:'daten/schwingung_20Ohm_',5:'daten/schwingung_47Ohm_',6:'daten/schwingung_100Ohm_'}
 
 reg1 = np.array([])
 reg2 = np.array([])
@@ -50,8 +52,7 @@ for i in range(1,6,1):
     x = time[dic1[i]]
     ex = np.full((dic1[i].size,),1e-05/np.sqrt(12))
     y = np.log(np.abs(vol[dic1[i]])-dic3[i])
-    temp = 4.8e-03/np.sqrt(12)+0.01*np.abs(vol[dic1[i]])
-    ey = temp*1/(np.abs(vol[dic1[i]])-dic3[i])
+    ey = 4.8e-03*1/(np.abs(vol[dic1[i]])-dic3[i])
     ey_sys = 0.01*np.sqrt(vol[dic1[i]]**2+dic3[i]**2)/(np.abs(vol[dic1[i]])-dic3[i])
     res1 = analyse.lineare_regression(n,x,ex)
     res2 = analyse.lineare_regression_xy(x,y,ex,ey)
@@ -62,7 +63,6 @@ for i in range(1,6,1):
     reg2plus = np.concatenate((reg2plus, res2plus))
     reg2minus = np.concatenate((reg2minus, res2minus))
     
-    '''
     #Plot
     f, ((ax1,ax2), (ax3,ax4)) = plt.subplots(2,2, sharex='col', gridspec_kw={'height_ratios': [5, 2]})
     #1. Regression Vanilla Plot [Zeiten in Mikrosekunden]
@@ -107,8 +107,7 @@ for i in range(1,6,1):
     f.subplots_adjust(hspace=0.0)
     #plt.savefig('plots/reg_schwingung'+str(i)+'.pdf', format='pdf', dpi=1200)
     plt.close(f)
-    '''
-
+    
 #relevante Größen aus Regressionergebnissen ablesen
 cond1 = np.arange(0,30,1)
 cond2 = (np.mod(cond1,6) == 0)
@@ -126,6 +125,10 @@ eR = np.array([0.001,0.001,0.002,0.01,0.01])
 freq = 1/T
 efreq = freq*(eT/T)
 
+    
+#Auswertung von zwei Maxima liefert schlecteren Wert als die Regression,
+#auch wenn die delta über R Regression dann ein schlechteres chi^2/ndf hat
+'''
 data = cassy.CassyDaten(dic2[5])
 time = data.messung(1).datenreihe('t').werte
 vol = data.messung(1).datenreihe('U_B1').werte
@@ -133,6 +136,7 @@ delt1 = -(np.log(vol[max5[0]]-offset5)-np.log(vol[max5[2]]-offset5))/(time[max5[
 delt2 = -(np.log(-vol[max5[1]]+offset5)-np.log(-vol[max5[3]]+offset5))/(time[max5[1]]-time[max5[3]])
 delta[4] = (delt1+delt2)/2
 edelta[4] = 5
+'''
 
 reg = analyse.lineare_regression_xy(R,delta,eR,edelta)
 
