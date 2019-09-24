@@ -16,7 +16,12 @@ In diesem Versuch werden zwei Schwingkreise induktiv miteinander gekoppelt. Spez
 \draw (2,0) to [normal open switch] (2,-1) -- (0,-1) -- (0,0);
 \draw (2.75,0) to [normal open switch] (2.75,-1) -- (4.75,-1) -- (4.75,0);
 \draw[dashed, thin] (2.15,-0.5) -- (2.85,-0.5); 
-
+\node[below] at(0.8,0) {\tiny $+$};
+\node[below] at(1.2,0) {\tiny $-$};
+\node[above] at(1,0) {$U_0$};
+\node[below] at(3.55,0) {\tiny $-$};
+\node[below] at(3.95,0) {\tiny $+$};
+\node[above] at(3.75,0) {$U_0$};
 
 % Rechte Schwingkreise
 \draw (8,0.2) -- (7,0.2) to [rmeterwa, t=$U_1$] (7,1.8) -- (8,1.8);
@@ -26,6 +31,13 @@ In diesem Versuch werden zwei Schwingkreise induktiv miteinander gekoppelt. Spez
 \draw (10,0) to [normal open switch] (10,-1) -- (8,-1) -- (8,0);
 \draw (10.75,0) to [normal open switch] (10.75,-1) -- (12.75,-1) -- (12.75,0);
 \draw[dashed, thin] (10.15,-0.5) -- (10.85,-0.5); 
+\node[below] at(8.8,0) {\tiny $+$};
+\node[below] at(9.2,0) {\tiny $-$};
+\node[above] at(9,0) {$U_0$};
+\node[below] at(11.55,0) {\tiny $+$};
+\node[below] at(11.95,0) {\tiny $-$};
+\node[above] at(11.75,0) {$U_0$};
+
 
 \end{tikzpicture}
 \caption{Fundamentalschwingungen der gekoppelten Schwingkreise bei gleichsinniger (links) und gegensinniger Anregung (rechts)}
@@ -51,7 +63,7 @@ $$f_k = \frac{f_- + f_+}{2} \hspace{0.2cm} \text{ und } \hspace{0.2cm} f_s = \fr
 bestimmen. Aufgrund der unvermeidbaren Dämpfung der beiden Schwingkreise sind die Extrema des einen Schwingkreises gegen die Nulldurchgänge des anderen verschoben. Für Kopplungen $k < 0.2$ gilt näherungsweise für die zeitliche Verschiebung
 
 \begin{equation}\label{eq:delta_t}
-\Delta t \approx \frac{1}{\omega_s} \left( \frac{\pi}{2} - \arctan\left(  \frac kR \sqrt{\frac LC}\right) \right)
+\Delta t \approx \frac{1}{\pi(f_--f_+)} \left( \frac{\pi}{2} - \arctan\left(  \frac kR \sqrt{\frac LC}\right) \right)
 \end{equation}
 
 
@@ -63,7 +75,7 @@ bestimmen. Aufgrund der unvermeidbaren Dämpfung der beiden Schwingkreise sind d
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{bilder/aufbau_schwebung.jpg}
+\includegraphics[width=0.6\textwidth]{bilder/aufbau_schwebung.png}
 \caption{Aufbau zur Erzeugung einer Schwebung}
 \label{abb:aufbau_schweb}
 \end{figure}
@@ -175,9 +187,9 @@ Maximum $U_2$ & $2.0 \pm 0.1$ & $6.9 \pm 0.1$
 \label{tab:delta_t_zeiten}
 \end{table}
 
-Nach Differenzbildung und gewichteter Mittelung ergibt sich mit dem inneren Fehler $\Delta t = (0.4 \pm 0.1) \, \mathrm{ms}$. Zum Vergleich berechnen wir die erwartete Zeitverschiebung
+Nach Differenzbildung und gewichteter Mittelung ergibt sich mit dem inneren Fehler $\Delta t = (0.4 \pm 0.1) \, \mathrm{ms}$. Zum Vergleich berechnen wir die erwartete Zeitverschiebung gemäß Gleichung \ref{eq:delta_t}
 $$\Delta t_e \approx 0.495 \, \mathrm{ms}.$$
-Dabei wurde für den Widerstand der Wert des Restwiderstandes aus dem ersten Versuch verwendet. Die abgelesene Verschiebung stimmt also innerhalb der Unsicherheiten mit der Erwartung überein.
+Dabei wurde für den Widerstand der Wert des Restwiderstandes $R = (4.93 \pm 0.07)\,\Omega$ aus dem ersten Versuch verwendet. Die abgelesene Verschiebung stimmt also innerhalb der Unsicherheiten mit der Erwartung überein.
 
 \subsubsection{Fazit}
 
@@ -192,12 +204,12 @@ In diesem Versuch konnten einige qualitative Aussagen bestätigt werden. Zum ein
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{bilder/aufbau_fundamental.jpg}
+\includegraphics[width=\textwidth]{bilder/aufbau_fundamental.png}
 \caption{Aufbau zur Anregung der Fundamentalschwingungen}
 \label{abb:aufbau_fundamental}
 \end{figure}
 
-Zur Anregung der Fundamentalschwingungen werden die Aufbauten aus Abbildung \ref{abb:aufbau_fundamental} verwendet. Dabei ist links die gleichsinnige und rechts die gegensinnige Anregung zu sehen. Abweichend zur Zeichnung werden die Spannungen jeweils am Eingang A gemessen. Die Kondensatoren und Spulen sind dabei die gleichen wie bei der Aufzeichnung der Schwebung.
+Zur Anregung der Fundamentalschwingungen werden die Aufbauten aus Abbildung \ref{abb:aufbau_fundamental} verwendet. Dabei ist links die gleichsinnige und rechts die gegensinnige Anregung zu sehen. Die Kondensatoren und Spulen sind dabei die gleichen wie bei der Aufzeichnung der Schwebung.
 
 \subsubsection{Versuchsdurchführung}
 

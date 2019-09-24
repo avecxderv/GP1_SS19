@@ -303,8 +303,8 @@ Mit diesen Ergebnissen liefert eine Regression von $\omega^2$ über $\delta^2$, 
 \end{figure}
 
 Alternativ kann auch der Restwiderstand $R_0 = (4.93\pm 0.07)\,\Omega$ aus der Regression \ref{abb:reg_Rdelta} verwendet werden, um eine Regression von $\omega^2$ über $(R+R_0)^2$ anzufertigen. Aus \ref{eq:korrektur} folgt nämlich
-$$\omega^2 = \omega_0^2 - \frac{1}{4L^2} (R+R_0)^2\text{.}$$
-Somit kann $\omega_0$ als Wurzel des y-Achsenabschnitts und $L$ aus der Steigung bestimmt werden. Diese Regression ist in Abbildung \ref{abb:reg_Rome} dargestellt und liefert $\omega_0 = (10672.64\pm 2.85)\,$Hz, d.h. $f_0 = (1698.60\pm0.45)\,$Hz und $L = (9.020\pm0.317)\,$mH. Dies wiederum ergibt eine Kapazität von $C = \frac{1}{L\omega_0^2} = (0.973\pm 0.034)\,\mu$F.
+$$\omega^2 = \omega_0^2 - \frac{1}{4L^2} R_{\text{Ges}}^2\text{.}$$
+Somit kann $\omega_0$ als Wurzel des y-Achsenabschnitts und $L$ aus der Steigung bestimmt werden. Diese Regression ist in Abbildung \ref{reg_Rome} dargestellt und liefert $\omega_0 = (10672.64\pm 2.85)\,$Hz, d.h. $f_0 = (1698.60\pm0.45)\,$Hz und $L = (9.020\pm0.317)\,$mH. Dies wiederum ergibt eine Kapazität von $C = \frac{1}{L\omega_0^2} = (0.973\pm 0.034)\,\mu$F.
 
 
 
@@ -326,7 +326,7 @@ Dies deckt sich im Rahmen der Unsicherheiten mit dem gemessenen Widerstand $R_{G
 
 Bei der Regression von $\delta$ über $R$ erhalten wir eine Induktivität von $L = (8.759 \pm 0.079) \,$mH und damit eine relative Abweichung von
 $$\frac{|L-L_g|}{\sqrt{\sigma_L^2 + \sigma_{L_g}^2}} \approx 1.89$$
-zum gemessenen Wert $L_g = (9.00 \pm 0.01)\,$mH. Dies ist angesichts der mäßigen Modellanpassungen akzeptabel. Entsprechend bekommt man hier natürlich eine etwas zu große Kapazität von $C = (1.002 \pm 0.009)\, \mu$F im Vergleich zum gemessenen Wert $C_g = (0.9842 \pm 0.0002)\,\mu$F mit einer relativen Abweichung von etwa 1.98. Bei der alternativen Regression von $\omega^2$ über $(R+R_0)^2$ ergeben sich hingegen passendere Werte von $L = (9.020 \pm 0.317) \,$mH und $C = (0.973 \pm 0.034)\,\mu$F mit relativen Abweichungen von $0.03$ in L und $0.32$ in C, wobei die Fehler hier deutlich größer sind. Außerdem konnte man qualitativ sehen, welchen Einfluss die zunehmende Dämpfung auf den Einschwingvorgang hat und Schwing-, Kriech- und den aperiodischen Grenzfall beobachten. Bei dem aperiodischen Grenzfall stimmt gemessener und erwarteter Widerstand gut überein. Nebenbei konnten wir den Restwiderstand der Schaltung $R_0 = (4.93 \pm 0.07) \,\Omega$ auf etwa 1.5 \% genau bestimmen. 
+zum gemessenen Wert $L_g = (9.00 \pm 0.01)\,$mH. Dies ist angesichts der mäßigen Modellanpassungen akzeptabel. Entsprechend bekommt man hier natürlich eine etwas zu große Kapazität von $C = (1.002 \pm 0.009)\, \mu$F im Vergleich zum gemessenen Wert $C_g = (0.9842 \pm 0.0002)\,\mu$F mit einer relativen Abweichung von etwa 1.98. Bei der alternativen Regression von $\omega^2$ über $(R+R_0)^2$ ergeben sich hingegen passendere Werte von $L = (9.020 \pm 0.317) \,$mH und $(0.973 \pm 0.034)\,\mu$F, wobei die Fehler hier deutlich größer sind. Außerdem konnte man qualitativ sehen, welchen Einfluss die zunehmende Dämpfung auf den Einschwingvorgang hat und Schwing-, Kriech- und den aperiodischen Grenzfall beobachten. Bei dem aperiodischen Grenzfall stimmt gemessener und erwarteter Widerstand gut überein. Nebenbei konnten wir den Restwiderstand der Schaltung $R_0 = (4.93 \pm 0.07) \,\Omega$ auf etwa 1.5 \% genau bestimmen. 
 
 
 
