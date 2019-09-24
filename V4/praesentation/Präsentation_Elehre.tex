@@ -44,6 +44,11 @@
 \subsection{Theorie}
 
 \begin{frame}
+\centering
+\Large{LCR-Schwingkreis}
+\end{frame}
+
+\begin{frame}
 \frametitle{Die Differentialgleichung des LCR-Schwingkreises}
 
 \begin{columns}[c]
@@ -297,7 +302,7 @@ Daraus folgt $\omega_0 = (10672.64\pm2.85)$Hz und $L=(9.020 \pm 0.317)$mH. Damit
 \subsection{Fazit}
 
 \begin{frame}
-\frametitle{Fazit}
+\frametitle{Fazit (1)}
 Gruppe 1:
 \begin{figure}
 \includegraphics[width=\textwidth]{abbildungen/1VCWerte.PNG}
@@ -313,9 +318,184 @@ Methode 2 & $8.759\pm0.079$ & 1.89 & $1.002 \pm 0.009$ & 1.98
 \end{tabular}
 \end{adjustbox}
 \end{table}
+\end{frame}
 
+\begin{frame}
+\frametitle{Fazit (2)}
+Die Einstellung des aperiodischen Grenzfalls ergab folgende Werte:
+\begin{table}
+\begin{tabular}{c|cc|c}
+Gruppe & $R_{gemessen}$ / $\Omega$ & $R_{erwartet}$ / $\Omega$ & relative Abweichung \\
+\hline
+1 & $40.45 \pm 0.08$ & $43.66\pm 1.12$ & 2.85 \\
+2 & $190.93 \pm 1$ & $191.27 \pm 0.11$ & 0.34
+\end{tabular}
+\end{table}
 \end{frame}
 
 \section{Gekoppelte LC-Schwingkreis}
+
+\begin{frame}
+\centering
+\Large{Gekoppelte LC-Schwingkreise}
+\end{frame}
+
+\subsection{Theorie}
+
+\begin{frame}
+\frametitle{Die Differentialgleichung der gekoppelten LC-Schwingkreise}
+\begin{figure}
+\includegraphics[width = \textwidth]{abbildungen/theorie_LC.png}
+\end{figure}
+
+Das System wird durch das folgende DGL-System beschrieben:
+$$\ddot{I_1} + k \ddot{I_2} + \frac{1}{LC} I_1 = 0$$\ \\
+$$\ddot{I_2} + k \ddot{I_1} + \frac{1}{LC} I_2 = 0$$
+mit Kopplungsgrad $k\in (0,1)$. Die tatsächlich gemessen Kreisfrequenzen sind durch $k$ beeinflusst.
+\end{frame}
+
+\subsection{Versuchsaufbau}
+
+\begin{frame}
+\frametitle{Versuchsaufbau - Schwebung}
+\begin{figure}
+\includegraphics[width=0.6\linewidth]{abbildungen/aufbau_LC.png}
+\caption{Aufbau zur Messung einer Schwebung.}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Versuchsaufbau - gleich- und gegensinnige Schwingung}
+\begin{figure}
+\includegraphics[width=\linewidth]{abbildungen/aufbau_LC_gg.png}
+\caption{Aufbau zur Messung einer gleich- bzw. gegensinniger Schwingung.}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Versuchsdurchführung}
+Folgende Messparameter wurden verwendet:
+\begin{table}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Messintervall} & \multicolumn{2}{c|}{Anzahl} & \multicolumn{2}{c|}{Messzeit} \\
+\cline{2-5}
+& Gruppe 1 & Gruppe 2 & Gruppe 1 & Gruppe 2 \\
+\hline
+10 $\mu$s & 2000 & 8000 & 20 ms & 80 ms \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{enumerate}[-]
+\item Trigger zum Starten der Messreihe
+\item Bei der Schwebungsmessungen wurden unterschiedliche Abstände und der Aufbau mit Eisenkern gemessen.
+\item Messbereich: $\pm$ 3 V (Gruppe 1) oder $\pm$ 10 V (Gruppe 2)
+\item Gruppe 1: Kapazität: 1.002$\mu$F und 1.000$\mu$F; Induktivität: 2.240mH und 2.223mH
+\item Gruppe 2: Kapazität: 0.984$\mu$F und 0.980$\mu$F; Induktivität 9.00mH und 9.03mH
+\end{enumerate}
+
+\end{frame}
+
+\subsection{Schwebung}
+\begin{frame}
+\centering
+\Large{Schwebung}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Rohdaten - Gruppe 1}
+\begin{figure}
+\includegraphics[width = .7\framewidth]{abbildungen/plotsLC/Schwebung.png}
+\caption{Spannungswerte der Schwebungsmessung ohne Eisenkern von Gruppe 1 im Zeitbereich.}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{FFT - Gruppe 1}
+\begin{figure}
+\includegraphics[width = .65\framewidth]{abbildungen/plotsLC/FFTFehler.png}
+\caption{Frequenzspektrum der Spannungswerte der Schwebungsmessung ohne Eisenkern von Gruppe 1.}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Rohdaten - Gruppe 2}
+\begin{figure}
+\includegraphics[width = \framewidth]{abbildungen/plotsLC/schwebung_roh.pdf}
+\caption{Spannungswerte einer Schwebungsmessung von Gruppe 2 im Zeitbereich.}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{FFT - Gruppe 2}
+\begin{figure}
+\includegraphics[width = \framewidth]{abbildungen/plotsLC/FFT_schwebungen.pdf}
+\caption{Frequenzspektrum der Spannungswerte aller Schwebungsmessung von Gruppe 2.}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ergebnisse}
+
+\begin{table}
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{\ } & \multicolumn{2}{c|}{Fundamentalfrequenzen / Hz} & \multicolumn{2}{c|}{Kopplungsgrad} \\
+\cline{2-5}
+ & Gruppe 1 & Gruppe 2 & Gruppe 1 & Gruppe 2 \\
+\hline
+ohne Eisenkern & $3198\pm10$, $3621\pm10$ & $1598.7 \pm 1$, $1832.1 \pm 7.5$ & $0.121\pm 0.004$ & $0.1355 \pm 0.0041$ \\
+mit Eisenkern & $1247\pm10$, $2130\pm10$ & $631.8 \pm 6.9$, $1094 \pm 19$ & $0.489\pm 0.006$ & $0.4999 \pm 0.0155$ \\
+\hline
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Mit Eisenkern wird ein Kopplungsgrad von $\approx 0.5$ erwartet.
+\end{frame}
+
+\subsection{Gleich- und gegensinnige Schwingung}
+\begin{frame}
+\centering
+\Large{Gleich- und gegensinnige Schwingung}
+\end{frame}
+
+\begin{frame}
+\frametitle{Gegensinnige - Zeitbereich}
+\begin{figure}
+\includegraphics[width = .75\framewidth]{abbildungen/plotsLC/GegenGraph.PNG}
+\caption{Zeitbereich der gegensinnigen Messung von Gruppe 1.}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Gleichsinnige - Zeitbereich}
+\begin{figure}
+\includegraphics[width = \framewidth]{abbildungen/plotsLC/fundamental_roh.pdf}
+\caption{Zeitbereich der gleichsinnigen Messung von Gruppe 2.}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Frequenzspektrum}
+\begin{figure}
+\includegraphics[width = \framewidth]{abbildungen/plotsLC/fundamental_fft.pdf}
+\caption{Frequenzspektren der gleich- und gegensinnigen Messungen von Gruppe 2.}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Fazit}
+\begin{itemize}
+\item Messungen sehr schwer durchzuführen, da die Bauteile leicht verschieden sind und das Timing perfekt stimmen muss.
+\item Erwartete, qualitative Effekte sind aufgetreten. Besonders gut im Frequenzspektrum erkennbar.
+\end{itemize}
+\end{frame}
+
 
 \end{document}
