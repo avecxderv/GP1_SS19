@@ -109,13 +109,14 @@ Das Schaltbild aus Abbildung \ref{abb:schaltLCR} wird auf der Rastersteckplatte 
 
 Die Schwingungen werden im Modus \glqq automatische Aufnahme\grqq{} mit folgenden Messparametern aufgenommen:
 \begin{enumerate}[-]
-\item Messbereich Strom $I$: $\pm 0.3$A
-\item Messbereich Spannung am Kondensator $U_C$: $\pm 10$V
-\item Messintervall: $10\mu\text{s}$
+\setlength{\itemsep}{-5pt}
+\item Messbereich Strom $I$: $\pm 0.3$ A
+\item Messbereich Spannung am Kondensator $U_C$: $\pm 10$ V
+\item Messintervall: $10 \, \mu\text{s}$
 \item Anzahl an Messpunkten: $2000$
-\item Messzeit: $20$ms
+\item Messzeit: $20$ ms
 \end{enumerate}
-Die Spannungsquelle des Sensor-CASSYs ist stets eingeschaltet, so dass der Kondensator geladen ist. Eine Messung wird ausgelöst, indem der Taster gedrückt und somit der Stromkreis geschlossen wird. Um möglich direkt nach Betätigung des Tasters die Aufnahme zu beginnen, wird ein Trigger verwendet. Dieser aktiviert die Messung bei einer steigenden Flanke von $U_C$, die den Schwellenwert von $-9.2$V überschreitet. Das ist sinnvoll, weil die Spannungsquelle auf $U_0 = 9.4$V eingestellt ist und die Polung des Messgerätes zu einer gemessenen Kondensatorspannung von $-9.4$V bei offenem Taster führt. 
+Die Spannungsquelle des Sensor-CASSYs ist stets eingeschaltet, so dass der Kondensator geladen ist. Eine Messung wird ausgelöst, indem der Taster gedrückt und somit der Stromkreis geschlossen wird. Um möglich direkt nach Betätigung des Tasters die Aufnahme zu beginnen, wird ein Trigger verwendet. Dieser aktiviert die Messung bei einer steigenden Flanke von $U_C$, die den Schwellenwert von $-9.2 \, \mathrm V$ überschreitet. Das ist sinnvoll, weil die Spannungsquelle auf $U_0 = 9.4 \, \mathrm V$ eingestellt ist und die Polung des Messgerätes zu einer gemessenen Kondensatorspannung von $-9.4 \, \mathrm V$ bei offenem Taster führt. 
 Vorab werden die im Versuch verwendeten Widerstände mit Hilfe eines Multimeters auf ihren tatsächlichen Widerstandswert geprüft. In Tabelle \ref{tab:widerstaende} sind die verwendeten Widerstände mit Herstellerangabe und gemessenen Werten angegeben.
 
 \begin{table}[H]
@@ -134,19 +135,19 @@ $1000$ & $991.20\pm 0.08$
 \caption{Herstellerangaben für die verwendeten Widerstände und deren mittels Multimeter gemessene Widerstandswerte samt Fehler.}
 \label{tab:widerstaende}
 \end{table}
-Ebenso wurde die verwendete $9$mH Spule und der$1\mu$F Kondensator überprüft. Es ergab sich eine Induktivität von $(9.00 \pm 0.01)$mH und eine Kapazität von $(984.2 \pm 0.2)$nF.
-Die nun folgenden Rechnungen verwenden die gemessenen Widerstandswerte. Zusätzlich werden drei in Reihe geschaltete $1\text{k}\Omega$ Widerstädnde verwendet, um einen Widerstand von $3\text{k}\Omega$ zu erreichen. Da diese Messung jedoch nur zur Visualisierung des Kriechsfalls dient, wird kein genauer Wert benötigt. Um den aperiodischen Grenzfall einzustellen, wird außerdem ein Potentiometer verwendet. Durch sukzessives Erhöhen des Widerstandes nimmt $\delta$ zu, sodass ab einem gewissen Wert keine Schwingung mehr am Oszilloskop beobachtbar ist. Dieses Vorgehen wird in Abbildung \ref{pic:oszi} dargestellt.
+Ebenso wurde die verwendete $9 \,$mH Spule und der $1 \, \mu$F Kondensator überprüft. Es ergab sich eine Induktivität von $(9.00 \pm 0.01)\,$mH und eine Kapazität von $(984.2 \pm 0.2)\,$nF.
+Die nun folgenden Rechnungen verwenden die gemessenen Widerstandswerte. Zusätzlich werden drei in Reihe geschaltete $1\,\text{k}\Omega$ Widerstädnde verwendet, um einen Widerstand von $3\,\text{k}\Omega$ zu erreichen. Da diese Messung jedoch nur zur Visualisierung des Kriechsfalls dient, wird kein genauer Wert benötigt. Um den aperiodischen Grenzfall einzustellen, wird außerdem ein Potentiometer verwendet. Durch sukzessives Erhöhen des Widerstandes nimmt $\delta$ zu, sodass ab einem gewissen Wert keine Schwingung mehr am Oszilloskop beobachtbar ist. Dieses Vorgehen wird in Abbildung \ref{pic:oszi} dargestellt.
 
 \begin{figure}[h]
 \centering
-\subfigure[$60\Omega$]{
+\subfigure[$60\,\Omega$]{
 \includegraphics[width=.37\textwidth]{bilder/oszi1.jpg}
 }
-\subfigure[$160\Omega$]{
+\subfigure[$160\,\Omega$]{
 \includegraphics[width=.37\textwidth]{bilder/oszi2.jpg}
 }
 
-\subfigure[$186\Omega$]{
+\subfigure[$186\,\Omega$]{
 \includegraphics[width=.37\textwidth]{bilder/oszi3.jpg}
 }
 \caption{Messungen der Schwingung mit verschiedenen Einstellungen des Potentiometers. Man erkennt gut, wie durch das Erhöhen des Widerstandwertes die Schwingung abnimmt.}
@@ -160,7 +161,7 @@ Beispielhafte Rohdaten für alle verschiedenen Fälle sind in Abbildung \ref{abb
 \begin{figure}[H]
 \centering
 \includegraphics[width=.9\textwidth]{plots/rohdaten_ska.pdf}
-\caption{Rohdaten mit Schwing- (10$\Omega$), Kriech- (1k$\Omega$) und Aperiodischem Grenzfall ($186\Omega$)}
+\caption{Rohdaten mit Schwing-, Kriech- und Aperiodischem Grenzfall}
 \label{abb:rohdaten_ska}
 \end{figure}
 
@@ -173,29 +174,29 @@ $$\log \lvert I(t_i)\rvert = -\delta t_i + \log\left\lvert CU_0 \left(\omega+\fr
 beziehungsweise eine analoge Form für $U_C$. Natürlich kann $\delta$ durch die Verwendung eines Steigungsdreiecks auch nur bei zwei ablesbaren Maxima oder Minima bestimmt werden:
 $$\delta = \frac{\log\left(\frac{U_C(t_0)}{U_C(t_1)}\right)}{t_1-t_0}$$
 Bei beiden Vorgehensweisen muss der Offset korrigiert werden. Als zweite Option für die Berechnung von $\delta$ kann eine Exponentialfunktion als Einhüllende gefittet werden und die Dämpfung $\delta$ aus dem Fit abgelesen werden.
-Für den $100\Omega$ Widerstand sind Regressionen nicht praktikabel, da - aufgrund der starken Dämpfung - zu wenige Extrema genau ablesbar sind. Ein beispielhaftes Ergebnis für die Regression von abgelesenen Extrema bei der Schwingung des $10\Omega$ Widerstand ist in Abbildung \ref{abb:reg1} dargestellt. Die übrigen durchgeführten Regressionen sind im Anhang \ref{app:reg} abgebildet.
+Für den $100\,\Omega$ Widerstand sind Regressionen nicht praktikabel, da - aufgrund der starken Dämpfung - zu wenige Extrema genau ablesbar sind. Ein beispielhaftes Ergebnis für die Regression von abgelesenen Extrema bei der Schwingung des $10\,\Omega$ Widerstand ist in Abbildung \ref{abb:reg1} dargestellt. Die übrigen durchgeführten Regressionen sind im Anhang \ref{app:reg} abgebildet.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{plots/reg_schwingung3.pdf}
-\caption{Regressionen für den $10\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$.}
+\caption{Regressionen für den $10\,\Omega$ Widerstand zur Bestimmung von $\frac{T}{2}$ und $\delta$.}
 \label{abb:reg1}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{plots/fft/fft_schwingung3_1.pdf}
-\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $10\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
+\caption{Mittels FFT berechnetes Spektrum für die erste Messung des $10\,\Omega$ Widerstands. Die rote Linie zeigt das Argument-Maximum an. Die grüne Linie Hingegen den Peak-Schwerpunkt.}
 \label{abb:fft1}
 \end{figure}
 
-Für die Frequenzen ergeben sich die in Tabelle \ref{tab:freq} dargestellten Werte. Die FFT-Ergebnisse sind mit der Peakfinder-Methode berechnet. Dabei sollte man beachten, dass der FFT-Algorithmus die Frequenz mit einer Breite von $h\approx 49.975 \text{Hz}$ diskretisiert. Dies mindert die Qualität der Resultate spürbar. Als Fehler der Einzelmessungen wird die Differenz aus Argument-Maximum der Amplitude und Peak-Schwerpunkt verwendet. Der Fehler des gewichteten Mittels ist der innere Fehler der Einzelmessungen. Das Frequenzspektrum der ersten Messung des $10\Omega$ Widerstands ist in Abbildung \ref{abb:fft1} zu sehen. Für die übrigen Widerstände befindet sich jeweils das Spektrum der 1. Messung im Anhang \ref{app:fft}.
+Für die Frequenzen ergeben sich die in Tabelle \ref{tab:freq} dargestellten Werte. Die FFT-Ergebnisse sind mit der Peakfinder-Methode berechnet. Dabei sollte man beachten, dass der FFT-Algorithmus die Frequenz mit einer Breite von $h\approx 49.975 \,\text{Hz}$ diskretisiert. Dies mindert die Qualität der Resultate spürbar. Als Fehler der Einzelmessungen wird die Differenz aus Argument-Maximum der Amplitude und Peak-Schwerpunkt verwendet. Der Fehler des gewichteten Mittels ist der innere Fehler der Einzelmessungen. Das Frequenzspektrum der ersten Messung des $10\,\Omega$ Widerstands ist in Abbildung \ref{abb:fft1} zu sehen. Für die übrigen Widerstände befindet sich jeweils das Spektrum der 1. Messung im Anhang \ref{app:fft}.
 
 \begin{table}[H]
 \centering
 \begin{adjustbox}{width=\textwidth}
 \begin{tabular}{c|c|cccc}
-\multirow{2}{*}{Ohmscher Widerstand / $\Omega$} & \multirow{2}{*}{Regression / Hz} & \multicolumn{4}{c}{$f$ mit FFT / Hz} \\
+\multirow{2}{*}{Widerstand / $\Omega$} & \multirow{2}{*}{Regression / Hz} & \multicolumn{4}{c}{$f$ mit FFT / Hz} \\
 \cline{3-6}
 & & Messung 1 & Messung 2 & Messung 3 & Mittel\\
 \hline
@@ -211,7 +212,7 @@ $100$ & - & $1294.7\pm 154.6$ & $1293.4\pm 155.8$ & $1339.0\pm 110.3$ & $1316.4 
 \label{tab:freq}
 \end{table}
 
-Die Messungen des $100\Omega$ Widerstands werden von nun an nicht weiter ausgewertet, da die kurze Schwingzeit keine zuverlässigen Ergebnisse ermöglicht. Des Weiteren arbeitet die Peakfinder-Methode wegen der groben Diskretisierung der Frequenz durch den FFT-Algorithmus nicht korrekt, sodass die Frequenzen der Regressionsmethode als weitere Berechnungsgrundlage dienen. Ein Indiz dafür, dass die Frequenzwerte aus dem Spektrum systematisch fehlerhaft sind, ist, dass sie mit steigendem Widerstand steigen, obwohl
+Die Messungen des $100\,\Omega$ Widerstands werden von nun an nicht weiter ausgewertet, da die kurze Schwingzeit keine zuverlässigen Ergebnisse ermöglicht. Des Weiteren arbeitet die Peakfinder-Methode wegen der groben Diskretisierung der Frequenz durch den FFT-Algorithmus nicht korrekt, sodass die Frequenzen der Regressionsmethode als weitere Berechnungsgrundlage dienen. Ein Indiz dafür, dass die Frequenzwerte aus dem Spektrum systematisch fehlerhaft sind, ist, dass sie mit steigendem Widerstand steigen, obwohl
 \begin{equation}\label{eq:korrektur}
 \omega^2 = \omega_0^2 - \delta^2
 \end{equation}
@@ -220,7 +221,7 @@ mit der korrigierten Frequenz $\omega_0$ und der Dämpfung $\delta$ gilt und sie
 \begin{table}[h]
 \centering
 \begin{tabular}{c|c}
-Ohmscher Widerstand / $\Omega$ & $\delta \pm \sigma_{\delta\text{, stat}} \pm \sigma_{\delta\text{, syst}}$ (mit Regression berechnet) / Hz \\
+Widerstand / $\Omega$ & $\delta \pm \sigma_{\delta\text{, stat}} \pm \sigma_{\delta\text{, syst}}$ (mit Regression) / Hz \\
 \hline
 $1$ & $341.02 \pm 0.26 \pm 0.02$ \\
 $5.1$ & $565.81 \pm 0.57 \pm 0.04$\\
@@ -233,23 +234,23 @@ $100$ & $-$
 \label{tab:daempfung1}
 \end{table}
 
-Die aus der Regression von $\log \lvert U_C \rvert$ über $t$ bestimmten Dämpfungswerte sind in Tabelle \ref{tab:daempfung1} einsehbar. Die Regressionen selber sind in Abbildung \ref{abb:reg1} und Anhang \ref{app:reg} geplottet. Die systematischen Fehler $\sigma_{syst}$ ergeben sich aus den systematischen Fehlern von $U_C$. Für $U_C$ wird ein statistischer Fehler von $\sigma_{U_C} = 4.89$mV verwendet. Dies entspricht der Diskretisierungsbreite des Sensor-CASSYs für den vorliegenden Messbereich $\pm 10$V.
+Die aus der Regression von $\log \lvert U_C \rvert$ über $t$ bestimmten Dämpfungswerte sind in Tabelle \ref{tab:daempfung1} einsehbar. Die Regressionen selber sind in Abbildung \ref{abb:reg1} und Anhang \ref{app:reg} geplottet. Die systematischen Fehler $\sigma_{syst}$ ergeben sich aus den systematischen Fehlern von $U_C$ mit der Verschiebemethode. Dabei wird nur der Fehler auf den momentanen Wert beachtet, da der Fehler auf den Bereichsendwert durch die Differenzbildung mit dem Offset verschwindet. Für $U_C$ wird ein statistischer Fehler von $\sigma_{U_C} = 4.89\,$mV verwendet. Dies entspricht der Diskretisierungsbreite des Sensor-CASSYs für den vorliegenden Messbereich $\pm 10\,$V.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{plots/einhuellend/exp_einhuellend3_2.pdf}
-\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $10\Omega$ Widerstands.}
+\caption{Mittels Python berechnete exponentiell Einhüllende für die zweite Messung des $10\,\Omega$ Widerstands.}
 \label{abb:einhuellende1}
 \end{figure}
 
-Die berechneten Dämpfungen mittels Fit einer einhüllenden Exponentialfunktion um die Schwingung können aus Tabelle \ref{tab:daempfung2} abgelesen werden. Die Größe der systematischen Fehler liegt dabei unter 1\% der statistischen Fehler, so dass die systematischen Fehler vernachlässigt werden. Die Fehler der gewichteten Mittel sind die äußeren Fehler der drei Messungen. Für eine Messung mit dem $10\Omega$ Widerstand ist die Einhüllende in Abbildung \ref{abb:einhuellende1} geplotet. Im Anhang \ref{app:expein} befinden sich Einhüllende für jeweils eine Messung der übrigen Widerstände.
+Die berechneten Dämpfungen mittels Fit einer einhüllenden Exponentialfunktion um die Schwingung können aus Tabelle \ref{tab:daempfung2} abgelesen werden. Die Größe der systematischen Fehler liegt dabei unter 1\% der statistischen Fehler, so dass die systematischen Fehler vernachlässigt werden. Die Fehler der gewichteten Mittel sind die äußeren Fehler der drei Messungen. Für eine Messung mit dem $10\,\Omega$ Widerstand ist die Einhüllende in Abbildung \ref{abb:einhuellende1} geplotet. Im Anhang \ref{app:expein} befinden sich Einhüllende für jeweils eine Messung der übrigen Widerstände.
 
 
 \begin{table}[H]
 \centering
 \begin{adjustbox}{width=\textwidth}
 \begin{tabular}{c|cccc}
-\multirow{2}{*}{Ohmscher Widerstand / $\Omega$} & \multicolumn{4}{c}{$\delta$ mit Exp-Einhüllender / Hz} \\
+\multirow{2}{*}{Widerstand / $\Omega$} & \multicolumn{4}{c}{$\delta$ mit Exp-Einhüllender / Hz} \\
 \cline{2-5}
 & Messung 1 & Messung 2 & Messung 3 & Mittel\\
 \hline
@@ -274,12 +275,15 @@ Nun kann $\delta$ über $R$ aufgetragen und eine Regression durchgeführt werden
 \end{figure}
 
 Die Daten, die mit den Einhüllenden berechnet wurden, liefern die bessere Regression und werden daher für die weitere Auswertung verwendet. Im Gegensatz zu den Frequenzen kann man hier nicht direkt an der Tabelle erkennen, welche Daten qualitativ besser sind. Ein Nachteil von den Dämpfungswerten aus der Methode \url{exp_einhuellende} sind die (verglichen mit den Regressions-Daten) großen Fehler, die aufgrund unterschiedlicher Ergebnisse in den einzelnen Messreihen entstehen. Mit der linken Regressiongerade $\text{reg}(R) = \Delta \cdot R + \alpha$ aus Abbildung \ref{abb:reg_Rdelta} folgt nun
-\begin{enumerate}[-]
-\item $R_0 = \frac{\alpha}{\Delta r} = 4.93 \Omega$
-\item $\sigma_{R_0} = R_0 \sqrt{\left(\frac{\sigma_\alpha}{\alpha}\right)^2 + \left(\frac{\sigma_\Delta}{\Delta}\right)^2} = 0.07 \Omega$
-\item $L = \frac{1}{2\Delta} = 8.759$mH
-\item $\sigma_{L} = \frac{\sigma_\Delta}{\Delta^2} = 0.079$mH.
-\end{enumerate}
+\begin{align*}
+R_0 &= \frac{\alpha}{\Delta r} = 4.93 \, \Omega 
+\hspace{0.4cm} \text{ mit } \hspace{0.4cm}
+\sigma_{R_0} = R_0 \sqrt{\left(\frac{\sigma_\alpha}{\alpha}\right)^2 + \left(\frac{\sigma_\Delta}{\Delta}\right)^2} = 0.07 \, \Omega 
+\intertext{und} 
+L &= \frac{1}{2\Delta} = 8.759 \, \mathrm{mH} 
+\hspace{0.4cm} \text{ mit } \hspace{0.4cm}
+\sigma_{L} = \frac{\sigma_\Delta}{\Delta^2} = 0.079 \, \mathrm{mH}.
+\end{align*}
 
 \begin{figure}[H]
 \centering
@@ -289,7 +293,7 @@ Die Daten, die mit den Einhüllenden berechnet wurden, liefern die bessere Regre
 \end{figure}
 
 
-Mit diesen Ergebnissen liefert eine Regression von $\omega^2$ über $\delta^2$, die in Abbildung \ref{abb:reg_delomega} gezeigt ist, die Grundfrequenz $\omega_0 = (10673.58\pm 2.53)$Hz, d.h. $f_0 = (1698.75\pm 0.40)$Hz, und eine Kapazität von $C = \frac{1}{L\omega_0^2} = (1.002\pm 0.009)\mu$F. 
+Mit diesen Ergebnissen liefert eine Regression von $\omega^2$ über $\delta^2$, die in Abbildung \ref{abb:reg_delomega} gezeigt ist, die Grundfrequenz $\omega_0 = (10673.58\pm 2.53)\,$Hz, d.h. $f_0 = (1698.75\pm 0.40)\,$Hz, und eine Kapazität von $C = \frac{1}{L\omega_0^2} = (1.002\pm 0.009)\,\mu$F. 
 
 \begin{figure}[h]
 \centering
@@ -298,13 +302,13 @@ Mit diesen Ergebnissen liefert eine Regression von $\omega^2$ über $\delta^2$, 
 \label{abb:reg_Rome}
 \end{figure}
 
-Alternativ kann auch der Restwiderstand $R_0 = (4.93\pm 0.07)\Omega$ aus der Regression \ref{abb:reg_Rdelta} verwendet werden, um eine Regression von $\omega^2$ über $(R+R_0)^2$ anzufertigen. Aus \ref{eq:korrektur} folgt nämlich
+Alternativ kann auch der Restwiderstand $R_0 = (4.93\pm 0.07)\,\Omega$ aus der Regression \ref{abb:reg_Rdelta} verwendet werden, um eine Regression von $\omega^2$ über $(R+R_0)^2$ anzufertigen. Aus \ref{eq:korrektur} folgt nämlich
 $$\omega^2 = \omega_0^2 - \frac{1}{4L^2} R_{\text{Ges}}^2\text{.}$$
-Somit kann $\omega_0$ als Wurzel des y-Achsenabschnitts und $L$ aus der Steigung bestimmt werden. Diese Regression ist in Abbildung \ref{reg_Rome} dargestellt und liefert $\omega_0 = (10672.64\pm 2.85)$Hz, d.h. $f_0 = (1698.60\pm0.45)$Hz und $L = (9.020\pm0.317)$mH. Dies wiederum ergibt eine Kapazität von $C = \frac{1}{L\omega_0^2} = (0.973\pm 0.034)\mu$F.
+Somit kann $\omega_0$ als Wurzel des y-Achsenabschnitts und $L$ aus der Steigung bestimmt werden. Diese Regression ist in Abbildung \ref{reg_Rome} dargestellt und liefert $\omega_0 = (10672.64\pm 2.85)\,$Hz, d.h. $f_0 = (1698.60\pm0.45)\,$Hz und $L = (9.020\pm0.317)\,$mH. Dies wiederum ergibt eine Kapazität von $C = \frac{1}{L\omega_0^2} = (0.973\pm 0.034)\,\mu$F.
 
 
 
-\subsubsection{Aperiodischer Grenzfall}
+\subsubsection{Aperiodischer Grenzfall und Kriechfall}
 
 \begin{figure}[H]
 \centering
@@ -313,13 +317,17 @@ Somit kann $\omega_0$ als Wurzel des y-Achsenabschnitts und $L$ aus der Steigung
 \label{abb:rohkriech}
 \end{figure}
 
-Aus der vorangegangen Analyse der Messreihen des Schwingfalls erhalten wir einen Restwiderstand von $R_0 = (4.93\pm0.07)\Omega$. Zusammen mit dem Widerstand des Potentiometers, der im aperiodischen Grenzfall $(186\pm 1)\Omega)$ beträgt, ergibt sich der Gesamtwiderstand $R_{\text{Ges}} = (190.93 \pm 1)\Omega$.
-\subsubsection{Kriechfall}
-In Abbildung \ref{abb:rohkriech} kann man qualitativ gut erkennen, wie ein zunehmender Widerstand, die Entladezeit des Kondensators.
+Aus der vorangegangen Analyse der Messreihen des Schwingfalls erhalten wir einen Restwiderstand von $R_0 = (4.93\pm0.07)\, \Omega$. Zusammen mit dem Widerstand des Potentiometers, der im aperiodischen Grenzfall $(186\pm 1)\, \Omega)$ beträgt, ergibt sich der Gesamtwiderstand $R_{\text{Ges}} = (190.93 \pm 1)\, \Omega$. Mit der gemessenen Kapazität und Induktivität aus der Versuchsdurchführung erhält man einen erwarteteten Widerstand $R_{ap}$ von
+$$ R_{ap} = 2\sqrt{\frac{L}{C}} = (191.27 \pm 0.11) \,\Omega.$$
+Dies deckt sich im Rahmen der Unsicherheiten mit dem gemessenen Widerstand $R_{Ges}$. In Abbildung \ref{abb:rohkriech} kann man zudem qualitativ gut erkennen, wie ein zunehmender Widerstand, die Entladezeit des Kondensators erhöht.
 
 
 \subsection{Fazit}
-Erwartet werden für den aperiodischen Grenzfall (mit der in der Versuchsdurchführung aufgeführten, gemessenen Kapazität bzw. Induktivität) $2\sqrt{\frac{L}{C}} = 191.27 \pm 0.11$. 
+
+Bei der Regression von $\delta$ über $R$ erhalten wir eine Induktivität von $L = (8.759 \pm 0.079) \,$mH und damit eine relative Abweichung von
+$$\frac{|L-L_g|}{\sqrt{\sigma_L^2 + \sigma_{L_g}^2}} \approx 1.89$$
+zum gemessenen Wert $L_g = (9.00 \pm 0.01)\,$mH. Dies ist angesichts der mäßigen Modellanpassungen akzeptabel. Entsprechend bekommt man hier natürlich eine etwas zu große Kapazität von $C = (1.002 \pm 0.009)\, \mu$F im Vergleich zum gemessenen Wert $C_g = (0.9842 \pm 0.0002)\,\mu$F mit einer relativen Abweichung von etwa 1.98. Bei der alternativen Regression von $\omega^2$ über $(R+R_0)^2$ ergeben sich hingegen passendere Werte von $L = (9.020 \pm 0.317) \,$mH und $(0.973 \pm 0.034)\,\mu$F, wobei die Fehler hier deutlich größer sind. Außerdem konnte man qualitativ sehen, welchen Einfluss die zunehmende Dämpfung auf den Einschwingvorgang hat und Schwing-, Kriech- und den aperiodischen Grenzfall beobachten. Bei dem aperiodischen Grenzfall stimmt gemessener und erwarteter Widerstand gut überein. Nebenbei konnten wir den Restwiderstand der Schaltung $R_0 = (4.93 \pm 0.07) \,\Omega$ auf etwa 1.5 \% genau bestimmen. 
+
 
 
 \newpage
